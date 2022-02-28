@@ -1,0 +1,18 @@
+﻿@model List<LaptopShopOnline.Model.Entities.Menu>
+
+<div class="header-bottom">
+    <div class="container">
+        <div class="top-nav">
+            <ul class="memenu skyblue">
+                @foreach (var item in Model)
+                {
+                    <li class="grid">
+                        <a href="@item.Link" target="@item.Target">@item.MenuName</a>
+                        @await Component.InvokeAsync("SubMenu")
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>

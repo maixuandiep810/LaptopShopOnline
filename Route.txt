@@ -1,0 +1,6 @@
+https://localhost:5001/quan-tri/dang-nhap
+
+https://localhost:5001/quan-tri/tai-khoan-nguoi-dung
+
+
+https://localhost:5001/dang-nhap

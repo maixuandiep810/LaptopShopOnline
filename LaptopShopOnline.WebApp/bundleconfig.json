@@ -1,0 +1,68 @@
+[
+    {
+        "outputFileName": "~/bundles/jquery",
+        "inputFiles": [
+            "~/Scripts/jquery-{version}.js"
+        ],
+
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+
+        "sourceMap": false
+    },
+    {
+        "outputFileName": "~/bundles/jqueryval",
+        "inputFiles": [
+            "~/Scripts/jquery.validate*"
+        ],
+
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+
+        "sourceMap": false
+    },
+    {
+        "outputFileName": "~/bundles/modernizr",
+        "inputFiles": [
+            "~/Scripts/modernizr-*"
+        ],
+
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+
+        "sourceMap": false
+    },
+    {
+        "outputFileName": "~/bundles/bootstrap",
+        "inputFiles": [
+            "~/Scripts/bootstrap.js"
+        ],
+
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+
+        "sourceMap": false
+    },
+    {
+        "outputFileName": "~/Content/css",
+        "inputFiles": [
+            "~/Content/bootstrap.css",
+            "~/Content/site.css"
+        ],
+
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+
+        "sourceMap": false
+    }
+]

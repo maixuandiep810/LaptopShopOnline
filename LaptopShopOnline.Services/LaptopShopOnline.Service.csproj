@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LaptopShopOnline.Common\LaptopShopOnline.Common.csproj" />
+    <ProjectReference Include="..\LaptopShopOnline.Model\LaptopShopOnline.Model.csproj" />
+  </ItemGroup>
+
+</Project>

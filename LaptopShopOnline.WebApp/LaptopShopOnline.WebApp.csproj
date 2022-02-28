@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-LaptopShopOnline.WebApp-A639BD9F-6071-4F30-AD48-A62B8696FE3A</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\About\**" />
+    <Compile Remove="Views\Cart\**" />
+    <Compile Remove="Views\FeedBack\**" />
+    <Compile Remove="Views\Homes\**" />
+    <Compile Remove="Views\NewsContent\**" />
+    <Compile Remove="Views\Product\**" />
+    <Content Remove="Views\About\**" />
+    <Content Remove="Views\Cart\**" />
+    <Content Remove="Views\FeedBack\**" />
+    <Content Remove="Views\Homes\**" />
+    <Content Remove="Views\NewsContent\**" />
+    <Content Remove="Views\Product\**" />
+    <EmbeddedResource Remove="Views\About\**" />
+    <EmbeddedResource Remove="Views\Cart\**" />
+    <EmbeddedResource Remove="Views\FeedBack\**" />
+    <EmbeddedResource Remove="Views\Homes\**" />
+    <EmbeddedResource Remove="Views\NewsContent\**" />
+    <EmbeddedResource Remove="Views\Product\**" />
+    <None Remove="Views\About\**" />
+    <None Remove="Views\Cart\**" />
+    <None Remove="Views\FeedBack\**" />
+    <None Remove="Views\Homes\**" />
+    <None Remove="Views\NewsContent\**" />
+    <None Remove="Views\Product\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Admin\Controllers\_bin_OrderDetailsController.txt" />
+    <None Remove="Views\_bin_ViewImports.txt" />
+    <None Remove="_bundleconfig.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Areas\Admin\Controllers\_bin_OrderDetailsController.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\_bin_ViewImports.txt" />
+    <Content Include="_bundleconfig.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.14" />
+    <PackageReference Include="X.PagedList" Version="8.1.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LaptopShopOnline.Common\LaptopShopOnline.Common.csproj" />
+    <ProjectReference Include="..\LaptopShopOnline.Model\LaptopShopOnline.Model.csproj" />
+    <ProjectReference Include="..\LaptopShopOnline.Services\LaptopShopOnline.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+</Project>
