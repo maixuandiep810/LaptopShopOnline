@@ -24,16 +24,24 @@
                         <td>@Html.DisplayFor(model => model.Code)</td>
                     </tr>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.MetaTitle)</th>
-                        <td>@Html.DisplayFor(model => model.MetaTitle)</td>
-                    </tr>
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.MetaKeywords)</th>
-                        <td>@Html.DisplayFor(model => model.MetaKeywords)</td>
+                        <th>@Html.DisplayNameFor(model => model.ShopId)</th>
+                        <td>
+                            @Html.DisplayFor(model => model.ShopId)
+                            <br>
+                            <a href="/quan-tri/quan-ly-cua-hang/@Model.ShopId">Xem</a>
+                        </td>
                     </tr>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.UrlImage)</th>
                         <td><img src="@Html.DisplayFor(model => model.UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Sub1UrlImage)</th>
+                        <td><img src="@Html.DisplayFor(model => model.Sub1UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Sub2UrlImage)</th>
+                        <td><img src="@Html.DisplayFor(model => model.Sub2UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
                     </tr>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Price)</th>

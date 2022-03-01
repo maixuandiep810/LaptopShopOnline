@@ -56,7 +56,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
-        [Display(Name = "Trạng thái")]
+        [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
     }
 }

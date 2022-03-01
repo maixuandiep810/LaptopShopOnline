@@ -40,11 +40,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.CountProductCategory = _serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountNews = _serviceWrapper.Db.News.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountNewsCategory = _serviceWrapper.Db.NewsCategory.Where(x => x.IsDeleted == false).Count();
-            ViewBag.CountAbout = _serviceWrapper.Db.About.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountMenu = _serviceWrapper.Db.Menu.Where(x => x.IsDeleted == false && x.ParentId == null).Count();
-            ViewBag.CountSlide = _serviceWrapper.Db.Slide.Where(x => x.IsDeleted == false).Count();
-            ViewBag.CountContact = _serviceWrapper.Db.Contact.Where(x => x.IsDeleted == false).Count();
-            ViewBag.CountFooter = _serviceWrapper.Db.Footer.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountOrder = _serviceWrapper.Db.Order.Where(x => x.IsDeleted == false).Count();
             ViewBag.Reven = _serviceWrapper.Db.OrderDetail.Where(x => x.IsDeleted == false).Sum(i => i.Price * i.Quantity);
             //tong tien ban
@@ -60,7 +56,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                              ProductId = p.Id
                          };
             var sumPrice = result.Sum(x => x.Quantity * x.Price);
-            var sum = result.Sum(x => x.Quantity * x.Code);
+            var sum = result.Sum(x => x.Quantity * x.Price);
             ViewBag.Benefit = sumPrice - sum;
             return View();
         }

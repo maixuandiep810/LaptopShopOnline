@@ -47,39 +47,35 @@ namespace LaptopShopOnline.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), false);
-                if (result == 1)
+                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), CommonConstants.BUYER_GROUP);
+                switch (result)
                 {
-                    var user = _serviceWrapper.UserService.GetByName(model.UserName);
-                    var userSession = new UserLogin();
-                    userSession.UserName = user.UserName;
-                    userSession.UserId = user.Id;
-                    userSession.Email = user.Email;
-                    userSession.Address = user.Address;
-                    userSession.FirstName = user.FirstName;
-                    userSession.LastName = user.LastName;
-                    HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userSession);
-                    return Redirect("/");
-                }
-                else if (result == 0)
-                {
-                    ModelState.AddModelError("", "Tài khoản không tồn tại.");
-                }
-                else if (result == -1)
-                {
-                    ModelState.AddModelError("", "Tài khoản đang bị khoá.");
-                }
-                else if (result == -2)
-                {
-                    ModelState.AddModelError("", "Mật khẩu không đúng.");
-                }
-                else if (result == -3)
-                {
-                    ModelState.AddModelError("", "Tài khoản không đúng.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Đăng nhập không đúng.");
+                    case 1:
+                        var user = _serviceWrapper.UserService.GetByName(model.UserName);
+                        var userSession = new UserLogin();
+                        userSession.UserName = user.UserName;
+                        userSession.UserId = user.Id;
+                        userSession.Email = user.Email;
+                        userSession.Address = user.Address;
+                        userSession.FirstName = user.FirstName;
+                        userSession.LastName = user.LastName;
+                        HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userSession);
+                        return Redirect("/");
+                    case 0:
+                        ModelState.AddModelError("", "Tài khoản không tồn tại");
+                        break;
+                    case -1:
+                        ModelState.AddModelError("", "Tài khoản đang bị khóa");
+                        break;
+                    case -2:
+                        ModelState.AddModelError("", "Mật khẩu không đúng");
+                        break;
+                    case -3:
+                        ModelState.AddModelError("", "Tài khoản không đúng.");
+                        break;
+                    default:
+                        ModelState.AddModelError("", "Đăng nhập không đúng");
+                        break;
                 }
             }
             return View(model);

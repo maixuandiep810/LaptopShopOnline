@@ -6,7 +6,7 @@ namespace LaptopShopOnline.Model.Entities
 {
 
     [Table("OrderDetail")]
-    public partial class OrderDetail
+    public partial class OrderDetail : IAuditable
     {
 
 
@@ -46,7 +46,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
-        [Display(Name = "Trạng thái")]
+        [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
 
         public virtual Order Order { get; set; }

@@ -9,7 +9,7 @@ namespace LaptopShopOnline.Service
 {
     public interface IUserService
     {
-        int Login(string userName, string password, bool isLoginAdmin = false);
+        int Login(string userName, string password, string loginAsUserGroupId);
         User GetByName(string userName);
         List<string> GetListCredential(string userName);
         bool CheckUserName(string userName);

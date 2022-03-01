@@ -25,16 +25,7 @@
                             @Html.DisplayNameFor(model => model.Name)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.MetaTitle)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SeoTitle)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.MetaKeywords)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.MetaDescriptions)
+                            @Html.DisplayNameFor(model => model.Descriptions)
                         </th>
                         <th class="text-center" style="width: 115px;"></th>
                     </tr>
@@ -50,16 +41,7 @@
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.MetaTitle)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SeoTitle)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MetaKeywords)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MetaDescriptions)
+                                @Html.DisplayFor(modelItem => item.Descriptions)
                             </td>
                             <td class="text-center">
                                 <a class="btn-sm btn-group-sm btn-success" href="/quan-tri/loai-san-pham/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>

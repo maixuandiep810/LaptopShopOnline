@@ -1,0 +1,31 @@
+﻿@using LaptopShopOnline.Model.Entities
+
+@model Cart
+
+<tr>
+<td>@Model.Product.Name</td>
+<td><img src="@Model.Product.UrlImage" alt="Alternate Text" width="100" height="70" /></td>
+<td>
+    @Model.Quantity
+</td>
+<td>
+    @if (Model.Product.PromotionPrice != null)
+        {
+        @Model.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")
+        }
+        else
+        {
+        @Model.Product.Price.GetValueOrDefault(0).ToString("N0")
+        }
+</td>
+<td>
+    @if (Model.Product.PromotionPrice != null)
+    {
+        @((Model.Product.PromotionPrice.GetValueOrDefault(0) * Model.Quantity)?.ToString("N0"))
+    }
+    else
+    {
+        @((Model.Product.Price.GetValueOrDefault(0) * Model.Quantity)?.ToString("N0"))
+    }
+</td>
+</tr>

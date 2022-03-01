@@ -31,7 +31,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (filterContext.HttpContext.Request.Path.Value != "/quan-tri/dang-nhap" && 
                     (userLoginSession == null || userLoginSession.GroupId != CommonConstants.ADMIN_GROUP 
-                    && userLoginSession.GroupId != CommonConstants.MOD_GROUP))
+                    && userLoginSession.GroupId != CommonConstants.MOD_GROUP
+                    && userLoginSession.GroupId != CommonConstants.SELLER_GROUP))
             {
                 filterContext.Result = Redirect("/dang-nhap");
             }

@@ -17,9 +17,9 @@ namespace LaptopShopOnline.Model.Entities
         [Required(ErrorMessage = "Bạn chưa nhập Id")]
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Bạn chưa nhập mô tả")]
+        [Required(ErrorMessage = "Bạn chưa nhập Tên")]
         [StringLength(50)]
-        [Display(Name = "Mô tả")]
+        [Display(Name = "Tên")]
         public string Name { get; set; }
 
         public virtual ICollection<Credential> Credentials { get; set; }

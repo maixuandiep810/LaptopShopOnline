@@ -28,7 +28,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users
-        [HasCredential(RoleId = "VIEW_USER")]
+        [HasCredential(RoleId = "VIEW_AUTH")]
         public ActionResult Index(string sortOrder, string currentFilter, int? page, string searchString)
         {
             CountMessage();
@@ -85,7 +85,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Details/5
-        [HasCredential(RoleId = "VIEW_USER")]
+        [HasCredential(RoleId = "VIEW_AUTH")]
         public ActionResult Details(Guid? id)
         {
             if (id == null)
@@ -105,7 +105,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Create
-        [HasCredential(RoleId = "ADD_USER")]
+        [HasCredential(RoleId = "ADD_AUTH")]
         public ActionResult Create()
         {
             CountMessage();
@@ -120,7 +120,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // POST: Admin/Users/Create
-        [HasCredential(RoleId = "ADD_USER")]
+        [HasCredential(RoleId = "ADD_AUTH")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
@@ -157,7 +157,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Edit/5
-        [HasCredential(RoleId = "EDIT_USER")]
+        [HasCredential(RoleId = "EDIT_AUTH")]
         public ActionResult Edit(Guid? id)
         {
             CountMessage();
@@ -175,13 +175,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.GroupId);
             return View(user);
         }
-
-
-
-
-
         // POST: Admin/Users/Edit/5
-        [HasCredential(RoleId = "EDIT_USER")]
+        [HasCredential(RoleId = "EDIT_AUTH")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(User user)
@@ -206,7 +201,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Delete/5
-        [HasCredential(RoleId = "DELETE_USER")]
+        [HasCredential(RoleId = "DELETE_AUTH")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -226,7 +221,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // POST: Admin/Users/Delete/5
-        [HasCredential(RoleId = "DELETE_USER")]
+        [HasCredential(RoleId = "DELETE_AUTH")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

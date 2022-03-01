@@ -67,12 +67,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountProduct();
             return View();
         }
-
-
-
-
-
-        // POST: Admin/ProductCategories/Create        [HttpPost]
+        // POST: Admin/ProductCategories/Create
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductCategory productCategory)
         {
@@ -111,12 +107,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(productCategory);
         }
-
-
-
-
-
-        // POST: Admin/ProductCategories/Edit/5        [HttpPost]
+        // POST: Admin/ProductCategories/Edit/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProductCategory productCategory)
         {
@@ -155,11 +147,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(productCategory);
         }
-
-
-
-
-
         // POST: Admin/ProductCategories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

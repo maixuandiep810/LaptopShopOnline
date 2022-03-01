@@ -2,7 +2,7 @@
 @using LaptopShopOnline.WebApp.Common
 
 @{
-    var userLoginSession = Context.Session.Get<UserLogin>(LaptopShopOnline.Common.CommonConstants.USER_LOGIN_SESSION);
+    var userLoginSession = Context.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
 }
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -32,91 +32,113 @@
         Quản lý chung
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    @if (userLoginSession?.GroupId == "ADMIN")
+    @if (userLoginSession?.GroupId == CommonConstants.ADMIN_GROUP || userLoginSession?.GroupId == CommonConstants.MOD_GROUP)
     {
+        <!-- Nav Item - Pages Collapse Menu -->
+        @if (userLoginSession?.GroupId == CommonConstants.ADMIN_GROUP)
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Giao diện người dùng</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/quan-tri/menu">Menu</a>
+                        <a class="collapse-item" href="/quan-tri/slide">Slide</a>
+                        <a class="collapse-item" href="/quan-tri/thong-tin-cua-hang">Thông tin cửa hàng</a>
+                        <a class="collapse-item" href="/quan-tri/footer">Footer</a>
+                    </div>
+                </div>
+            </li>
+        }
+
+        <!--Order, Order Detail-->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Giao diện người dùng</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fab fa-jedi-order"></i>
+                <span>Quản lý đơn hàng</span>
             </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseOrder" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/quan-tri/menu">Menu</a>
-                    <a class="collapse-item" href="/quan-tri/slide">Slide</a>
-                    <a class="collapse-item" href="/quan-tri/thong-tin-cua-hang">Thông tin cửa hàng</a>
-                    <a class="collapse-item" href="/quan-tri/footer">Footer</a>
+                    <a class="collapse-item" href="/quan-tri/don-dat-hang">Đơn đặt hàng</a>
                 </div>
             </div>
         </li>
-    }
 
-    <!--Order, Order Detail-->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fab fa-jedi-order"></i>
-            <span>Quản lý đơn hàng</span>
-        </a>
-        <div id="collapseOrder" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/quan-tri/don-dat-hang">Đơn đặt hàng</a>
-            </div>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Quản lý hệ thống
         </div>
-    </li>
-
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Quản lý hệ thống
-    </div>
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#product" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-pen-square"></i>
-            <span>Quản lý sản phẩm</span>
-        </a>
-        <div id="product" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/quan-tri/danh-muc-san-pham">Sản phẩm</a>
-                <a class="collapse-item" href="/quan-tri/loai-san-pham">Nhóm sản phẩm</a>
-            </div>
-        </div>
-    </li>
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-pen-square"></i>
-            <span>Quản lý bài viết</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/quan-tri/tin-tuc">Tin tức</a>
-                <a class="collapse-item" href="/quan-tri/loai-tin-tuc">Nhóm tin tức</a>
-                <a class="collapse-item" href="/quan-tri/gioi-thieu-cua-hang">Giới thiệu cửa hàng</a>
-            </div>
-        </div>
-    </li>
-    <!-- Nav Item - Pages Collapse Menu -->
-    @if (userLoginSession?.GroupId == "ADMIN")
-    {
+        <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-users"></i>
-                <span>Quản lý người dùng</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#product" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-pen-square"></i>
+                <span>Quản lý sản phẩm</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="product" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/quan-tri/nhom-nguoi-dung">Nhóm người dùng</a>
-                    <a class="collapse-item" href="/quan-tri/tai-khoan-nguoi-dung">Tài khoản người dùng</a>
-                    <a class="collapse-item" href="/quan-tri/quan-ly-phan-quyen">Quản lý phân quyền</a>
-                    <a class="collapse-item" href="/quan-tri/phan-quyen-nguoi-dung">Phân quyền người dùng</a>
+                    <a class="collapse-item" href="/quan-tri/danh-muc-san-pham">Sản phẩm</a>
+                    <a class="collapse-item" href="/quan-tri/loai-san-pham">Nhóm sản phẩm</a>
                 </div>
             </div>
         </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-pen-square"></i>
+                <span>Quản lý bài viết</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/quan-tri/tin-tuc">Tin tức</a>
+                    <a class="collapse-item" href="/quan-tri/loai-tin-tuc">Nhóm tin tức</a>
+                    <a class="collapse-item" href="/quan-tri/gioi-thieu-cua-hang">Giới thiệu cửa hàng</a>
+                </div>
+            </div>
+        </li>
+        <!-- Nav Item - Pages Collapse Menu -->
+        @if (userLoginSession?.GroupId == CommonConstants.ADMIN_GROUP)
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-users"></i>
+                    <span>Quản lý người dùng</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/quan-tri/nhom-nguoi-dung">Nhóm người dùng</a>
+                        <a class="collapse-item" href="/quan-tri/tai-khoan-nguoi-dung">Tài khoản người dùng</a>
+                        <a class="collapse-item" href="/quan-tri/quan-ly-phan-quyen">Quản lý phân quyền</a>
+                        <a class="collapse-item" href="/quan-tri/phan-quyen-nguoi-dung">Phân quyền người dùng</a>
+                    </div>
+                </div>
+            </li>
+        }
     }
+
+    @if (userLoginSession?.GroupId == CommonConstants.SELLER_GROUP)
+    {
+        <!--Order, Order Detail-->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/quan-tri/nguoi-ban/quan-ly-cua-hang">
+                <i class="fab fa-jedi-order"></i>
+                <span>Quản lý thông tin cửa hàng</span>
+            </a>
+        </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link" href="/quan-tri/nguoi-ban/danh-muc-san-pham">
+                <i class="fas fa-pen-square"></i>
+                <span>Quản lý sản phẩm</span>
+            </a>
+        </li>
+    }
+
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

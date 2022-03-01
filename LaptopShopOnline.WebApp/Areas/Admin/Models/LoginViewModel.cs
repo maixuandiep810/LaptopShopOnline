@@ -12,11 +12,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Models
         [Display(Name = "Tên đăng nhập")]
         public string UserName { get; set; }
 
-
-
         [Required(ErrorMessage = "Bạn chưa nhập Password")]
         [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "Bạn chưa chọn Nhóm người dùng")]
+        [Display(Name = "UserGroup")]
+        public string UserGroupId { get; set; }
 
 
 

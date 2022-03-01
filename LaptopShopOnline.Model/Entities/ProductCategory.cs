@@ -22,12 +22,8 @@ namespace LaptopShopOnline.Model.Entities
 
 
         [StringLength(256)]
-        [Display(Name = "Loại sản phẩmm")]
+        [Display(Name = "Tên")]
         public string Name { get; set; }
-
-        [StringLength(256)]
-        [Display(Name = "Liên kết")]
-        public string MetaTitle { get; set; }
 
         public int? ParentId { get; set; }
 
@@ -36,19 +32,9 @@ namespace LaptopShopOnline.Model.Entities
         public int? DisplayOrder { get; set; }
 
 
-        [Display(Name = "Tiêu Đề SEO")]
+        [Display(Name = "Mô tả")]
         [StringLength(256)]
-        public string SeoTitle { get; set; }
-
-
-        [Display(Name = "Tên khoá")]
-        [StringLength(256)]
-        public string MetaKeywords { get; set; }
-
-
-        [Display(Name = "Mô tả tên khóa")]
-        [StringLength(256)]
-        public string MetaDescriptions { get; set; }
+        public string Descriptions { get; set; }
 
 
         [Display(Name = "Ngày tạo")]
@@ -71,7 +57,7 @@ namespace LaptopShopOnline.Model.Entities
         public string ModifiedBy { get; set; }
 
 
-        [Display(Name = "Trạng thái")]
+        [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
 
 

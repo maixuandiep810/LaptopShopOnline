@@ -1,128 +1,143 @@
-﻿//using LaptopShopOnline.Common;
-//using LaptopShopOnline.Model.Entities;
-//using LaptopShopOnline.Service;
-//using LaptopShopOnline.WebApp.Common;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.Rendering;
-//using Microsoft.EntityFrameworkCore;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using X.PagedList;
+﻿using LaptopShopOnline.Common;
+using LaptopShopOnline.Model.Entities;
+using LaptopShopOnline.Service;
+using LaptopShopOnline.WebApp.Common;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using X.PagedList;
 
 
-//namespace LaptopShopOnline.WebApp.Controllers
-//{
-//    public class ProductController : BaseController
-//    {
-
-
-
-//        public ProductController(ServiceWrapper serviceWrapper) : base(serviceWrapper)
-//        {
-//        }
+namespace LaptopShopOnline.WebApp.Controllers
+{
+    public class ProductController : BaseController
+    {
 
 
 
-//        // GET: Products
-//        public ActionResult LoadHotProduct()
-//        {
-//            List<Product> list = new List<Product>();
-//            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.TopHot == true).OrderByDescending(x => x.CreatedOn).Take(2).ToList();
-//            ViewBag.Count = list.Count();
-//            return PartialView(list);
-//        }
-//        public ActionResult LoadNormalProduct1()
-//        {
-//            List<Product> list = new List<Product>();
-//            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.IsNormalProduct1 == true).OrderByDescending(x => x.CreatedOn).Take(4).ToList();
-//            ViewBag.Count = list.Count();
-//            return PartialView(list);
-//        }
-//        public ActionResult LoadNormalProduct2()
-//        {
-//            List<Product> list = new List<Product>();
-//            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.IsNormalProduct2 == true).OrderByDescending(x => x.CreatedOn).Take(4).ToList();
-//            ViewBag.Count = list.Count();
-//            return PartialView(list);
-//        }
-//        public ActionResult LoadNewProduct()
-//        {
-//            List<Product> list = new List<Product>();
-//            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.IsNewProduct == true).OrderByDescending(x => x.CreatedOn).Take(3).ToList();
-//            ViewBag.Count = list.Count();
-//            return PartialView(list);
-//        }
+        public ProductController(ServiceWrapper serviceWrapper) : base(serviceWrapper)
+        {
+        }
 
-//        public ActionResult LoadLastedProduct(Guid? id)
-//        {
-//            Product product = _serviceWrapper.Db.Product.Find(id);
-//            List<Product> list = new List<Product>();
-//            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.ProductCategoryId == product.ProductCategoryId && x.Id != product.Id).OrderByDescending(x => x.CreatedOn).Take(3).ToList();
-//            ViewBag.Count = list.Count();
-//            return PartialView(list);
-//        }
 
-//        //Detail of Product
-//        public ActionResult Details(Guid id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            Product product = _serviceWrapper.Db.Product.Find(id);
-//            if (product == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(product);
-//        }
-//        //Load category for menu
-//        public ActionResult LoadCategory()
-//        {
-//            List<ProductCategory> productCategories = new List<ProductCategory>();
-//            productCategories = _serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false).ToList();
-//            var product = _serviceWrapper.Db.Product.ToList();
-//            ViewBag.Count = productCategories.Count();
-//            ViewBag.CountAllProduct = product.Count();
-//            return PartialView(productCategories);
-//        }
-//        //Load product from price
-//        public ActionResult CategoryDetail(ProductCategory productCategory)
-//        {
-//            List<Product> list = new List<Product>();
-//            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.ProductCategoryId == productCategory.Id).ToList();
-//            ViewBag.Count = list.Count();
-//            return View(list);
-//        }
-//        //Load all product in 1 page
-//        public ActionResult LoadAllProduct(int? page)
-//        {
-//            List<Product> list = new List<Product>();
-//            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedOn).ToList();
-//            ViewBag.Count = list.Count();
-//            int pageSize = 6;
-//            int pageNumber = (page ?? 1);
-//            return View(list.ToPagedList(pageNumber, pageSize));
-//        }
+        public ActionResult Index(string sortOrder, int? page, string searchString, string currentFilter)
+        {
+            //paged
+            ViewBag.CurrentSort = sortOrder;
+            //Sort order
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "Name";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewBag.PromotionPriceSortParm = sortOrder == "PromotionPrice" ? "promotion_price_desc" : "PromotionPrice";
+            ViewBag.QuantitySortParm = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
+            var product = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-//        //Search auto complete
-//        public JsonResult ListName(string q)
-//        {
-//            var data = new ProductDao().ListName(q);
-//            return Json(new
-//            {
-//                data = data,
-//                status = true
-//            }, JsonRequestBehavior.AllowGet);
-//        }
-//        public ActionResult Search(string keyword)
-//        {
-//            var model = new ProductDao().Search(keyword);
-//            ViewBag.Keyword = keyword;
-//            ViewBag.Count = model.Count();
-//            return View(model);
-//        }
-//    }
-//}
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                product = product.Where(s => s.Name.Contains(searchString)
+                    || s.Price.ToString().Contains(searchString)
+                    || s.PromotionPrice.ToString().Contains(searchString)
+                    || s.ProductCategory.Name.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "Name":
+                    product = product.OrderBy(s => s.Name);
+                    break;
+                case "name_desc":
+                    product = product.OrderByDescending(s => s.Name);
+                    break;
+                case "Price":
+                    product = product.OrderBy(s => s.Price);
+                    break;
+                case "price_desc":
+                    product = product.OrderByDescending(s => s.Price);
+                    break;
+                case "PromotionPrice":
+                    product = product.OrderBy(s => s.PromotionPrice);
+                    break;
+                case "promotion_price_desc":
+                    product = product.OrderByDescending(s => s.PromotionPrice);
+                    break;
+                case "Quantity":
+                    product = product.OrderBy(s => s.Quantity);
+                    break;
+                case "quantity_desc":
+                    product = product.OrderByDescending(s => s.Quantity);
+                    break;
+                default:
+                    product = product.OrderBy(s => s.Name);
+                    break;
+            }
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            ViewBag.SearchString = searchString;
+            return View(product.ToPagedList(pageNumber, pageSize));
+        }
+
+
+
+        //Detail of Product
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var product = _serviceWrapper.Db.Product.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+
+
+        //Load category for menu
+        public ActionResult LoadCategory()
+        {
+            List<ProductCategory> productCategories = new List<ProductCategory>();
+            productCategories = _serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false).ToList();
+            var product = _serviceWrapper.Db.Product.ToList();
+            ViewBag.Count = productCategories.Count();
+            ViewBag.CountAllProduct = product.Count();
+            return PartialView(productCategories);
+        }
+        //Load product from price
+        public ActionResult CategoryDetail(ProductCategory productCategory)
+        {
+            List<Product> list = new List<Product>();
+            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.ProductCategoryId == productCategory.Id).ToList();
+            ViewBag.Count = list.Count();
+            return View(list);
+        }
+
+
+
+        //Load all product in 1 page
+        public ActionResult LoadAllProduct(int? page)
+        {
+            List<Product> list = new List<Product>();
+            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedOn).ToList();
+            ViewBag.Count = list.Count();
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            return View(list.ToPagedList(pageNumber, pageSize));
+        }
+    }
+}

@@ -26,6 +26,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Xác nhận mật khẩu")]
         [Compare("Password", ErrorMessage = "Mật khẩu không khớp")]
 
+        [NotMapped]
         [StringLength(50)]
         public string ConfirmPassword { get; set; }
 
@@ -68,9 +69,12 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
-        [Display(Name = "Trạng thái")]
+        [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
 
         public virtual UserGroup UserGroup { get; set; }
+
+        public virtual Shop Shop { get; set; }
+
     }
 }

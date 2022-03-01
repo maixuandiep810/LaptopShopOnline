@@ -204,6 +204,108 @@ namespace LaptopShopOnline.WebApp
 
 
                 //
+                //  ADMIN - ROLE
+                //
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Role",
+                    pattern: "quan-tri/quan-ly-phan-quyen",
+                    defaults: new { area = "Admin", controller = "Roles", action = "Index" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Role",
+                    pattern: "quan-tri/quan-ly-phan-quyen/{id:regex(^(?!((them-moi)|(cap-nhat))$).*)?}",
+                    defaults: new { area = "Admin", controller = "Roles", action = "Details" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Role-Create",
+                    pattern: "quan-tri/quan-ly-phan-quyen/them-moi",
+                    defaults: new { area = "Admin", controller = "Roles", action = "Create" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Role-Edit",
+                    pattern: "quan-tri/quan-ly-phan-quyen/cap-nhat",
+                    defaults: new { area = "Admin", controller = "Roles", action = "Edit" },
+                    dataTokens: new { area = "Admin" });
+
+
+
+                //
+                //  ADMIN - CREDENTIAL
+                //
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Credential",
+                    pattern: "quan-tri/phan-quyen-nguoi-dung",
+                    defaults: new { area = "Admin", controller = "Credentials", action = "Index" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Credential",
+                    pattern: "quan-tri/phan-quyen-nguoi-dung/{groupId:regex(^(?!((them-moi)|(cap-nhat))$).*)?}/{roleId:regex(^(?!((them-moi)|(cap-nhat))$).*)?}",
+                    defaults: new { area = "Admin", controller = "Credentials", action = "Details" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Credential-Create",
+                    pattern: "quan-tri/phan-quyen-nguoi-dung/them-moi",
+                    defaults: new { area = "Admin", controller = "Credentials", action = "Create" },
+                    dataTokens: new { area = "Admin" });
+
+
+                //
+                //  ADMIN - SHOP
+                //
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Shop",
+                    pattern: "quan-tri/quan-ly-cua-hang",
+                    defaults: new { area = "Admin", controller = "Shops", action = "Index" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Shop",
+                    pattern: "quan-tri/quan-ly-cua-hang/{id:regex(^(?!((them-moi)|(cap-nhat))$).*)?}",
+                    defaults: new { area = "Admin", controller = "Shops", action = "Details" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Shop-Create",
+                    pattern: "quan-tri/quan-ly-cua-hang/them-moi",
+                    defaults: new { area = "Admin", controller = "Shops", action = "Create" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Shop-Edit",
+                    pattern: "quan-tri/quan-ly-cua-hang/cap-nhat",
+                    defaults: new { area = "Admin", controller = "Shops", action = "Edit" },
+                    dataTokens: new { area = "Admin" });
+
+                //  S
+                endpoints.MapControllerRoute(
+                    name: "Admin-Seller-Shop-Edit",
+                    pattern: "quan-tri/nguoi-ban/quan-ly-cua-hang",
+                    defaults: new { area = "Admin", controller = "Shops", action = "EditSG" },
+                    dataTokens: new { area = "Admin" });
+
+
+
+
+                //
                 //  ADMIN - PRODUCT_CATEGORY
                 //
 
@@ -269,6 +371,34 @@ namespace LaptopShopOnline.WebApp
                     defaults: new { area = "Admin", controller = "Products", action = "Edit" },
                     dataTokens: new { area = "Admin" });
 
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Seller-Product",
+                    pattern: "quan-tri/nguoi-ban/danh-muc-san-pham",
+                    defaults: new { area = "Admin", controller = "Products", action = "IndexSG" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Seller-Product",
+                    pattern: "quan-tri/nguoi-ban/danh-muc-san-pham/{id:regex(^(?!((them-moi)|(cap-nhat))$).*)?}",
+                    defaults: new { area = "Admin", controller = "Products", action = "DetailsSG" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Seller-Product-Create",
+                    pattern: "quan-tri/nguoi-ban/danh-muc-san-pham/them-moi",
+                    defaults: new { area = "Admin", controller = "Products", action = "CreateSG" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Seller-Product-Edit",
+                    pattern: "quan-tri/nguoi-ban/danh-muc-san-pham/cap-nhat",
+                    defaults: new { area = "Admin", controller = "Products", action = "EditSG" },
+                    dataTokens: new { area = "Admin" });
+
 
 
                 //
@@ -311,6 +441,9 @@ namespace LaptopShopOnline.WebApp
                 //
 
 
+                //
+                //  USER - USER
+                //
 
                 endpoints.MapControllerRoute(
                     name: "Login",
@@ -328,6 +461,70 @@ namespace LaptopShopOnline.WebApp
                 //    name: "EditProfile",
                 //    pattern: "ho-so-nguoi-dung",
                 //    defaults: new { controller = "User", action = "EditProfile" });
+
+
+
+                //
+                //  USER - HOME
+                //
+
+                endpoints.MapControllerRoute(
+                    name: "Home",
+                    pattern: "/",
+                    defaults: new { controller = "Homes", action = "Index" });
+
+
+
+                //
+                //  USER - CART
+                //
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Cart",
+                    pattern: "gio-hang",
+                    defaults: new { controller = "Cart", action = "Index" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Cart-Create",
+                    pattern: "gio-hang/them-vao",
+                    defaults: new { controller = "Cart", action = "Create" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Cart-Edit",
+                    pattern: "gio-hang/cap-nhat",
+                    defaults: new { controller = "Cart", action = "Edit" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Cart-Delete",
+                    pattern: "gio-hang/xoa/{id?}",
+                    defaults: new { controller = "Cart", action = "Delete" });
+
+
+
+                //
+                //  USER - ORDER
+                //
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Cart",
+                    pattern: "don-hang",
+                    defaults: new { controller = "Order", action = "Index" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Cart-Create",
+                    pattern: "don-hang/tao",
+                    defaults: new { controller = "Order", action = "Create" });
+
+
+
+
+
 
 
 

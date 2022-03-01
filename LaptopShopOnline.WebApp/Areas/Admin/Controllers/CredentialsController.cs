@@ -30,7 +30,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials
-        [HasCredential(RoleId = "VIEW_CREDENTIAL")]
+        [HasCredential(RoleId = "VIEW_AUTH")]
         public ActionResult Index()
         {
             CountMessage();
@@ -39,14 +39,11 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             var credentials = _serviceWrapper.Db.Credentials.Include(c => c.Role).Include(c => c.UserGroup);
             return View(credentials.ToList());
         }
-
-
-
         // GET: Admin/Credentials/Details/5
-        [HasCredential(RoleId = "VIEW_CREDENTIAL")]
+        [HasCredential(RoleId = "VIEW_AUTH")]
         public ActionResult Details(string groupId, string roleId)
         {
-            Credential credential = _serviceWrapper.Db.Credentials.Find(groupId, roleId);
+            Credential credential = _serviceWrapper.Db.Credentials.Include(p => p.Role).Include(p => p.UserGroup).FirstOrDefault();
             if (credential == null)
             {
                 return NotFound();
@@ -57,7 +54,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials/Create
-        [HasCredential(RoleId = "CREATE_CREDENTIAL")]
+        [HasCredential(RoleId = "CREATE_AUTH")]
         public ActionResult Create()
         {
             CountMessage();
@@ -67,12 +64,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.UserGroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name");
             return View();
         }
-
-
-
         // POST: Admin/Credentials/Create
-
-        [HasCredential(RoleId = "CREATE_CREDENTIAL")]        [HttpPost]
+        [HasCredential(RoleId = "CREATE_AUTH")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("UserGroupId,RoleId")] Credential credential)
         {
@@ -92,7 +86,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials/Delete/5
-        [HasCredential(RoleId = "DELETE_CREDENTIAL")]
+        [HasCredential(RoleId = "DELETE_AUTH")]
         public ActionResult Delete(string groupId, string roleId)
         {
             if (groupId == null || roleId == null)
@@ -106,11 +100,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(credential);
         }
-
-
-
         // POST: Admin/Credentials/Delete/5
-        [HasCredential(RoleId = "DELETE_CREDENTIAL")]
+        [HasCredential(RoleId = "DELETE_AUTH")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string groupId, string roleId)

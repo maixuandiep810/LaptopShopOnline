@@ -68,12 +68,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountOrder();
             return View();
         }
-
-
-
         // POST: Admin/UserGroups/Create
-
-        [HasCredential(RoleId = "CREATE_USER_GROUP")]        [HttpPost]
+        [HasCredential(RoleId = "CREATE_USER_GROUP")]       
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Id,Name")] UserGroup userGroup)
         {

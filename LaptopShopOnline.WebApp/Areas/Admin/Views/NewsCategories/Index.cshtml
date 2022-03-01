@@ -27,12 +27,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.MetaTitle)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SeoTitle)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.MetaKeywords)
-                        </th>
                         <th class="text-center" style="width: 115px;"></th>
                     </tr>
                 </thead>
@@ -50,12 +44,6 @@
                                 @Html.DisplayFor(modelItem => item.MetaTitle)
                             </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SeoTitle)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MetaKeywords)
-                            </td>
                             <td>
                                 <a class="btn-sm btn-group-sm btn-success" href="/quan-tri/loai-tin-tuc/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
                                 <a class="btn-sm btn-group-sm btn-secondary dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>

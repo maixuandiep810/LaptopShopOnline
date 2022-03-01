@@ -8,7 +8,7 @@ namespace LaptopShopOnline.Model.Entities
 {
 
     [Table("Product")]
-    public partial class Product : IAuditable
+    public class Product : IAuditable
     {
 
 
@@ -19,13 +19,11 @@ namespace LaptopShopOnline.Model.Entities
         [Required(ErrorMessage = "Bạn chưa nhập tên sản phẩm")]
         public string Name { get; set; }
 
-        [Display(Name = "Mã nhập kho")]
-        public decimal Code { get; set; }
+        [Display(Name = "Mã lưu kho")]
+        public string Code { get; set; }
 
-        [Required(ErrorMessage = "Bạn chưa nhập tên link liên kết")]
-        [Display(Name = "Liên kết")]
-        [StringLength(256)]
-        public string MetaTitle { get; set; }
+        [Display(Name = "Mã Shop")]
+        public Guid? ShopId { get; set; }
 
         [Display(Name = "Mô tả")]
         public string Description { get; set; }
@@ -55,16 +53,15 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Số lượng")]
         public int? Quantity { get; set; }
 
+        [Display(Name = "Số lượng đã bán")]
+        public int? QuantityOfSoldProduct { get; set; }
+
         [Display(Name = "Loại sản phẩm")]
         public Guid? ProductCategoryId { get; set; }
 
         [Column(TypeName = "ntext")]
         [Display(Name = "Chi tiết")]
         public string Detail { get; set; }
-
-        [Display(Name = "Tên khóa")]
-        [StringLength(256)]
-        public string MetaKeywords { get; set; }
 
         [Display(Name = "Sản phẩm Hot")]
         public bool? TopHot { get; set; }
@@ -82,7 +79,6 @@ namespace LaptopShopOnline.Model.Entities
         public int? ViewCount { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-
         [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }
 
@@ -98,14 +94,20 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
-        [Display(Name = "Trạng thái")]
+        [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
 
+        [NotMapped]
         public IFormFile Image { get; set; }
+        [NotMapped]
         public IFormFile Sub1Image { get; set; }
+        [NotMapped]
         public IFormFile Sub2Image { get; set; }
 
 
         public virtual ProductCategory ProductCategory { get; set; }
+
+        public virtual Shop Shop { get; set; }
+
     }
 }

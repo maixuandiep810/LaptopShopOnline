@@ -12,7 +12,7 @@ namespace LaptopShopOnline.Model.Entities
         public Guid Id { get; set; }
 
         [StringLength(256)]
-        [Required(ErrorMessage = "Bạn chưa nhập tiêu Đề")]
+        [Required(ErrorMessage = "Bạn chưa nhập Tên")]
         public string Name { get; set; }
 
         public string Summary { get; set; }
@@ -28,9 +28,6 @@ namespace LaptopShopOnline.Model.Entities
         public Guid? NewsCategoryId { get; set; }
 
         public int? Warranty { get; set; }
-
-        [StringLength(256)]
-        public string MetaKeywords { get; set; }
 
         [StringLength(256)]
         public string MetaDescriptions { get; set; }

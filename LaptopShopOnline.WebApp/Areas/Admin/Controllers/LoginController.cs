@@ -8,6 +8,7 @@ using LaptopShopOnline.Service;
 using LaptopShopOnline.Common;
 using LaptopShopOnline.WebApp.Common;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 {
@@ -24,6 +25,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.UserGroupId = new SelectList(CommonConstants.ADMIN_AREA_GROUP_ID, "Id");
             return View();
         }
         //
@@ -32,46 +34,45 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), true);
-                if (result == 1)
+                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), model.UserGroupId);
+                switch (result)
                 {
-                    var user = _serviceWrapper.UserService.GetByName(model.UserName);
-                    var userLoginSession = new UserLogin();
-                    userLoginSession.UserId = user.Id;
-                    userLoginSession.GroupId = user.GroupId;
-                    userLoginSession.UserName = user.UserName;
-                    userLoginSession.FirstName = user.FirstName;
-                    userLoginSession.LastName = user.LastName;
-                    userLoginSession.Email = user.Email;
-                    userLoginSession.Address = user.Address;
-                    //Phan quyen dua tren userLoginSession_credential
-                    var listCredentials = _serviceWrapper.UserService.GetListCredential(model.UserName);
-                    HttpContext.Session.Add(CommonConstants.SESSION_CREDENTIALS, listCredentials);
-                    //Luu user info vao userLoginSession
-                    HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userLoginSession);
-                    return Redirect("/quan-tri/trang-chu");
-                }
-                else if (result == 0)
-                {
-                    ModelState.AddModelError("", "Tài khoản không tồn tại");
-                }
-                else if (result == -1)
-                {
-                    ModelState.AddModelError("", "Tài khoản đang bị khóa");
-                }
-                else if (result == -2)
-                {
-                    ModelState.AddModelError("", "Mật khẩu không đúng");
-                }
-                else if (result == -3)
-                {
-                    ModelState.AddModelError("", "Tài khoản không có quyền đăng nhập");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Đăng nhập không đúng");
+                    case 1:
+                        var user = _serviceWrapper.UserService.GetByName(model.UserName);
+                        var userLoginSession = new UserLogin();
+                        userLoginSession.UserId = user.Id;
+                        userLoginSession.GroupId = model.UserGroupId;
+                        userLoginSession.UserName = user.UserName;
+                        userLoginSession.FirstName = user.FirstName;
+                        userLoginSession.LastName = user.LastName;
+                        userLoginSession.Email = user.Email;
+                        userLoginSession.Address = user.Address;
+                        if (model.UserGroupId == CommonConstants.SELLER_GROUP)
+                            userLoginSession.ShopId = _serviceWrapper.Db.Shop.Where(p => p.SellerId == user.Id).First().Id;
+                        //Phan quyen dua tren userLoginSession_credential
+                        var listCredentials = _serviceWrapper.UserService.GetListCredential(model.UserName);
+                        HttpContext.Session.Add(CommonConstants.CREDENTIALS_SESSION, listCredentials);
+                        //Luu user info vao userLoginSession
+                        HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userLoginSession);
+                        return Redirect("/quan-tri/trang-chu");
+                    case 0:
+                        ModelState.AddModelError("", "Tài khoản không tồn tại");
+                        break;
+                    case -1:
+                        ModelState.AddModelError("", "Tài khoản đang bị khóa");
+                        break;
+                    case -2:
+                        ModelState.AddModelError("", "Mật khẩu không đúng");
+                        break;
+                    case -3:
+                        ModelState.AddModelError("", "Tài khoản không có quyền đăng nhập");
+                        break;
+                    default:
+                        ModelState.AddModelError("", "Đăng nhập không đúng");
+                        break;
                 }
             }
+            ViewBag.UserGroupId = new SelectList(CommonConstants.ADMIN_AREA_GROUP_ID, "Id");
             return View(model);
         }
 

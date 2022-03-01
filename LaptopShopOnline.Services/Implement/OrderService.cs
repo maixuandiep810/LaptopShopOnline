@@ -21,12 +21,11 @@ namespace LaptopShopOnline.Service.Implement
 
 
         //Change order status
-        public bool ChangeOrderStatus(Guid? id)
+        public void ChangeOrderStatus(Guid? id, int orderStatus)
         {
             var order = _db.Order.Find(id);
-            order.OrderStatus = !order.OrderStatus;
+            order.OrderStatus = orderStatus;
             _db.SaveChanges();
-            return order.OrderStatus;
         }
     }
 }

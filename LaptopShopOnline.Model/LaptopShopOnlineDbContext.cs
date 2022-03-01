@@ -34,19 +34,17 @@ namespace LaptopShopOnline.Model
             optionsBuilder.UseLoggerFactory(loggerFactory)  //tie-up DbContext with LoggerFactory object
                 .EnableSensitiveDataLogging();
         }
-        public virtual DbSet<About> About { get; set; }
         public virtual DbSet<NewsCategory> NewsCategory { get; set; }
-        public virtual DbSet<Contact> Contact { get; set; }
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<Feedback> Feedback { get; set; }
-        public virtual DbSet<Footer> Footer { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
+        public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<Slide> Slide { get; set; }
+        public virtual DbSet<Shop> Shop { get; set; }
         //public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserGroup> UserGroup { get; set; }
@@ -74,10 +72,6 @@ namespace LaptopShopOnline.Model
             //  LAYOUT
             modelBuilder.Entity<NewsCategory>()
                 .Property(e => e.MetaTitle)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Contact>()
-                .Property(e => e.Mobile)
                 .IsUnicode(false);
 
             modelBuilder.Entity<News>()
@@ -137,18 +131,19 @@ namespace LaptopShopOnline.Model
                 .Property(e => e.PromotionPrice)
                 .HasPrecision(18, 0);
 
-            modelBuilder.Entity<ProductCategory>()
-                .Property(e => e.MetaTitle)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Product>().Ignore(e => e.Image);
-            modelBuilder.Entity<Product>().Ignore(e => e.Sub1Image);
-            modelBuilder.Entity<Product>().Ignore(e => e.Sub2Image);
+            //modelBuilder.Entity<Product>().Ignore(e => e.Image);
+            //modelBuilder.Entity<Product>().Ignore(e => e.Sub1Image);
+            //modelBuilder.Entity<Product>().Ignore(e => e.Sub2Image);
 
             modelBuilder.Entity<Product>()
                 .HasOne(e => e.ProductCategory)
                 .WithMany(e => e.Product)
                 .HasForeignKey(e => e.ProductCategoryId);
+
+            modelBuilder.Entity<Product>()
+                .HasOne(e => e.Shop)
+                .WithMany(e => e.Products)
+                .HasForeignKey(e => e.ShopId);
 
 
 
@@ -156,6 +151,10 @@ namespace LaptopShopOnline.Model
             modelBuilder.Entity<Role>()
                 .Property(e => e.Id)
                 .IsUnicode(false);
+
+
+
+            //  SHOP
 
 
 
@@ -184,6 +183,11 @@ namespace LaptopShopOnline.Model
                 .HasOne(e => e.UserGroup)
                 .WithMany(e => e.Users)
                 .HasForeignKey(e => e.GroupId);
+
+            modelBuilder.Entity<User>()
+                .HasOne(e => e.Shop)
+                .WithOne(e => e.Seller)
+                .HasForeignKey<Shop>(e => e.SellerId);
 
 
 

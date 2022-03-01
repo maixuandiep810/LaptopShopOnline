@@ -24,7 +24,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Thứ tự")]
         public int? DisplayOrder { get; set; }
 
-        [Display(Name = "Menu con")]
+        [Display(Name = "Menu cha")]
         public int? ParentId { get; set; }
 
         [Display(Name = "Kiểu sang trang")]
@@ -48,7 +48,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
-        [Display(Name = "Trạng thái")]
+        [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
     }
 }

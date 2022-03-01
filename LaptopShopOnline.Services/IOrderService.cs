@@ -9,6 +9,6 @@ namespace LaptopShopOnline.Service
 {
     public interface IOrderService
     {
-        bool ChangeOrderStatus(Guid? id);
+        void ChangeOrderStatus(Guid? id, int orderStatus);
     }
 }

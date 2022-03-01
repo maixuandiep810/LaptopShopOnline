@@ -19,55 +19,14 @@ namespace LaptopShopOnline.Model.Migrations
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LaptopShopOnline.Model.Entities.About", b =>
+            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Cart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTimeOffset?>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTimeOffset?>("ModifiedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("About");
-                });
-
-            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Contact", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<Guid>("BuyerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
@@ -76,17 +35,8 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<DateTimeOffset?>("CreatedOn")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Mobile")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(256)
@@ -95,21 +45,19 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<DateTimeOffset?>("ModifiedOn")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("ObjectName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Website")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contact");
+                    b.HasIndex("BuyerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.Credential", b =>
@@ -182,46 +130,6 @@ namespace LaptopShopOnline.Model.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Feedback");
-                });
-
-            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Footer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("CoppyRight")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTimeOffset?>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTimeOffset?>("ModifiedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Footer");
                 });
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.Menu", b =>
@@ -297,10 +205,6 @@ namespace LaptopShopOnline.Model.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("MetaKeywords")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
                     b.Property<string>("MetaTitle")
                         .HasMaxLength(256)
                         .IsUnicode(false)
@@ -367,10 +271,6 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MetaKeywords")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
                     b.Property<string>("MetaTitle")
                         .HasMaxLength(256)
                         .IsUnicode(false)
@@ -390,10 +290,6 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SeoTitle")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
                     b.HasKey("Id");
 
                     b.ToTable("NewsCategory");
@@ -403,6 +299,9 @@ namespace LaptopShopOnline.Model.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BuyerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
@@ -422,8 +321,8 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<DateTimeOffset?>("ModifiedOn")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<bool>("OrderStatus")
-                        .HasColumnType("bit");
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -446,10 +345,15 @@ namespace LaptopShopOnline.Model.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("ShopId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ShopId");
 
                     b.HasIndex("UserId");
 
@@ -501,9 +405,9 @@ namespace LaptopShopOnline.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Code")
+                    b.Property<string>("Code")
                         .HasPrecision(18)
-                        .HasColumnType("decimal(18,0)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
@@ -529,15 +433,6 @@ namespace LaptopShopOnline.Model.Migrations
 
                     b.Property<bool?>("IsNormalProduct2")
                         .HasColumnType("bit");
-
-                    b.Property<string>("MetaKeywords")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(256)
@@ -565,6 +460,12 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("QuantityOfSoldProduct")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ShopId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Sub1UrlImage")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -587,6 +488,8 @@ namespace LaptopShopOnline.Model.Migrations
 
                     b.HasIndex("ProductCategoryId");
 
+                    b.HasIndex("ShopId");
+
                     b.ToTable("Product");
                 });
 
@@ -603,24 +506,15 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<DateTimeOffset?>("CreatedOn")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Descriptions")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("MetaDescriptions")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("MetaKeywords")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("MetaTitle")
-                        .HasMaxLength(256)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(256)
@@ -635,10 +529,6 @@ namespace LaptopShopOnline.Model.Migrations
 
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("SeoTitle")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -662,12 +552,11 @@ namespace LaptopShopOnline.Model.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Slide", b =>
+            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Shop", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256)
@@ -677,18 +566,10 @@ namespace LaptopShopOnline.Model.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<int?>("DisplayOrder")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Link")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(256)
@@ -697,14 +578,21 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<DateTimeOffset?>("ModifiedOn")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("UrlImage")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<Guid?>("SellerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Slide");
+                    b.HasIndex("SellerId")
+                        .IsUnique()
+                        .HasFilter("[SellerId] IS NOT NULL");
+
+                    b.ToTable("Shop");
                 });
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.User", b =>
@@ -796,6 +684,25 @@ namespace LaptopShopOnline.Model.Migrations
                     b.ToTable("UserGroup");
                 });
 
+            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Cart", b =>
+                {
+                    b.HasOne("LaptopShopOnline.Model.Entities.User", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LaptopShopOnline.Model.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.Credential", b =>
                 {
                     b.HasOne("LaptopShopOnline.Model.Entities.Role", "Role")
@@ -826,11 +733,17 @@ namespace LaptopShopOnline.Model.Migrations
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.Order", b =>
                 {
-                    b.HasOne("LaptopShopOnline.Model.Entities.User", "User")
+                    b.HasOne("LaptopShopOnline.Model.Entities.Shop", "Shop")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ShopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LaptopShopOnline.Model.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Shop");
 
                     b.Navigation("User");
                 });
@@ -860,7 +773,22 @@ namespace LaptopShopOnline.Model.Migrations
                         .WithMany("Product")
                         .HasForeignKey("ProductCategoryId");
 
+                    b.HasOne("LaptopShopOnline.Model.Entities.Shop", "Shop")
+                        .WithMany("Products")
+                        .HasForeignKey("ShopId");
+
                     b.Navigation("ProductCategory");
+
+                    b.Navigation("Shop");
+                });
+
+            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Shop", b =>
+                {
+                    b.HasOne("LaptopShopOnline.Model.Entities.User", "Seller")
+                        .WithOne("Shop")
+                        .HasForeignKey("LaptopShopOnline.Model.Entities.Shop", "SellerId");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.User", b =>
@@ -890,6 +818,16 @@ namespace LaptopShopOnline.Model.Migrations
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.Role", b =>
                 {
                     b.Navigation("Credentials");
+                });
+
+            modelBuilder.Entity("LaptopShopOnline.Model.Entities.Shop", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("LaptopShopOnline.Model.Entities.User", b =>
+                {
+                    b.Navigation("Shop");
                 });
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.UserGroup", b =>

@@ -58,7 +58,7 @@ namespace LaptopShopOnline.WebApp.Common
 
         private List<string> GetCredentialByLoggedInUser(AuthorizationFilterContext filterContext, string userName)
         {
-            var credentialsSession = filterContext.HttpContext.Session.Get<List<string>>(CommonConstants.SESSION_CREDENTIALS);
+            var credentialsSession = filterContext.HttpContext.Session.Get<List<string>>(CommonConstants.CREDENTIALS_SESSION);
             return credentialsSession;
         }
     }

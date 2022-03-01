@@ -1,3 +1,5 @@
 add-migration
 
 Update-Database
+
+Ctrl + K, Ctrl + D để format toàn bộ document mà bạn đang code, hoặc dùng Ctrl + K, Ctrl + F để format cho đoạn code được chọn

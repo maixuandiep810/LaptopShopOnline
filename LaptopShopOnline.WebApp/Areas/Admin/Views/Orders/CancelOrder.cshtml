@@ -1,4 +1,4 @@
-﻿@using X.PagedList
+﻿@*@using X.PagedList
 @using X.PagedList.Mvc.Core
 @using LaptopShopOnline.Model.Entities
 
@@ -10,7 +10,7 @@
     int i = 1;
 }
 
-<!-- DataTales Example -->
+ DataTales Example 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
@@ -77,7 +77,7 @@
                                 @Html.DisplayFor(modelItem => item.CreatedOn)
                             </td>
                             <td>
-                                <a href="#" class="btn-active btn btn-primary btn-sm" data-id="@item.Id">@(item.OrderStatus ? "Đã xác nhận" : "Chưa xác nhận")</a>
+                                <a href="#" class="btn-active btn btn-primary btn-sm" data-id="@item.Id">@((ENUM.OrderStatus)(item.OrderStatus).ToString())</a>
                             </td>
                             <td class="text-center" style="width: 80px;">
                                 <a class="btn-sm btn-group-sm btn-secondary dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>
@@ -131,4 +131,4 @@
         }
         order.init();
     </script>
-}
+}*@

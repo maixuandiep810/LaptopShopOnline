@@ -19,7 +19,7 @@ namespace LaptopShopOnline.Model.Entities
         public Guid Id { get; set; }
 
         [StringLength(256)]
-        [DisplayName("Loại tin tức")]
+        [DisplayName("Tên")]
         public string Name { get; set; }
 
         [DisplayName("Link liên kết")]
@@ -32,20 +32,11 @@ namespace LaptopShopOnline.Model.Entities
         [DisplayName("Thứ tự")]
         public int? DisplayOrder { get; set; }
 
-        [DisplayName("Tiêu Đề SEO")]
-        [StringLength(256)]
-        public string SeoTitle { get; set; }
-
-        [DisplayName("Tên khóa truy cập")]
-        [StringLength(256)]
-        public string MetaKeywords { get; set; }
-
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTimeOffset? CreatedOn { get; set; }
 
         [StringLength(256)]
         public string CreatedBy { get; set; }
-
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTimeOffset? ModifiedOn { get; set; }

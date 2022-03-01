@@ -1,0 +1,97 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using LaptopShopOnline.Model.Entities
+
+@model IPagedList<Order>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
+}
+
+<div class="my-5">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
+                            <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+                        </div>
+                    }
+                    <thead>
+                        <tr>
+                            <th>
+                                STT
+                            </th>
+                            <th>
+                                Mã đơn hàng
+                            </th>
+                            <th>
+                                Cửa hàng
+                            </th>
+                            <th style="width: 240px;">
+                                Thành tiền
+                                <a href="/don-hang?sortOrder=@ViewBag.TotalSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
+                            </th>
+                            <th>
+                                Ngày tạo
+                                <a href="/quan-tri/danh-muc-san-pham?sortOrder=@ViewBag.CreatedOnSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
+                            </th>
+                            <th>
+                                Trạng thái đơn hàng
+                                <a href="/quan-tri/danh-muc-san-pham?sortOrder=@ViewBag.OrderStatusSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
+                            </th>
+                            <th class="text-center" style="width: 115px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @i
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Total)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                                </td>
+                                <td>
+                                    <a class="btn-sm btn-group-sm btn-success" href="/quan-tri/danh-muc-san-pham/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
+                                    <a class="btn-sm btn-group-sm btn-secondary dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>
+                                    <a class="btn-sm btn-group-sm btn-danger dialog-link" href="@Url.Action("Delete", new { id = item.Id })"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+                @if (Model.Count() <= 0)
+                {
+                    <div class="text-center text-danger">Không có dữ liệu</div>
+                }
+            </div>
+            <div class="text-center">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            </div>
+        </div>
+    </div>
+
+</div>

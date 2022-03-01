@@ -72,10 +72,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
     <!--End body-->
     <!--start-footer-->
-    @await Component.InvokeAsync("Contact")
+    @Html.Partial("_Contact.cshtml")
     <!--end-footer-->
     <!--end-footer-text-->
-    @await Component.InvokeAsync("Footer")
+    @Html.Partial("_Footer.cshtml")
 
     <a href="#top" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
     <script type="text/javascript">

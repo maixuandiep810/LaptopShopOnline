@@ -20,17 +20,17 @@ namespace LaptopShopOnline.Service.Implement
 
 
 
-        public int Login(string userName, string password, bool isLoginAdmin = false)
+        public int Login(string userName, string password, string loginAsUserGroupId)
         {
             var result = _db.User.SingleOrDefault(x => x.UserName == userName);
             if (result == null)
             {
                 return 0;
             }
-            else
+            switch (loginAsUserGroupId)
             {
-                if (isLoginAdmin == true)
-                {
+                case "ADMIN":
+                case "MOD":
                     if (result.GroupId == CommonConstants.ADMIN_GROUP || result.GroupId == CommonConstants.MOD_GROUP)
                     {
                         if (result.IsDeleted == true)
@@ -49,10 +49,8 @@ namespace LaptopShopOnline.Service.Implement
                     {
                         return -3;
                     }
-                }
-                else
-                {
-                    if (result.GroupId == CommonConstants.MEMBER_GROUP)
+                case "SELLER":
+                    if (result.GroupId == CommonConstants.SELLER_GROUP)
                     {
                         if (result.IsDeleted == true)
                         {
@@ -70,7 +68,25 @@ namespace LaptopShopOnline.Service.Implement
                     {
                         return -3;
                     }
-                }
+                default:
+                    if (result.GroupId == CommonConstants.BUYER_GROUP)
+                    {
+                        if (result.IsDeleted == true)
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            if (result.Password == password)
+                                return 1;
+                            else
+                                return -2;
+                        }
+                    }
+                    else
+                    {
+                        return -3;
+                    }            
             }
         }
 
