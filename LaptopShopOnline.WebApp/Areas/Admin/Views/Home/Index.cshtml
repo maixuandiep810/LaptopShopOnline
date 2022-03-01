@@ -147,21 +147,6 @@
                 </div>
             </div>
         </a>
-        <a href="/quan-tri/gioi-thieu-cua-hang" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-info ">Giới thiệu cửa hàng</div>
-                            <div class="text-sm font-weight-bold text-info ">@ViewBag.CountAbout</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-store fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
     </div>
 
     <!--Quản lý giao diện người dùng-->
@@ -179,51 +164,6 @@
                             </div>
                             <div class="col-auto">
                                 <i class="fa fa-list fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="/quan-tri/slide" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-4">
-                                <div class="text-sm font-weight-bold text-success">Slide</div>
-                                <div class="text-sm font-weight-bold text-success">@ViewBag.CountSlide</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-sliders fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="/quan-tri/thong-tin-cua-hang" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-4">
-                                <div class="text-sm font-weight-bold text-info ">Thông tin cửa hàng</div>
-                                <div class="text-sm font-weight-bold text-info ">@ViewBag.CountContact</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-info fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="/quan-tri/footer" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-4">
-                                <div class="text-sm font-weight-bold text-warning ">Footer</div>
-                                <div class="text-sm font-weight-bold text-warning ">@ViewBag.CountFooter</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-pager fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -260,23 +200,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-primary">Doanh thu</div>
-                            <div class="text-sm font-weight-bold text-primary">@ViewBag.Reven</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fa fa-list-alt fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="/quan-tri/don-dat-hang" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-primary">Lợi nhuận</div>
-                            <div class="text-sm font-weight-bold text-primary">@ViewBag.Benefit</div>
+                            <div class="text-sm font-weight-bold text-primary">AAAAA</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-list-alt fa-2x text-gray-300"></i>
@@ -286,16 +210,17 @@
             </div>
         </a>
 
+
     </div>
     @*// chart*@
-    <select>
+    @*<select>
         <option value="2022" selected>2022</option>
         <option value="2023">2023</option>
         <option value="2024">2024</option>
     </select>
     <figure class="highcharts-figure">
         <div id="container"></div>
-    </figure>
+    </figure>*@
     @*//Xuất ExCel*@
     @using (Html.BeginForm("ExportToExcel", "Home", FormMethod.Post))
     {

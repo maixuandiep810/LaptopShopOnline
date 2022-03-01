@@ -42,7 +42,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.CountNewsCategory = _serviceWrapper.Db.NewsCategory.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountMenu = _serviceWrapper.Db.Menu.Where(x => x.IsDeleted == false && x.ParentId == null).Count();
             ViewBag.CountOrder = _serviceWrapper.Db.Order.Where(x => x.IsDeleted == false).Count();
-            ViewBag.Reven = _serviceWrapper.Db.OrderDetail.Where(x => x.IsDeleted == false).Sum(i => i.Price * i.Quantity);
             //tong tien ban
             //var sumPrice = _serviceWrapper.Db.OrderDetail.Where(x => x.IsDeleted == false).Sum(i => i.Price * i.Quantity);
             var result = from o in _serviceWrapper.Db.OrderDetail
@@ -57,7 +56,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                          };
             var sumPrice = result.Sum(x => x.Quantity * x.Price);
             var sum = result.Sum(x => x.Quantity * x.Price);
-            ViewBag.Benefit = sumPrice - sum;
             return View();
         }
 

@@ -8,7 +8,7 @@
                 {
                     <li class="grid">
                         <a href="@item.Link" target="@item.Target">@item.MenuName</a>
-                        @await Component.InvokeAsync("SubMenu")
+                        @await Component.InvokeAsync("SubMenu", item.Id)
                     </li>
                 }
             </ul>

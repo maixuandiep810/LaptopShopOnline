@@ -28,7 +28,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
         // GET: Admin/Products
-        public ActionResult Index(string sortOrder, int? page, string searchString, string currentFilter)
+        public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             //paged
             ViewBag.CurrentSort = sortOrder;
@@ -38,13 +38,9 @@ namespace LaptopShopOnline.WebApp.Controllers
             ViewBag.OrderStatusSortParm = sortOrder == "OrderStatus" ? "orderStatus_desc" : "OrderStatus";
             var orders = _serviceWrapper.Db.Order.Where(x => x.IsDeleted == false);
 
-            if (searchString != null)
+            if (searchString == null)
             {
                 page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
             }
 
             ViewBag.CurrentFilter = searchString;

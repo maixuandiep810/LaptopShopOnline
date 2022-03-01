@@ -1,0 +1,66 @@
+﻿@using LaptopShopOnline.Model.Entities
+
+@model Product
+
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--start-breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/">Quay lại</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!--end-breadcrumbs-->
+<div class="container">
+    <!--start-single-->
+    <div class="col-md-12 my-5">
+        <div class="col-md-12 my-5">
+            <div class="col-md-4 m-5">
+                <img src="@Model.UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+            </div>
+            <div class="col-md-4 m-5">
+                <h3>
+                    @Model.Name
+                </h3>
+                <p>
+                    Cửa hàng: @Model.Shop.Name
+                </p>
+            </div>
+        </div>
+        <div class="col-md-12 my-5">
+            <p class="my-5">
+                Hình ảnh mô tả
+            </p>
+            <div class="col-md-3">
+                <img src="@Model.UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+            </div>
+            @if (Model.Sub1UrlImage != null)
+            {
+            <div class="col-md-3">
+                <img src="@Model.Sub1UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+            </div>
+            }
+            @if (Model.Sub2UrlImage != null)
+            {
+            <div class="col-md-3">
+                <img src="@Model.Sub2UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+            </div>
+            }
+        </div>
+        <div class="col-md-12 my-5">
+            <p class="my-5">
+                Mô tả
+            </p>
+            @Html.Raw(@Model.Description)
+        </div>
+    </div>
+    <!--end-single-->
+</div>

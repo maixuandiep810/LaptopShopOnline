@@ -54,7 +54,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                         HttpContext.Session.Add(CommonConstants.CREDENTIALS_SESSION, listCredentials);
                         //Luu user info vao userLoginSession
                         HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userLoginSession);
-                        return Redirect("/quan-tri/trang-chu");
+                        return Redirect("/quan-tri");
                     case 0:
                         ModelState.AddModelError("", "Tài khoản không tồn tại");
                         break;

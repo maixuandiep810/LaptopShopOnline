@@ -9,19 +9,15 @@
     <Compile Remove="Views\About\**" />
     <Compile Remove="Views\FeedBack\**" />
     <Compile Remove="Views\NewsContent\**" />
-    <Compile Remove="Views\Product\**" />
     <Content Remove="Views\About\**" />
     <Content Remove="Views\FeedBack\**" />
     <Content Remove="Views\NewsContent\**" />
-    <Content Remove="Views\Product\**" />
     <EmbeddedResource Remove="Views\About\**" />
     <EmbeddedResource Remove="Views\FeedBack\**" />
     <EmbeddedResource Remove="Views\NewsContent\**" />
-    <EmbeddedResource Remove="Views\Product\**" />
     <None Remove="Views\About\**" />
     <None Remove="Views\FeedBack\**" />
     <None Remove="Views\NewsContent\**" />
-    <None Remove="Views\Product\**" />
   </ItemGroup>
 
   <ItemGroup>

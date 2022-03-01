@@ -115,24 +115,14 @@ namespace LaptopShopOnline.WebApp
                 //  ADMIN AREA
                 //
 
-                //endpoints.MapAreaControllerRoute(
-                //    name: "Admin_default",
-                //    areaName: "Admin",
-                //    pattern: "quan-tri/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute(
+                    areaName: "Admin",
+                    name: "Admin_Default",
+                    pattern: "quan-tri/",
+                    defaults: new { area = "Admin", controller = "Home", action = "Index" },
+                    dataTokens: new { area = "Admin" }
+                    );
 
-
-
-
-                //
-                //  HELLO
-                //
-
-                //
-                //endpoints.MapControllerRoute(
-                //    name: "Admin-Hello",
-                //    pattern: "quan-tri/dang-nhap",
-                //    defaults: new { area = "Admin", controller = "Hello", action = "Index" },
-                //    dataTokens: new { area = "Admin" });
 
 
 
@@ -520,6 +510,24 @@ namespace LaptopShopOnline.WebApp
                     name: "Cart-Create",
                     pattern: "don-hang/tao",
                     defaults: new { controller = "Order", action = "Create" });
+
+
+
+                //
+                //  USER - PRODUCT
+                //
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Product",
+                    pattern: "danh-muc-san-pham",
+                    defaults: new { controller = "Product", action = "Index" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Product",
+                    pattern: "danh-muc-san-pham/{id}",
+                    defaults: new { controller = "Product", action = "Details" });
 
 
 

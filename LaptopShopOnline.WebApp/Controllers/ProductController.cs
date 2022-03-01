@@ -24,7 +24,8 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-        public ActionResult Index(string sortOrder, int? page, string searchString, string currentFilter)
+        // GET: Admin/Products
+        public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             //paged
             ViewBag.CurrentSort = sortOrder;
@@ -35,13 +36,9 @@ namespace LaptopShopOnline.WebApp.Controllers
             ViewBag.QuantitySortParm = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
             var product = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            if (searchString != null)
+            if (searchString == null)
             {
                 page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
             }
 
             ViewBag.CurrentFilter = searchString;
@@ -83,12 +80,11 @@ namespace LaptopShopOnline.WebApp.Controllers
                     product = product.OrderBy(s => s.Name);
                     break;
             }
-            int pageSize = 10;
+            int pageSize = 16;
             int pageNumber = (page ?? 1);
             ViewBag.SearchString = searchString;
             return View(product.ToPagedList(pageNumber, pageSize));
         }
-
 
 
         //Detail of Product
@@ -98,13 +94,19 @@ namespace LaptopShopOnline.WebApp.Controllers
             {
                 return BadRequest();
             }
-            var product = _serviceWrapper.Db.Product.Find(id);
+            var product = _serviceWrapper.Db.Product.Include(x => x.Shop).Where(x => x.Id == id).FirstOrDefault();
             if (product == null)
             {
                 return NotFound();
             }
             return View(product);
         }
+
+
+
+
+
+
 
 
 
@@ -125,19 +127,6 @@ namespace LaptopShopOnline.WebApp.Controllers
             list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.ProductCategoryId == productCategory.Id).ToList();
             ViewBag.Count = list.Count();
             return View(list);
-        }
-
-
-
-        //Load all product in 1 page
-        public ActionResult LoadAllProduct(int? page)
-        {
-            List<Product> list = new List<Product>();
-            list = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedOn).ToList();
-            ViewBag.Count = list.Count();
-            int pageSize = 6;
-            int pageNumber = (page ?? 1);
-            return View(list.ToPagedList(pageNumber, pageSize));
         }
     }
 }

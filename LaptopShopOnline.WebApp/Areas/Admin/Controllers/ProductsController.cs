@@ -38,7 +38,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Products
-        public ActionResult Index(string sortOrder, int? page, string searchString, string currentFilter)
+        public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             CountMessage();
             CountProduct();
@@ -52,13 +52,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.QuantitySortParm = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
             var product = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            if (searchString != null)
+            if (searchString == null)
             {
                 page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
             }
 
             ViewBag.CurrentFilter = searchString;
@@ -105,6 +101,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.SearchString = searchString;
             return View(product.ToPagedList(pageNumber, pageSize));
         }
+
         // GET: Admin/Products
         public ActionResult IndexSG(string sortOrder, int? page, string searchString, string currentFilter)
         {
