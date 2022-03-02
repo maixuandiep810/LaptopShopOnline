@@ -28,6 +28,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
         // GET: Cart
+        [HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Index()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -36,9 +37,14 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-
-        public ActionResult Create(Guid? productId, int quantity)
+        [HasCredential(RoleId = "BUYER_ROLE")]
+        public ActionResult Add(Guid? productId, int quantity)
         {
+            if (quantity <= 0)
+            {
+                SetAlert("Thêm vào giỏ thất bại", "warning");
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (userLoginSession != null)
             {
@@ -71,22 +77,29 @@ namespace LaptopShopOnline.WebApp.Controllers
             }
         }
 
+        [HasCredential(RoleId = "BUYER_ROLE")]
         [HttpPost]
         public ActionResult Edit(Cart cart)
         {
             if (ModelState.IsValid)
             {
+                if (cart.Quantity <= 0)
+                {
+                    SetAlert("Thêm vào giỏ thất bại", "warning");
+                    return Redirect("/gio-hang");
+                }
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
                 _serviceWrapper.Db.Entry(cart).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
                 return Redirect("/gio-hang");
             }
+            SetAlert("Thêm vào giỏ thất bại", "warning");
             return Redirect("/gio-hang");
         }
 
 
-
+        [HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Delete(Guid? id) {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (id == null)
@@ -96,8 +109,10 @@ namespace LaptopShopOnline.WebApp.Controllers
                 return Redirect("/gio-hang");
             }
             _serviceWrapper.Db.Cart.Remove(_serviceWrapper.Db.Cart.Find(id));
+            _serviceWrapper.Db.SaveChanges();
             return Redirect("/gio-hang");
         }
+
 
 
 

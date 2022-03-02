@@ -29,10 +29,11 @@
         <div class="top-header-main">
             <div class="col-md-4 top-header-left">
                 <div class="search-bar">
-                    <form action="/tim-kiem" method="get">
-                        <input type="text" value="@ViewBag.Keyword" name="keyword" id="txtKeyword" placeholder="Tìm kiếm">
-                        <input type="submit" value="">
-                    </form>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = "/danh-muc-san-pham" }))
+                    {
+                            @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
+                            <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+                        }
                 </div>
             </div>
             <div class="col-md-4 top-header-middle">

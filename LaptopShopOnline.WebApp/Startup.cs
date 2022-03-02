@@ -479,7 +479,7 @@ namespace LaptopShopOnline.WebApp
                 endpoints.MapControllerRoute(
                     name: "Cart-Create",
                     pattern: "gio-hang/them-vao",
-                    defaults: new { controller = "Cart", action = "Create" });
+                    defaults: new { controller = "Cart", action = "Add" });
 
                 //
                 endpoints.MapControllerRoute(
@@ -490,7 +490,7 @@ namespace LaptopShopOnline.WebApp
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart-Delete",
-                    pattern: "gio-hang/xoa/{id?}",
+                    pattern: "gio-hang/xoa/{id}",
                     defaults: new { controller = "Cart", action = "Delete" });
 
 
@@ -510,6 +510,12 @@ namespace LaptopShopOnline.WebApp
                     name: "Cart-Create",
                     pattern: "don-hang/tao",
                     defaults: new { controller = "Order", action = "Create" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Cart-Create",
+                    pattern: "don-hang/xoa/{id}",
+                    defaults: new { controller = "Order", action = "Delete" });
 
 
 

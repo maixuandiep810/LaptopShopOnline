@@ -159,11 +159,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     product = product.OrderByDescending(s => s.Quantity);
                     break;
                 default:
+                    sortOrder = "Name";
                     product = product.OrderBy(s => s.Name);
                     break;
             }
-            int pageSize = 10;
+            int pageSize = 16;
             int pageNumber = (page ?? 1);
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.SearchString = searchString;
             return View(product.ToPagedList(pageNumber, pageSize));
         }

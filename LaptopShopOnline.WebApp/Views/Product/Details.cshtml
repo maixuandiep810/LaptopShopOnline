@@ -33,10 +33,24 @@
                 <p>
                     Cửa hàng: @Model.Shop.Name
                 </p>
+                @if (Model.PromotionPrice > 0)
+                {
+                        <p><span class=""><strike>Giá gốc: @(Model.Price.Value.ToString("N0"))</strike></span></p>
+                        <p><span>Chỉ còn: @(Model.PromotionPrice.Value.ToString("N0"))</span></p>
+                }
+                else
+                {
+                        <p><span>Giá: @(Model.Price.Value.ToString("N0"))</span></p>
+                }
+                <form action="/gio-hang/them-vao" method="post">
+                    <input type="text" name="productId" value="@Model.Id" hidden />
+                    <input type="number" name="quantity" />
+                    <button class="btn btn-group-sm btn-primary text-decoration-none" disabled="@(Model.Quantity <= 0)"><i class="fa fa-plus"></i> Thêm mới</button>
+                </form>
             </div>
         </div>
-        <div class="col-md-12 my-5">
-            <p class="my-5">
+        <div class="col-md-12 my-5 py-5">
+            <p class="my-5 text-primary">
                 Hình ảnh mô tả
             </p>
             <div class="col-md-3">
@@ -55,8 +69,8 @@
             </div>
             }
         </div>
-        <div class="col-md-12 my-5">
-            <p class="my-5">
+        <div class="col-md-12 my-5 py-5">
+            <p class="my-5 text-primary">
                 Mô tả
             </p>
             @Html.Raw(@Model.Description)

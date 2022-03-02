@@ -8,71 +8,81 @@
 @section Scripts{
     <script src="~/Content/Client/js/Controller/cartController.js"></script>
 }
-<!--start-breadcrumbs-->
-<div class="row">
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="breadcrumbs-main">
-                <ol class="breadcrumb">
-                    <li><a href="/trang-chu">Trang chủ</a></li>
-                    <li class="active">@ViewBag.Title</li>
-                </ol>
+
+
+<div class="container">
+    <!--start-breadcrumbs-->
+    <div class="col-md-12">
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="breadcrumbs-main">
+                    <ol class="breadcrumb">
+                        <li><a href="/trang-chu">Trang chủ</a></li>
+                        <li class="active">@ViewBag.Title</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!--end-breadcrumbs-->
-<div class="row my-5">
-    @if (Model.Count > 0)
-    {
-    <div class="table-responsive container">
+    <!--end-breadcrumbs-->
+    <div class="col-md-12 my-5">
+        @if (Model.Count > 0)
+        {
+            <div class="table-responsive container">
 
-        @{
-            var groupedCarts = Model.ToLookup(x => x.Product.Shop);
-            foreach (var groupedCart in groupedCarts)
-            {
-                <div class="row my-5">
-                    <div class="row my-5">
-                        <h6>
-                            Cửa hàng : @groupedCart.Key?.Name
-                        </h6>
-                    </div>
-                    <table class="table table-bordered table-striped table-condensed">
-                        <thead>
-                            <tr>
-                                <td>Tên sản phẩm</td>
-                                <td>Ảnh sản phẩm</td>
-                                <td>Số lượng</td>
-                                <td>Đơn giá</td>
-                                <td>Thành tiền</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var cart in groupedCart)
-                            {
-                                @Html.Partial("_EditPartialView", cart);
-                            }
-                        </tbody>
-                    </table>
+                @{
+                    var groupedCarts = Model.ToLookup(x => x.Product.Shop);
+                    foreach (var groupedCart in groupedCarts)
+                    {
+                                <div class="col-md-12 my-5">
+                                    <div class="col-md-12 my-5">
+                                        <h6>
+                                            Cửa hàng : @groupedCart.Key?.Name
+                                        </h6>
+                                    </div>
+                                    <table class="col-md-12 table table-bordered table-striped table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <td>Tên sản phẩm</td>
+                                                <td>Ảnh sản phẩm</td>
+                                                <td>Số lượng</td>
+                                                <td>Đơn giá</td>
+                                                <td>Thành tiền</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var cart in groupedCart)
+                                            {
+                                                @Html.Partial("_EditPartialView", cart);
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div style="float:right;">
+                                        <button class="btn"><a href="/don-hang/tao?shopId=@groupedCart.Key.Id">Đặt hàng theo cửa hàng</a></button>
+                                    </div>
+                                </div>
+                    }
+                }
+
+                <div class="col-md-12" style="float:right;">
+                    <button class="btn"><a href="/">Tiếp tục mua hàng</a></button>
+                    <button class="btn"><a href="/gio-hang/xoa">Xóa giỏ hàng</a></button>
+                    <button class="btn"><a href="/don-hang/tao?shouldOrderAll=true">Đặt hàng tất cả</a></button>
                 </div>
-            }
+            </div>
         }
-
-        <div style="float:right;">
-            <button class="btn"><a href="/">Tiếp tục mua hàng</a></button>
-            <button class="btn"><a href="/gio-hang/xoa">Xóa giỏ hàng</a></button>
-            <button class="btn"><a href="/don-hang/tao?shouldOrderAll=true">Đặt hàng tất cả</a></button>
-        </div>
+        else
+        {
+            <div class="container">
+                <span class="alert alert-danger" style="margin-top: 40px;">Chưa có sản phẩm nào trong giỏ hàng</span>
+            </div>
+        }
     </div>
-    }
-    else
-    {
-        <div class="container">
-            <span class="alert alert-danger" style="margin-top: 40px;">Chưa có sản phẩm nào trong giỏ hàng</span>
-        </div>
-    }
+
 </div>
+
+
 <script>
     function updateQuantity() {
         var listProduct = $('.txtQuantity');

@@ -34,35 +34,29 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountMessage();
             CountProduct();
             CountOrder();
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.UserNameSortParm = String.IsNullOrEmpty(sortOrder) ? "username_desc" : "";
+            ViewBag.UserNameSortParm = String.IsNullOrEmpty(sortOrder) ? "username_desc" : "UserName";
             ViewBag.LastNameSortParm = sortOrder == "LastName" ? "lastname_desc" : "LastName";
             var user = _serviceWrapper.Db.User.Include(u => u.UserGroup).Select(p => p);
 
             //Search
-            if (searchString != null)
+            if (searchString == null)
             {
                 page = 1;
             }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 user = user.Where(s => s.UserName.Contains(searchString)
-                    || s.Email.ToString().Contains(searchString)
-                    || s.UserGroup.Name.Contains(searchString)
-                    || s.Address.Contains(searchString));
+                    || s.LastName.Contains(searchString));
             }
             //Sort
             switch (sortOrder)
             {
                 case "username_desc":
                     user = user.OrderByDescending(s => s.UserName);
+                    break;
+                case "UserName":
+                    user = user.OrderBy(s => s.UserName);
                     break;
                 case "LastName":
                     user = user.OrderBy(s => s.LastName);
@@ -72,11 +66,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     break;
                 default:
                     user = user.OrderBy(s => s.UserName);
+                    sortOrder = "UserName";
                     break;
             }
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             ViewBag.SearchString = searchString;
+            ViewBag.CurrentSort = sortOrder;
             return View(user.ToPagedList(pageNumber, pageSize));
         }
 

@@ -27,8 +27,6 @@ namespace LaptopShopOnline.WebApp.Controllers
         // GET: Admin/Products
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
-            //paged
-            ViewBag.CurrentSort = sortOrder;
             //Sort order
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "Name";
             ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
@@ -40,8 +38,6 @@ namespace LaptopShopOnline.WebApp.Controllers
             {
                 page = 1;
             }
-
-            ViewBag.CurrentFilter = searchString;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -77,11 +73,13 @@ namespace LaptopShopOnline.WebApp.Controllers
                     product = product.OrderByDescending(s => s.Quantity);
                     break;
                 default:
+                    sortOrder = "Name";
                     product = product.OrderBy(s => s.Name);
                     break;
             }
             int pageSize = 16;
             int pageNumber = (page ?? 1);
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.SearchString = searchString;
             return View(product.ToPagedList(pageNumber, pageSize));
         }

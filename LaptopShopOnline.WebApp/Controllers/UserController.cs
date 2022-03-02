@@ -144,7 +144,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-
+        [HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Logout()
         {
             Object nullUserLogin = null;

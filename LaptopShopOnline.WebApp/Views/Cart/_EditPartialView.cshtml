@@ -47,8 +47,10 @@
 </td>
 <td>
     <button type="submit" class="btn-sm btn-group-sm btn-primary">Cập nhật</button>
-    <a href="/don-hang/tao?gioHangId=@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-delete btn-sm btn-group-sm btn-primary">Đặt hàng</a>
-    <a href="/gio-hang/xoa/@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-delete btn-sm btn-group-sm btn-primary">Xoá</a>
+    |
+    <a href="/don-hang/tao?cartId=@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-sm btn-group-sm btn-success">Đặt hàng</a>
+    |
+    <a href="/gio-hang/xoa/@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-sm btn-group-sm btn-warning">Xoá</a>
 </td>
 </tr>
 }

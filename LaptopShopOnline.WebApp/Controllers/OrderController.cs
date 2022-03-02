@@ -1,5 +1,6 @@
 ﻿using LaptopShopOnline.Common;
 using LaptopShopOnline.Model.Entities;
+using LaptopShopOnline.Model.ViewModels;
 using LaptopShopOnline.Service;
 using LaptopShopOnline.WebApp.Common;
 using LaptopShopOnline.WebApp.Models;
@@ -28,6 +29,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
         // GET: Admin/Products
+        [HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             //paged
@@ -81,83 +83,95 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-
+        [HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Create(Guid? cartId, Guid? shopId, bool shouldOrderAll)
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            if (userLoginSession != null)
+            var createOrderVM = new CreateOrderViewModel();
+            if (shouldOrderAll)
             {
-                var carts = new List<Cart>();
-                if (shouldOrderAll)
-                {
-                     carts = _serviceWrapper.Db.Cart.Include(x => x.Product).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
-                    return View(carts);
-                }
-                if (shopId != null)
-                {
-                     carts = _serviceWrapper.Db.Cart.Include(x => x.Product).Where(x => x.BuyerId == userLoginSession.UserId && x.Product.ShopId == shopId).ToList();
-                    return View(carts);
-                }
-                 carts = _serviceWrapper.Db.Cart.Include(x => x.Product).Where(x => x.BuyerId == userLoginSession.UserId && x.Id == cartId).ToList();
-                return View(carts);
+                createOrderVM.Carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
+                return View(createOrderVM);
+            }
+            else
+            if (shopId != null)
+            {
+                createOrderVM.Carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Product.ShopId == shopId).ToList();
+                return View(createOrderVM);
             }
             else
             {
-                SetAlert("Bạn phải đăng nhập để có thể mua hàng", "warning");
-                return Redirect("/dang-nhap");
+                createOrderVM.Carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Id == cartId).ToList();
             }
+            return View(createOrderVM);
         }
         //
+        [HasCredential(RoleId = "BUYER_ROLE")]
         [HttpPost]
         public ActionResult Create([FromForm] Order order, Guid? cartId, Guid? shopId, bool shouldOrderAll)
         {
+
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (userLoginSession != null)
             {
                 var carts = new List<Cart>();
                 if (shouldOrderAll)
                 {
-                    carts = _serviceWrapper.Db.Cart.Include(x => x.Product).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
+                    carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
                 }
-                if (shopId != null)
+                else if (shopId != null)
                 {
-                    carts = _serviceWrapper.Db.Cart.Include(x => x.Product).Where(x => x.BuyerId == userLoginSession.UserId && x.Product.ShopId == shopId).ToList();
+                    carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Product.ShopId == shopId).ToList();
                 }
-                carts = _serviceWrapper.Db.Cart.Include(x => x.Product).Where(x => x.BuyerId == userLoginSession.UserId && x.Id == cartId).ToList();
-                var groupedCarts = carts.ToLookup(x => x.Product.Shop);
-                foreach (var groupedCart in groupedCarts)
+                else
                 {
-                    var newOrder = new Order
+                    carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Id == cartId).ToList();
+                }
+                if (ModelState.IsValid)
+                {
+                    var groupedCarts = carts.ToLookup(x => x.Product.Shop);
+                    foreach (var groupedCart in groupedCarts)
                     {
-                        ShipName = order.ShipName,
-                        ShipPhone = order.ShipPhone,
-                        ShipAddress = order.ShipPhone,
-                        ShipEmail = order.ShipEmail
-                    };
-                    newOrder.ShopId = groupedCart.Key.Id;
-                    newOrder.BuyerId = userLoginSession.UserId;
-                    AuditTable.InsertAuditFields(newOrder, userLoginSession.UserName);
-                    foreach (var cart in groupedCart)
-                    {
-                        var newOrderDetail = new OrderDetail
+                        var newOrder = new Order
                         {
-                            ProductId = cart.ProductId,
-                            Quantity = cart.Quantity,
-                            Price = cart.Product.PromotionPrice > 0 ? cart.Product.PromotionPrice : cart.Product.Price
+                            ShipName = order.ShipName,
+                            ShipPhone = order.ShipPhone,
+                            ShipAddress = order.ShipPhone,
+                            ShipEmail = order.ShipEmail
                         };
-                        AuditTable.InsertAuditFields(newOrderDetail, userLoginSession.UserName);
-                        newOrder.OrderDetails.Add(newOrderDetail);
+                        newOrder.ShopId = groupedCart.Key.Id;
+                        newOrder.BuyerId = userLoginSession.UserId;
+                        newOrder.OrderStatus = (int)ENUM.OrderStatus.PENDING;
+                        AuditTable.InsertAuditFields(newOrder, userLoginSession.UserName);
+                        foreach (var cart in groupedCart)
+                        {
+                            var newOrderDetail = new OrderDetail
+                            {
+                                ProductId = cart.ProductId,
+                                Quantity = cart.Quantity,
+                                Price = cart.Product.PromotionPrice > 0 ? cart.Product.PromotionPrice : cart.Product.Price
+                            };
+                            AuditTable.InsertAuditFields(newOrderDetail, userLoginSession.UserName);
+                            newOrder.OrderDetails.Add(newOrderDetail);
+                            _serviceWrapper.Db.Cart.Remove(cart);
+                            _serviceWrapper.Db.Order.Add(newOrder);
+                        }
+                        _serviceWrapper.Db.SaveChanges();
                     }
                     SetAlert("Bạn đã đặt hàng thành công", "success");
-                    _serviceWrapper.Db.SaveChanges();
+                    return Redirect("/don-hang");
                 }
-                return Redirect("/don-hang");
+                var createOrderVM = new CreateOrderViewModel();
+                createOrderVM.Carts = carts;
+                createOrderVM.Order = order;
+                return View(createOrderVM);
             }
             else
             {
                 SetAlert("Bạn phải đăng nhập để có thể mua hàng", "warning");
                 return Redirect("/dang-nhap");
             }
+
         }
 
     }

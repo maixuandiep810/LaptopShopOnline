@@ -26,7 +26,30 @@
                             <div class="form-group">
                                 @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
                                 <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
-                                <a href="/quan-tri/danh-muc-san-pham/them-moi" class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
+                                <a href="/danh-muc-san-pham?sortOrder=@ViewBag.NameSortParm&searchString=@ViewBag.SearchString">
+                                    <button class="btn btn-secondary ml-1">
+                                        <span>Lọc theo tên</span>
+                                        <i class="fas fa-sort text-dark"></i>
+                                    </button>
+                                </a>
+                                <a href="/quan-tri/danh-muc-san-pham?sortOrder=@ViewBag.PriceSortParm&searchString=@ViewBag.SearchString">
+                                    <button class="btn btn-secondary ml-1">
+                                        <span>Lọc theo giá</span>
+                                        <i class="fas fa-sort text-dark"></i>
+                                    </button>
+                                </a>
+                                <a href="/danh-muc-san-pham?sortOrder=@ViewBag.PromotionPriceSortParm&searchString=@ViewBag.SearchString">
+                                    <button class="btn btn-secondary ml-1">
+                                        <span>Lọc theo giá k/m</span>
+                                        <i class="fas fa-sort text-dark"></i>
+                                    </button>
+                                </a>
+                                <a href="/danh-muc-san-pham?sortOrder=@ViewBag.QuantitySortParm&searchString=@ViewBag.SearchString">
+                                    <button class="btn btn-secondary ml-1">
+                                        <span>Lọc theo số lượng mở bán</span>
+                                        <i class="fas fa-sort text-dark"></i>
+                                    </button>
+                                </a>
                             </div>
                         }
                         @{

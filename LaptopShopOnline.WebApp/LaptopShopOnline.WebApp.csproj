@@ -22,12 +22,14 @@
 
   <ItemGroup>
     <None Remove="Areas\Admin\Controllers\_bin_OrderDetailsController.txt" />
+    <None Remove="Controllers\ShopController.txt" />
     <None Remove="Views\_bin_ViewImports.txt" />
     <None Remove="_bundleconfig.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Areas\Admin\Controllers\_bin_OrderDetailsController.txt" />
+    <Compile Include="Controllers\ShopController.txt" />
   </ItemGroup>
 
   <ItemGroup>
