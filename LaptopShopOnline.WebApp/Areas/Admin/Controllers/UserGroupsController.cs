@@ -30,7 +30,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups
-        [HasCredential(RoleId = "VIEW_USER_GROUP")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
         public ActionResult Index()
         {
             CountMessage();
@@ -42,7 +42,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Details/5
-        [HasCredential(RoleId = "VIEW_USER_GROUP")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -60,7 +60,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Create
-        [HasCredential(RoleId = "CREATE_USER_GROUP")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
@@ -69,17 +69,20 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View();
         }
         // POST: Admin/UserGroups/Create
-        [HasCredential(RoleId = "CREATE_USER_GROUP")]       
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,Name")] UserGroup userGroup)
+        public ActionResult Create(UserGroup userGroup)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             if (ModelState.IsValid)
             {
                 _serviceWrapper.Db.UserGroup.Add(userGroup);
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect("/quan-tri/nhom-nguoi-dung");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_PARAMS);
             }
 
             return View(userGroup);
@@ -88,7 +91,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Edit/5
-        [HasCredential(RoleId = "EDIT_USER_GROUP")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
         public ActionResult Edit(string id)
         {
             CountMessage();
@@ -105,21 +108,20 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(userGroup);
         }
-
-
-
-        // POST: Admin/UserGroups/Edit/5
-
-        [HasCredential(RoleId = "EDIT_USER_GROUP")]        [HttpPost]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]        
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("Id,Name")] UserGroup userGroup)
+        public ActionResult Edit(UserGroup userGroup)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             if (ModelState.IsValid)
             {
                 _serviceWrapper.Db.Entry(userGroup).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/nhom-nguoi-dung");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_PARAMS);
             }
             return View(userGroup);
         }
@@ -127,40 +129,34 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Delete/5
-        [HasCredential(RoleId = "DELETE_USER_GROUP")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
         public ActionResult Delete(string id)
         {
-            var existCredential = _serviceWrapper.Db.Credentials.Where(x => x.UserGroupId == id);
-            var existUser = _serviceWrapper.Db.User.Where(x => x.GroupId == id);
-            if (existCredential != null || existUser != null)
+            if (id == null)
             {
                 return PartialView("_Delete");
             }
-            if (id == null)
-            {
-                return BadRequest();
-            }
-            UserGroup userGroup = _serviceWrapper.Db.UserGroup.Find(id);
+            var userGroup = _serviceWrapper.Db.UserGroup.Where(x => x.Id == id).FirstOrDefault();
             if (userGroup == null)
             {
-                return NotFound();
+                return PartialView("_Delete");
             }
-            return View(userGroup);
+            return PartialView();
         }
-
-
-
-        // POST: Admin/UserGroups/Delete/5
-        [HasCredential(RoleId = "DELETE_USER_GROUP")]
+        //
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             UserGroup userGroup = _serviceWrapper.Db.UserGroup.Find(id);
             _serviceWrapper.Db.UserGroup.Remove(userGroup);
             _serviceWrapper.Db.SaveChanges();
             SetAlert("Xóa thành công", "success");
-            return Redirect("/quan-tri/nhom-nguoi-dung");
+            return Redirect(CommonConstants.ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_PARAMS);
         }
 
     }

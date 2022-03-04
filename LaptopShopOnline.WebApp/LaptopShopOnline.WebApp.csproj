@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <None Remove="Areas\Admin\Controllers\_bin_OrderDetailsController.txt" />
+    <None Remove="Areas\Admin\Views\Roles\Create.txt" />
+    <None Remove="Areas\Admin\Views\Roles\Delete.txt" />
     <None Remove="Controllers\ShopController.txt" />
     <None Remove="Views\_bin_ViewImports.txt" />
     <None Remove="_bundleconfig.txt" />
@@ -33,6 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Areas\Admin\Views\Roles\Create.txt" />
+    <Content Include="Areas\Admin\Views\Roles\Delete.txt" />
     <Content Include="_bundleconfig.txt" />
   </ItemGroup>
 

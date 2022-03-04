@@ -46,9 +46,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
         public ActionResult Details(string id)
         {
-            CountMessage();
-            CountOrder();
-            CountProduct();
             if (id == null)
             {
                 return BadRequest();
@@ -60,38 +57,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(role);
         }
-
-
-
-        // GET: Admin/Roles/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
-        public ActionResult Create()
-        {
-            CountMessage();
-            CountOrder();
-            CountProduct();
-            return View();
-        }
-        // POST: Admin/Roles/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Role role)
-        {
-            CountMessage();
-            CountOrder();
-            CountProduct();
-            if (ModelState.IsValid)
-            {
-                _serviceWrapper.Db.Role.Add(role);
-                _serviceWrapper.Db.SaveChanges();
-                SetAlert("Thêm mới thành công", "success");
-                return Redirect(CommonConstants.ROUTE_QUAN_TRI_QUYEN_PARAMS);
-            }
-
-            return View(role);
-        }
-
 
 
         // GET: Admin/Roles/Edit/5
@@ -131,6 +96,40 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(role);
         }
+
+
+
+
+
+
+        //// GET: Admin/Roles/Create
+        //[HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        //public ActionResult Create()
+        //{
+        //    CountMessage();
+        //    CountOrder();
+        //    CountProduct();
+        //    return View();
+        //}
+        //// POST: Admin/Roles/Create
+        //[HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(Role role)
+        //{
+        //    CountMessage();
+        //    CountOrder();
+        //    CountProduct();
+        //    if (ModelState.IsValid)
+        //    {
+        //        _serviceWrapper.Db.Role.Add(role);
+        //        _serviceWrapper.Db.SaveChanges();
+        //        SetAlert("Thêm mới thành công", "success");
+        //        return Redirect(CommonConstants.ROUTE_QUAN_TRI_QUYEN_PARAMS);
+        //    }
+
+        //    return View(role);
+        //}
 
 
 

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LaptopShopOnline.Common
 {
@@ -56,15 +54,44 @@ namespace LaptopShopOnline.Common
 
         //
         public const string ROUTE_QUAN_TRI_QUYEN = "/quan-tri/quyen";
-        public const string ROUTE_QUAN_TRI_QUYEN_CHI_TIET ="quan-tri/quyen/chi-tiet/{id:regex(^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$)?}";
-        public const string ROUTE_QUAN_TRI_QUYEN_THEM_MOI = "/quan-tri/quyen/them-moi";
-        public const string ROUTE_QUAN_TRI_QUYEN_CAP_NHAT = "/quan-tri/quyen/cap-nhat/{id:regex(^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$)?}";
+        public const string ROUTE_QUAN_TRI_QUYEN_CHI_TIET = "/quan-tri/quyen/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_QUYEN_CAP_NHAT = "/quan-tri/quyen/cap-nhat/{id}";
 
-       public const string ROUTE_QUAN_TRI_QUYEN_PARAMS = "/quan-tri/quyen";
-        public const string ROUTE_QUAN_TRI_QUYEN_CHI_TIET_PARAMS ="quan-tri/quyen/chi-tiet/{id}";
-        public const string ROUTE_QUAN_TRI_QUYEN_THEM_MOI_PARAMS = "/quan-tri/quyen/them-moi";
+        public const string ROUTE_QUAN_TRI_QUYEN_PARAMS = "/quan-tri/quyen";
+        public const string ROUTE_QUAN_TRI_QUYEN_CHI_TIET_PARAMS = "/quan-tri/quyen/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_QUYEN_CAP_NHAT_PARAMS = "/quan-tri/quyen/cap-nhat/{id}";
-    
-    
+
+        //
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG = "/quan-tri/nhom-nguoi-dung";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_CHI_TIET = "/quan-tri/nhom-nguoi-dung/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_THEM_MOI = "/quan-tri/nhom-nguoi-dung/them-moi";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_CAP_NHAT = "/quan-tri/nhom-nguoi-dung/cap-nhat/{id}";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_XOA = "/quan-tri/nhom-nguoi-dung/xoa/{id}";
+
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_PARAMS = "/quan-tri/nhom-nguoi-dung";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_CHI_TIET_PARAMS = "/quan-tri/nhom-nguoi-dung/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_THEM_MOI_PARAMS = "/quan-tri/nhom-nguoi-dung/them-moi";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_CAP_NHAT_PARAMS = "/quan-tri/nhom-nguoi-dung/cap-nhat/{id}";
+        public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_XOA_PARAMS = "/quan-tri/nhom-nguoi-dung/xoa/{id}";
+
+        //
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN = "/quan-tri/phan-quyen";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_NHOM_NGUOI_DUNG = "/quan-tri/phan-quyen/nhom-nguoi-dung/{userGroupId}";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_CHI_TIET = "/quan-tri/phan-quyen/chi-tiet";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_THEM_MOI = "/quan-tri/phan-quyen/them-moi";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_NHOM_NGUOI_DUNG_THEM_MOI = "/quan-tri/phan-quyen/nhom-nguoi-dung/them-moi/{userGroupId}";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_XOA = "/quan-tri/phan-quyen/xoa";
+
+        //
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_PARAMS = "/quan-tri/phan-quyen";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_NHOM_NGUOI_DUNG_PARAMS = "/quan-tri/phan-quyen/nhom-nguoi-dung/{userGroupId}";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_CHI_TIET_PARAMS = "/quan-tri/phan-quyen/chi-tiet?userGroupId={userGroupId}&roleId={roleId}";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_NHOM_NGUOI_DUNG_THEM_MOI_PARAMS = "/quan-tri/phan-quyen/nhom-nguoi-dung/them-moi/{userGroupId}";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_THEM_MOI_PARAMS = "/quan-tri/phan-quyen/them-moi";
+        public const string ROUTE_QUAN_TRI_PHAN_QUYEN_XOA_PARAMS = "/quan-tri/phan-quyen/xoa?userGroupId={userGroupId}&roleId={roleId}";
+
+
+        //{id:regex(^[{ {]?[0 - 9a - fA - F]{ { 8} } -([0 - 9a - fA - F]{ { 4} } -){ { 3} }[0 - 9a - fA - F]{ { 12} }[} }]?$)?}";
+
     }
 }

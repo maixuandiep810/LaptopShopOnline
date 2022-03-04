@@ -5,6 +5,7 @@ using LaptopShopOnline.WebApp.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SmartFormat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,20 +31,30 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials
-        [HasCredential(RoleId = "VIEW_AUTH")]
-        public ActionResult Index()
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        public ActionResult Index(string userGroupId)
         {
             CountMessage();
             CountOrder();
             CountProduct();
-            var credentials = _serviceWrapper.Db.Credentials.Include(c => c.Role).Include(c => c.UserGroup);
-            return View(credentials.ToList());
+            List<Credential> credentials = null;
+            if (String.IsNullOrEmpty(userGroupId) == false)
+            {
+                credentials = _serviceWrapper.Db.Credentials.Include(c => c.Role).Include(c => c.UserGroup).Where(c => c.UserGroupId == userGroupId).ToList();
+                return View(credentials);
+            }
+            credentials = _serviceWrapper.Db.Credentials.Include(c => c.Role).Include(c => c.UserGroup).ToList();
+            return View(credentials);
         }
         // GET: Admin/Credentials/Details/5
-        [HasCredential(RoleId = "VIEW_AUTH")]
-        public ActionResult Details(string groupId, string roleId)
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        public ActionResult Details(string userGroupId, string roleId)
         {
-            Credential credential = _serviceWrapper.Db.Credentials.Include(p => p.Role).Include(p => p.UserGroup).FirstOrDefault();
+            if (String.IsNullOrEmpty(userGroupId) || String.IsNullOrEmpty(roleId))
+            {
+                return BadRequest();
+            }
+            Credential credential = _serviceWrapper.Db.Credentials.Include(p => p.Role).Include(p => p.UserGroup).Where(p => p.UserGroupId == userGroupId && p.RoleId == roleId).FirstOrDefault();
             if (credential == null)
             {
                 return NotFound();
@@ -54,28 +65,33 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials/Create
-        [HasCredential(RoleId = "CREATE_AUTH")]
-        public ActionResult Create()
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        public ActionResult Create(string userGroupId)
         {
             CountMessage();
             CountOrder();
             CountProduct();
             ViewBag.RoleId = new SelectList(_serviceWrapper.Db.Role, "Id", "Name");
             ViewBag.UserGroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name");
-            return View();
+            var credential = new Credential {UserGroupId = userGroupId};
+            return View(credential);
         }
         // POST: Admin/Credentials/Create
-        [HasCredential(RoleId = "CREATE_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("UserGroupId,RoleId")] Credential credential)
+        public ActionResult Create(string userGroupId, [FromForm] Credential credential)
         {
             if (ModelState.IsValid)
             {
                 _serviceWrapper.Db.Credentials.Add(credential);
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect("/quan-tri/phan-quyen-nguoi-dung");
+                if (String.IsNullOrEmpty(userGroupId) == false)
+                {
+                    return Redirect(Smart.Format(CommonConstants.ROUTE_QUAN_TRI_PHAN_QUYEN_NHOM_NGUOI_DUNG_PARAMS, new { userGroupId = userGroupId }));
+                }
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_PHAN_QUYEN_PARAMS);
             }
 
             ViewBag.RoleId = new SelectList(_serviceWrapper.Db.Role, "Id", "Name", credential.RoleId);
@@ -86,14 +102,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials/Delete/5
-        [HasCredential(RoleId = "DELETE_AUTH")]
-        public ActionResult Delete(string groupId, string roleId)
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
+        public ActionResult Delete(string userGroupId, string roleId)
         {
-            if (groupId == null || roleId == null)
+            if (userGroupId == null || roleId == null)
             {
                 return BadRequest();
             }
-            Credential credential = _serviceWrapper.Db.Credentials.Find(groupId, roleId);
+            Credential credential = _serviceWrapper.Db.Credentials.Find(userGroupId, roleId);
             if (credential == null)
             {
                 return NotFound();
@@ -101,16 +117,20 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View(credential);
         }
         // POST: Admin/Credentials/Delete/5
-        [HasCredential(RoleId = "DELETE_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string groupId, string roleId)
+        public ActionResult DeleteConfirmed(string userGroupId, string roleId)
         {
-            Credential credential = _serviceWrapper.Db.Credentials.Find(groupId, roleId);
+            Credential credential = _serviceWrapper.Db.Credentials.Find(userGroupId, roleId);
             _serviceWrapper.Db.Credentials.Remove(credential);
             _serviceWrapper.Db.SaveChanges();
             SetAlert("Xóa thành công", "success");
-            return Redirect("/quan-tri/phan-quyen-nguoi-dung");
+            if (String.IsNullOrEmpty(userGroupId) == false)
+            {
+                return Redirect(Smart.Format(CommonConstants.ROUTE_QUAN_TRI_PHAN_QUYEN_NHOM_NGUOI_DUNG_PARAMS, new { userGroupId = userGroupId }));
+            }
+            return Redirect(CommonConstants.ROUTE_QUAN_TRI_PHAN_QUYEN_PARAMS);
         }
 
     }
