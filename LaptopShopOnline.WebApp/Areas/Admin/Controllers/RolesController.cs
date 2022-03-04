@@ -33,7 +33,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Roles
-        [HasCredential(RoleId = "VIEW_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
         public ActionResult Index()
         {
             CountMessage();
@@ -41,10 +41,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountProduct();
             return View(_serviceWrapper.Db.Role.ToList());
         }
+
         // GET: Admin/Roles/Details/5
-        [HasCredential(RoleId = "VIEW_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
         public ActionResult Details(string id)
         {
+            CountMessage();
+            CountOrder();
+            CountProduct();
             if (id == null)
             {
                 return BadRequest();
@@ -60,7 +64,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Roles/Create
-        [HasCredential(RoleId = "CREATE_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
@@ -69,17 +73,20 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View();
         }
         // POST: Admin/Roles/Create
-        [HasCredential(RoleId = "CREATE_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,Name")] Role role)
+        public ActionResult Create(Role role)
         {
+            CountMessage();
+            CountOrder();
+            CountProduct();
             if (ModelState.IsValid)
             {
                 _serviceWrapper.Db.Role.Add(role);
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect("/quan-tri/quan-ly-phan-quyen");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_QUYEN_PARAMS);
             }
 
             return View(role);
@@ -88,7 +95,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Roles/Edit/5
-        [HasCredential(RoleId = "EDIT_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
         public ActionResult Edit(string id)
         {
             CountMessage();
@@ -107,55 +114,58 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
         // POST: Admin/Roles/Edit/5
 
-        [HasCredential(RoleId = "EDIT_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("Id,Name")] Role role)
+        public ActionResult Edit(Role role)
         {
+            CountMessage();
+            CountOrder();
+            CountProduct();
             if (ModelState.IsValid)
             {
                 _serviceWrapper.Db.Entry(role).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/quan-ly-phan-quyen");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_QUYEN_PARAMS);
             }
             return View(role);
         }
 
 
 
-        // GET: Admin/Roles/Delete/5
-        [HasCredential(RoleId = "DELETE_AUTH")]
-        public ActionResult Delete(string id)
-        {
-            var existCredential = _serviceWrapper.Db.Credentials.Where(x => x.RoleId == id).FirstOrDefault();
-            if (existCredential != null)
-            {
-                return PartialView("_Delete");
-            }
-            if (id == null)
-            {
-                return BadRequest();
-            }
-            Role role = _serviceWrapper.Db.Role.Find(id);
-            if (role == null)
-            {
-                return NotFound();
-            }
-            return View(role);
-        }
-        // POST: Admin/Roles/Delete/5
-        [HasCredential(RoleId = "DELETE_AUTH")]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            Role role = _serviceWrapper.Db.Role.Find(id);
-            _serviceWrapper.Db.Role.Remove(role);
-            _serviceWrapper.Db.SaveChanges();
-            SetAlert("Xóa thành công", "success");
-            return Redirect("/quan-tri/quan-ly-phan-quyen");
-        }
+        //// GET: Admin/Roles/Delete/5
+        //[HasCredential(RoleId = "DELETE_AUTH")]
+        //public ActionResult Delete(string id)
+        //{
+        //    var existCredential = _serviceWrapper.Db.Credentials.Where(x => x.RoleId == id).FirstOrDefault();
+        //    if (existCredential != null)
+        //    {
+        //        return PartialView("_Delete");
+        //    }
+        //    if (id == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    Role role = _serviceWrapper.Db.Role.Find(id);
+        //    if (role == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(role);
+        //}
+        //// POST: Admin/Roles/Delete/5
+        //[HasCredential(RoleId = "DELETE_AUTH")]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(string id)
+        //{
+        //    Role role = _serviceWrapper.Db.Role.Find(id);
+        //    _serviceWrapper.Db.Role.Remove(role);
+        //    _serviceWrapper.Db.SaveChanges();
+        //    SetAlert("Xóa thành công", "success");
+        //    return Redirect(CommonConstants.ROUTE_QUAN_TRI_QUYEN_PARAMS);
+        //}
 
     }
 }

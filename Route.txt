@@ -1,8 +1,2 @@
-https://localhost:5001/quan-tri/dang-nhap
+quan-tri/quan-ly-phan-quyen
 
-https://localhost:5001/quan-tri/danh-muc-san-pham
-https://localhost:5001/quan-tri/tai-khoan-nguoi-dung
-https://localhost:5001/quan-tri/phan-quyen-nguoi-dung
-
-
-https://localhost:5001/dang-nhap

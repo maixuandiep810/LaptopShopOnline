@@ -8,7 +8,7 @@ namespace LaptopShopOnline.Model.Entities
     [Table("OrderDetail")]
     public partial class OrderDetail : IAuditable
     {
-
+        public Guid Id { get; set; }
 
         [Column(Order = 0)]
         [Display(Name = "Mã sản phẩm")]

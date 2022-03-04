@@ -16,6 +16,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         protected readonly ServiceWrapper _serviceWrapper;
+        protected UserLogin _userLoginSession;
 
 
 
@@ -25,19 +26,21 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
 
 
-
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        //
+        //      Chỉ có MANAGER && SELLER
+        //
+/*        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            if (filterContext.HttpContext.Request.Path.Value != "/quan-tri/dang-nhap" && 
-                    (userLoginSession == null || userLoginSession.GroupId != CommonConstants.ADMIN_GROUP 
-                    && userLoginSession.GroupId != CommonConstants.MOD_GROUP
-                    && userLoginSession.GroupId != CommonConstants.SELLER_GROUP))
+            _userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            if (filterContext.HttpContext.Request.Path.Value != CommonConstants.ROUTE_ADMIN_DANG_NHAP && 
+                    (_userLoginSession == null || _userLoginSession.GroupId != CommonConstants.ADMIN_GROUP 
+                    && _userLoginSession.GroupId != CommonConstants.MOD_GROUP
+                    && _userLoginSession.GroupId != CommonConstants.SELLER_GROUP))
             {
                 filterContext.Result = Redirect("/dang-nhap");
             }
             base.OnActionExecuting(filterContext);
-        }
+        }*/
 
 
 
@@ -70,8 +73,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
         protected void CountProduct()
         {
-            //var products = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.Quantity < 5);
-            //TempData["cpd"] = products.Count().ToString();
+            var products = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.Quantity < 5);
+            TempData["cpd"] = products.Count().ToString();
         }
         protected void CountOrder()
         {

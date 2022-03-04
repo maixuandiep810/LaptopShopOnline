@@ -18,14 +18,9 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                @using (Html.BeginForm())
-                {
                     <div class="form-group">
-                        @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
-                        <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
                         <a href="/quan-tri/quan-ly-cua-hang/them-moi" class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
-                    </div>
-                }
+                    </div
                 <thead>
                     <tr>
                         <th>
@@ -33,7 +28,6 @@
                         </th>
                         <th style="width: 240px;">
                             Tên cửa hàng
-                            <a href="/quan-tri/cua-hang?sortOrder=@ViewBag.NameSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
                         </th>
                         <th class="text-center" style="width: 115px;"></th>
                     </tr>
@@ -51,7 +45,7 @@
                             <td>
                                 <a class="btn-sm btn-group-sm btn-success" href="/quan-tri/quan-ly-cua-hang/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
                                 <a class="btn-sm btn-group-sm btn-secondary dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>
-                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href="@Url.Action("Delete", new { id = item.Id })"><i class="far fa-trash-alt"></i></a>
+                                @*<a class="btn-sm btn-group-sm btn-danger dialog-link" href="@Url.Action("Delete", new { id = item.Id })"><i class="far fa-trash-alt"></i></a>*@
                             </td>
                         </tr>
                         i++;
@@ -65,7 +59,7 @@
         </div>
         <div class="text-center">
             Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
         </div>
     </div>
 </div>

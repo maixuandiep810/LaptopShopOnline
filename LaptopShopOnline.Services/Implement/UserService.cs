@@ -1,10 +1,12 @@
 ﻿using LaptopShopOnline.Common;
 using LaptopShopOnline.Model;
 using LaptopShopOnline.Model.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LaptopShopOnline.Service.Implement
@@ -20,18 +22,17 @@ namespace LaptopShopOnline.Service.Implement
 
 
 
-        public int Login(string userName, string password, string loginAsUserGroupId)
+        public int Login(string userName, string password, string loginAsPrefixUserGroupId)
         {
             var result = _db.User.SingleOrDefault(x => x.UserName == userName);
             if (result == null)
             {
                 return 0;
             }
-            switch (loginAsUserGroupId)
+            switch (loginAsPrefixUserGroupId)
             {
-                case "ADMIN":
-                case "MOD":
-                    if (result.GroupId == CommonConstants.ADMIN_GROUP || result.GroupId == CommonConstants.MOD_GROUP)
+                case CommonConstants.USER_GROUP_ID_PREFIX_MANAGER:
+                    if (Regex.IsMatch(result.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_MANAGER))
                     {
                         if (result.IsDeleted == true)
                         {
@@ -49,8 +50,8 @@ namespace LaptopShopOnline.Service.Implement
                     {
                         return -3;
                     }
-                case "SELLER":
-                    if (result.GroupId == CommonConstants.SELLER_GROUP)
+                case CommonConstants.USER_GROUP_ID_PREFIX_SELLER:
+                    if (Regex.IsMatch(result.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER))
                     {
                         if (result.IsDeleted == true)
                         {
@@ -69,7 +70,7 @@ namespace LaptopShopOnline.Service.Implement
                         return -3;
                     }
                 default:
-                    if (result.GroupId == CommonConstants.BUYER_GROUP)
+                    if (Regex.IsMatch(result.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_BUYER))
                     {
                         if (result.IsDeleted == true)
                         {
@@ -94,7 +95,7 @@ namespace LaptopShopOnline.Service.Implement
 
         public User GetByName(string userName)
         {
-            return _db.User.OrderByDescending(x => x.CreatedOn).SingleOrDefault(x => x.UserName == userName);
+            return _db.User.Include(x => x.UserGroup).OrderByDescending(x => x.CreatedOn).SingleOrDefault(x => x.UserName == userName);
         }
 
 

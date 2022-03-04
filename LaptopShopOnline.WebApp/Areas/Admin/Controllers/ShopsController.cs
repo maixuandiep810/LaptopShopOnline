@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -29,44 +30,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Products
-        public ActionResult Index(string sortOrder, int? page, string searchString, string currentFilter)
+        public ActionResult Index(int? page)
         {
             CountMessage();
             CountProduct();
             CountOrder();
-            //paged
-            ViewBag.CurrentSort = sortOrder;
-            //Sort order
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             var shops = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false);
-
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                shops = shops.Where(s => s.Name.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    shops = shops.OrderByDescending(s => s.Name);
-                    break;
-                default:
-                    shops = shops.OrderBy(s => s.Name);
-                    break;
-            }
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            ViewBag.SearchString = searchString;
             return View(shops.ToPagedList(pageNumber, pageSize));
         }
 
@@ -77,11 +48,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         // GET: Admin/Shops/Details/5
         public ActionResult Details(Guid? id)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             if (id == null)
             {
                 return BadRequest();
             }
-            var shop = _serviceWrapper.Db.Shop.Find(id);
+            var shop = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false && x.Id == id).FirstOrDefault();
             if (shop == null)
             {
                 return NotFound();
@@ -97,7 +71,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountMessage();
             CountOrder();
             CountProduct();
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User, "Id", "UserName");
+            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
             return View();
         }
         // POST: Admin/Products/Create
@@ -105,6 +79,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Shop shop)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             if (ModelState.IsValid)
             {
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -115,7 +92,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 SetAlert("Thêm mới thành công", "success");
                 return Redirect("/quan-tri/quan-ly-cua-hang");
             }
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User, "Id", "UserName", shop.SellerId);
+            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
             return View(shop);
         }
 
@@ -133,12 +110,12 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            var shop = _serviceWrapper.Db.Shop.Find(id);
+            var shop = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false && x.Id == id).FirstOrDefault();
             if (shop == null)
             {
                 return NotFound();
             }
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User, "Id", "UserName", shop.SellerId);
+            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
             return View(shop);
         }
         // POST: Admin/Products/Edit/5
@@ -146,6 +123,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Shop shop)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             if (ModelState.IsValid)
             {
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -155,7 +135,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 SetAlert("Cập nhật thành công", "success");
                 return Redirect("/quan-tri/quan-ly-cua-hang");
             }
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User, "Id", "UserName", shop.SellerId);
+            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
             return View(shop);
         }
         // GET: Admin/Seller/Shops
@@ -164,7 +144,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             //CountOrder();
             //CountProduct();
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var shop = _serviceWrapper.Db.Shop.Find(userLoginSession.ShopId);
+            var shop = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false && x.Id ==  userLoginSession.ShopId).FirstOrDefault();
             return View(shop);
         }
         // POST: Admin/Seller/Shops/Edit
@@ -187,6 +167,19 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(shop);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

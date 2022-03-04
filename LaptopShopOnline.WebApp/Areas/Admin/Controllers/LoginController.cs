@@ -9,6 +9,7 @@ using LaptopShopOnline.Common;
 using LaptopShopOnline.WebApp.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.RegularExpressions;
 
 namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 {
@@ -25,36 +26,36 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
         public ActionResult Login()
         {
-            ViewBag.UserGroupId = new SelectList(CommonConstants.ADMIN_AREA_GROUP_ID, "Id");
+            ViewBag.UserGroupIdPrefix = new SelectList(CommonConstants._USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST, "Id");
             return View();
         }
         //
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public ActionResult Login(AdminLoginModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), model.UserGroupId);
+                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), model.UserGroupIdPrefix);
                 switch (result)
                 {
                     case 1:
                         var user = _serviceWrapper.UserService.GetByName(model.UserName);
                         var userLoginSession = new UserLogin();
                         userLoginSession.UserId = user.Id;
-                        userLoginSession.GroupId = model.UserGroupId;
+                        userLoginSession.GroupId = user.UserGroup.Id;
                         userLoginSession.UserName = user.UserName;
                         userLoginSession.FirstName = user.FirstName;
                         userLoginSession.LastName = user.LastName;
                         userLoginSession.Email = user.Email;
                         userLoginSession.Address = user.Address;
-                        if (model.UserGroupId == CommonConstants.SELLER_GROUP)
+                        if (Regex.IsMatch(user.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER))
                             userLoginSession.ShopId = _serviceWrapper.Db.Shop.Where(p => p.SellerId == user.Id).First().Id;
                         //Phan quyen dua tren userLoginSession_credential
                         var listCredentials = _serviceWrapper.UserService.GetListCredential(model.UserName);
                         HttpContext.Session.Add(CommonConstants.CREDENTIALS_SESSION, listCredentials);
                         //Luu user info vao userLoginSession
                         HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userLoginSession);
-                        return Redirect("/quan-tri");
+                        return Redirect(CommonConstants.ROUTE_QUAN_TRI_PARAMS);
                     case 0:
                         ModelState.AddModelError("", "Tài khoản không tồn tại");
                         break;
@@ -62,17 +63,15 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                         ModelState.AddModelError("", "Tài khoản đang bị khóa");
                         break;
                     case -2:
-                        ModelState.AddModelError("", "Mật khẩu không đúng");
-                        break;
                     case -3:
-                        ModelState.AddModelError("", "Tài khoản không có quyền đăng nhập");
+                        ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
                         break;
                     default:
                         ModelState.AddModelError("", "Đăng nhập không đúng");
                         break;
                 }
             }
-            ViewBag.UserGroupId = new SelectList(CommonConstants.ADMIN_AREA_GROUP_ID, "Id");
+            ViewBag.UserGroupIdPrefix = new SelectList(CommonConstants._USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST, "Id");
             return View(model);
         }
 
@@ -82,7 +81,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         public ActionResult LogOut()
         {
             HttpContext.Session.Add<UserLogin>(CommonConstants.USER_LOGIN_SESSION, null);
-            return Redirect("/quan-tri/dang-nhap");
+            return Redirect(CommonConstants.ROUTE_QUAN_TRI_DANG_NHAP_PARAMS);
         }
     }
 }

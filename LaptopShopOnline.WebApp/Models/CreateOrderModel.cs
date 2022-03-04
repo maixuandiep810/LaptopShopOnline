@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LaptopShopOnline.Model.ViewModels
+namespace LaptopShopOnline.WebApp.Models
 {
-    public class CreateOrderViewModel
+    public class CreateOrderModel
     {
         public Order Order { get; set; }
         public List<Cart> Carts { get; set; }

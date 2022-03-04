@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LaptopShopOnline.WebApp.Areas.Admin.Models
 {
-    public class LoginViewModel
+    public class AdminLoginModel
     {
         [Required(ErrorMessage = "Bạn chưa nhập User Name")]
         [Display(Name = "Tên đăng nhập")]
@@ -17,8 +17,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Models
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Bạn chưa chọn Nhóm người dùng")]
-        [Display(Name = "UserGroup")]
-        public string UserGroupId { get; set; }
+        [Display(Name = "Nhóm người dùng")]
+        public string UserGroupIdPrefix { get; set; }
 
 
 

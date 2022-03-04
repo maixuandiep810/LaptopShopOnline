@@ -29,50 +29,15 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
         // GET: Admin/Users
         [HasCredential(RoleId = "VIEW_AUTH")]
-        public ActionResult Index(string sortOrder, string currentFilter, int? page, string searchString)
+        public ActionResult Index(int? page)
         {
             CountMessage();
             CountProduct();
             CountOrder();
-            ViewBag.UserNameSortParm = String.IsNullOrEmpty(sortOrder) ? "username_desc" : "UserName";
-            ViewBag.LastNameSortParm = sortOrder == "LastName" ? "lastname_desc" : "LastName";
-            var user = _serviceWrapper.Db.User.Include(u => u.UserGroup).Select(p => p);
+            var user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false).Include(u => u.UserGroup).Select(p => p);
 
-            //Search
-            if (searchString == null)
-            {
-                page = 1;
-            }
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                user = user.Where(s => s.UserName.Contains(searchString)
-                    || s.LastName.Contains(searchString));
-            }
-            //Sort
-            switch (sortOrder)
-            {
-                case "username_desc":
-                    user = user.OrderByDescending(s => s.UserName);
-                    break;
-                case "UserName":
-                    user = user.OrderBy(s => s.UserName);
-                    break;
-                case "LastName":
-                    user = user.OrderBy(s => s.LastName);
-                    break;
-                case "lastname_desc":
-                    user = user.OrderByDescending(s => s.LastName);
-                    break;
-                default:
-                    user = user.OrderBy(s => s.UserName);
-                    sortOrder = "UserName";
-                    break;
-            }
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            ViewBag.SearchString = searchString;
-            ViewBag.CurrentSort = sortOrder;
             return View(user.ToPagedList(pageNumber, pageSize));
         }
 
@@ -84,11 +49,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [HasCredential(RoleId = "VIEW_AUTH")]
         public ActionResult Details(Guid? id)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             if (id == null)
             {
                 return BadRequest();
             }
-            User user = _serviceWrapper.Db.User.Find(id);
+            User user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false && u.Id == id).Include(u => u.UserGroup).Select(p => p).FirstOrDefault();
             if (user == null)
             {
                 return NotFound();
@@ -110,11 +78,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name");
             return View();
         }
-
-
-
-
-
         // POST: Admin/Users/Create
         [HasCredential(RoleId = "ADD_AUTH")]
         [HttpPost]
@@ -134,10 +97,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 else
                 {
                     user.Id = Guid.NewGuid();
-                    var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-                    AuditTable.InsertAuditFields(user, userLoginSession.UserName);
+                    AuditTable.InsertAuditFields(user, _userLoginSession?.UserName);
                     user.Password = Encryptor.MD5Hash(user.Password);
-                    user.ConfirmPassword = Encryptor.MD5Hash(user.ConfirmPassword);
                     _serviceWrapper.Db.User.Add(user);
                     _serviceWrapper.Db.SaveChanges();
                     SetAlert("Thêm mới thành công", "success");
@@ -163,7 +124,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            User user = _serviceWrapper.Db.User.Find(id);
+            User user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false && u.Id == id).Include(u => u.UserGroup).Select(p => p).FirstOrDefault();
             if (user == null)
             {
                 return NotFound();
@@ -177,12 +138,18 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(User user)
         {
+            CountMessage();
+            CountProduct();
+            CountOrder();
             if (ModelState.IsValid)
             {
-                var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-                AuditTable.UpdateAuditFields(user, userLoginSession.UserName);
+                User oldUser = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false && u.Id == user.Id).Include(u => u.UserGroup).Select(p => p).FirstOrDefault();
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                AuditTable.UpdateAuditFields(user, _userLoginSession?.UserName);
                 user.Password = Encryptor.MD5Hash(user.Password);
-                user.ConfirmPassword = Encryptor.MD5Hash(user.ConfirmPassword);
                 _serviceWrapper.Db.Entry(user).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
@@ -191,6 +158,21 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.GroupId);
             return View(user);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -211,18 +193,21 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(user);
         }
-
-
-
-
-
         // POST: Admin/Users/Delete/5
         [HasCredential(RoleId = "DELETE_AUTH")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(Guid? id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
             User user = _serviceWrapper.Db.User.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
             user.IsDeleted = true;
             _serviceWrapper.Db.SaveChanges();
             return Redirect("/quan-tri/tai-khoan-nguoi-dung");

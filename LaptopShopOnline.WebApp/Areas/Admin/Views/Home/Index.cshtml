@@ -1,5 +1,4 @@
-﻿@using LaptopShopOnline.Common
-@using LaptopShopOnline.WebApp.Common
+﻿@using LaptopShopOnline.WebApp.Common
 
 
 @{
@@ -46,12 +45,12 @@
                     </div>
                 </div>
             </a>
-            <a href="/quan-tri/quan-ly-phan-quyen" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
+            <a href="@CommonConstants.ROUTE_QUAN_TRI_QUYEN_PARAMS" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-4">
-                                <div class="text-sm font-weight-bold text-info ">Quản lý phân quyền</div>
+                                <div class="text-sm font-weight-bold text-info ">Quyền</div>
                                 <div class="text-sm font-weight-bold text-info ">@ViewBag.CountRole</div>
                             </div>
                             <div class="col-auto">

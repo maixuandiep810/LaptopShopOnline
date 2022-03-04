@@ -1,5 +1,7 @@
-﻿@using LaptopShopOnline.Common
+﻿
 @using LaptopShopOnline.WebApp.Common
+@using System.Text.RegularExpressions
+
 
 @{
     var userLoginSession = Context.Session.Get<UserLogin>(LaptopShopOnline.Common.CommonConstants.USER_LOGIN_SESSION);
@@ -85,32 +87,32 @@
         </li>
 
         <!-- Nav Item - Alerts -->
-        @if (userLoginSession?.GroupId == CommonConstants.ADMIN_GROUP || userLoginSession?.GroupId == CommonConstants.MOD_GROUP)
+        @if (userLoginSession != null && Regex.IsMatch(userLoginSession.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_MANAGER))
         {
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">@TempData["cms"]</span>
-            </a>
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    Phản hồi khách hàng
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="/quan-tri/phan-hoi-y-kien-khach-hang">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <span class="font-weight-bold">
-                            Bạn nhận được @TempData["cms"] phản hồi từ khách hàng
-                        </span>
-                    </div>
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-bell fa-fw"></i>
+                    <!-- Counter - Alerts -->
+                    <span class="badge badge-danger badge-counter">@TempData["cms"]</span>
                 </a>
-            </div>
-        </li>
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                    <h6 class="dropdown-header">
+                        Phản hồi khách hàng
+                    </h6>
+                    <a class="dropdown-item d-flex align-items-center" href="/quan-tri/phan-hoi-y-kien-khach-hang">
+                        <div class="mr-3">
+                            <div class="icon-circle bg-primary">
+                                <i class="fas fa-file-alt text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-weight-bold">
+                                Bạn nhận được @TempData["cms"] phản hồi từ khách hàng
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </li>
         }
 
         <!-- Nav Item - Alerts -->
@@ -200,7 +202,7 @@
             <div class="modal-body">Bạn có muốn đăng xuất?</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Thoát</button>
-                <a class="btn btn-primary" href="/quan-tri/dang-xuat">Đồng ý</a>
+                <a class="btn btn-primary" href="@CommonConstants.ROUTE_QUAN_TRI_DANG_XUAT_PARAMS">Đồng ý</a>
             </div>
         </div>
     </div>

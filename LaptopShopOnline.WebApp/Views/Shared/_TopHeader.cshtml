@@ -1,10 +1,11 @@
-﻿@using LaptopShopOnline.Common
+﻿
 @using LaptopShopOnline.WebApp.Common
 
 
 @{
     var userLoginSession = Context.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
 }
+
 <div class="top-component">
     <div class="float-left">
         <p>Bạn cần hỗ trợ? <span class="text-danger"> Gọi cho chúng tôi: </span><a href="#"> 0388.333.444</a></p>
@@ -37,7 +38,7 @@
                 </div>
             </div>
             <div class="col-md-4 top-header-middle">
-                <a href="/trang-chu"><img src="~/Content1/Admin/images/logo_4.png" alt="" /></a>
+                <a href="/trang-chu"><img src="~/Content/Client/images/LogoBKTech_01.png" alt="LOGO BKTech" /></a>
             </div>
             <div class="col-md-4 top-header-right">
                 @if (userLoginSession != null)

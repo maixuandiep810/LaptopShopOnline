@@ -28,7 +28,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
         // GET: Cart
-        [HasCredential(RoleId = "BUYER_ROLE")]
+        //[HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Index()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -37,7 +37,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-        [HasCredential(RoleId = "BUYER_ROLE")]
+        //[HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Add(Guid? productId, int quantity)
         {
             if (quantity <= 0)
@@ -77,7 +77,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             }
         }
 
-        [HasCredential(RoleId = "BUYER_ROLE")]
+        //[HasCredential(RoleId = "BUYER_ROLE")]
         [HttpPost]
         public ActionResult Edit(Cart cart)
         {
@@ -99,7 +99,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-        [HasCredential(RoleId = "BUYER_ROLE")]
+        //[HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Delete(Guid? id) {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (id == null)

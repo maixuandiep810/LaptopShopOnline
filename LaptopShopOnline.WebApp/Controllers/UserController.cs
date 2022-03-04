@@ -47,7 +47,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), CommonConstants.BUYER_GROUP);
+                var result = _serviceWrapper.UserService.Login(model.UserName, Encryptor.MD5Hash(model.Password), CommonConstants.USER_GROUP_ID_PREFIX_BUYER);
                 switch (result)
                 {
                     case 1:
@@ -68,10 +68,8 @@ namespace LaptopShopOnline.WebApp.Controllers
                         ModelState.AddModelError("", "Tài khoản đang bị khóa");
                         break;
                     case -2:
-                        ModelState.AddModelError("", "Mật khẩu không đúng");
-                        break;
                     case -3:
-                        ModelState.AddModelError("", "Tài khoản không đúng.");
+                        ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
                         break;
                     default:
                         ModelState.AddModelError("", "Đăng nhập không đúng");

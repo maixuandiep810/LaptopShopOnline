@@ -42,8 +42,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.CountNewsCategory = _serviceWrapper.Db.NewsCategory.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountMenu = _serviceWrapper.Db.Menu.Where(x => x.IsDeleted == false && x.ParentId == null).Count();
             ViewBag.CountOrder = _serviceWrapper.Db.Order.Where(x => x.IsDeleted == false).Count();
-            //tong tien ban
-            //var sumPrice = _serviceWrapper.Db.OrderDetail.Where(x => x.IsDeleted == false).Sum(i => i.Price * i.Quantity);
             var result = from o in _serviceWrapper.Db.OrderDetail
                          join p in _serviceWrapper.Db.Product on o.ProductId equals p.Id
                          where o.IsDeleted == false
@@ -95,38 +93,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         //    Response.Flush();
         //    Response.End();
         //    return View();
-        //}
-
-
-
-        //public JsonResult Chart(int year)
-        //{
-        //    List<decimal> price = new List<decimal>();
-        //    List<decimal> stock = new List<decimal>();
-        //    Dictionary<string, List<decimal>> result = new Dictionary<string, List<decimal>>();
-
-        //    for (int month = 1; month <= 12; month++)
-        //    {
-        //        var priceByMonth = _serviceWrapper.Db.OrderDetail
-        //            .Where(x => !x.IsDeleted && x.CreatedOn.Value.Month == month && x.CreatedOn.Value.Year == year)
-        //            .Sum(x => x.Quantity * x.Price);
-
-        //        price.Add(priceByMonth == null ? 0 : priceByMonth.Value);
-        //        var stockByMonth = (from o in _serviceWrapper.Db.OrderDetail
-        //                            join p in _serviceWrapper.Db.Product
-        //                            on o.ProductId equals p.Id
-        //                            where o.IsDeleted == false && o.CreatedOn.Value.Year == year && o.CreatedOn.Value.Month == month
-        //                            select new
-        //                            {
-        //                                Quantity = o.Quantity,
-        //                                Stock = p.Code
-        //                            }).Sum(x => x.Quantity * x.Stock);
-        //        stock.Add(stockByMonth == null ? 0 : stockByMonth.Value);
-        //    }
-        //    result.Add("price", price);
-        //    result.Add("stock", stock);
-        //    return Json(new { data = result },
-        //        JsonRequestBehavior.AllowGet);
         //}
     }
 

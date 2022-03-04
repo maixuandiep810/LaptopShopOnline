@@ -18,6 +18,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using LaptopShopOnline.Common;
 
 namespace LaptopShopOnline.WebApp
 {
@@ -118,7 +119,7 @@ namespace LaptopShopOnline.WebApp
                 endpoints.MapAreaControllerRoute(
                     areaName: "Admin",
                     name: "Admin_Default",
-                    pattern: "quan-tri/",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI,
                     defaults: new { area = "Admin", controller = "Home", action = "Index" },
                     dataTokens: new { area = "Admin" }
                     );
@@ -130,30 +131,27 @@ namespace LaptopShopOnline.WebApp
                 //  ADMIN AREA AUTH
                 //
 
-                //endpoints.MapRoute(
-                //    name: "Admin",
-                //    url: "quan-tri",
-                //    defaults: new { controller = "Login", action = "Login", id = null },
-                //    namespaces: new[] { "LaptopShopOnline.WebApp.Areas.Admin.Controllers" }
-                //).DataTokens["area"] = "Admin";
-                //endpoints.MapRoute(
-                //    name: "Admin-Home",
-                //    url: "quan-tri/trang-chu",
-                //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                //    namespaces: new[] { "LaptopShopOnline.WebApp.Areas.Admin.Controllers" }
-                //).DataTokens["area"] = "Admin";
+
+
+
+                // Login in Admin Areas
+                endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI,
+                    defaults: new { area = "Admin", controller = "Home", action = "Index" },
+                    dataTokens: new { area = "Admin" });
 
                 // Login in Admin Areas
                 endpoints.MapControllerRoute(
                     name: "Admin-Login",
-                    pattern: "quan-tri/dang-nhap",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_DANG_NHAP,
                     defaults: new { area = "Admin", controller = "Login", action = "Login" },
                     dataTokens: new { area = "Admin" });
 
                 ///LogOut in Admin Areas
                 endpoints.MapControllerRoute(
                     name: "Admin-Logout",
-                    pattern: "quan-tri/dang-xuat",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_DANG_XUAT,
                     defaults: new { area = "Admin", controller = "Login", action = "LogOut" },
                     dataTokens: new { area = "Admin" });
 
@@ -191,6 +189,13 @@ namespace LaptopShopOnline.WebApp
                     defaults: new { area = "Admin", controller = "Users", action = "Edit" },
                     dataTokens: new { area = "Admin" });
 
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Account-Edit",
+                    pattern: "quan-tri/tai-khoan-nguoi-dung/xoa",
+                    defaults: new { area = "Admin", controller = "Users", action = "Delete" },
+                    dataTokens: new { area = "Admin" });
+
 
 
                 //
@@ -200,28 +205,28 @@ namespace LaptopShopOnline.WebApp
                 //
                 endpoints.MapControllerRoute(
                     name: "Admin-Role",
-                    pattern: "quan-tri/quan-ly-phan-quyen",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_QUYEN,
                     defaults: new { area = "Admin", controller = "Roles", action = "Index" },
                     dataTokens: new { area = "Admin" });
 
                 //
                 endpoints.MapControllerRoute(
-                    name: "Admin-Role",
-                    pattern: "quan-tri/quan-ly-phan-quyen/{id:regex(^(?!((them-moi)|(cap-nhat))$).*)?}",
+                    name: "Admin-Role-Details",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_QUYEN_CHI_TIET,
                     defaults: new { area = "Admin", controller = "Roles", action = "Details" },
                     dataTokens: new { area = "Admin" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Admin-Role-Create",
-                    pattern: "quan-tri/quan-ly-phan-quyen/them-moi",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_QUYEN_THEM_MOI,
                     defaults: new { area = "Admin", controller = "Roles", action = "Create" },
                     dataTokens: new { area = "Admin" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Admin-Role-Edit",
-                    pattern: "quan-tri/quan-ly-phan-quyen/cap-nhat",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_QUYEN_CAP_NHAT,
                     defaults: new { area = "Admin", controller = "Roles", action = "Edit" },
                     dataTokens: new { area = "Admin" });
 

@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laptop Thanh Vân</title>
+    <title>BKTech</title>
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
     <link href="~/Content/Client/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <!-- Custom Theme files -->
@@ -50,9 +50,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 </head>
 <body id="top">
+
+
     <!--top-header-->
     @Html.Partial("_TopHeader.cshtml")
     <!--top-header-->
+
+
     <!--bottom-header-->
     @await Component.InvokeAsync("MainMenu")
 
@@ -66,18 +70,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
     }
     <!--bottom-header-->
+
+
     <!--Body-->
     <div id="body">
         @RenderBody()
     </div>
     <!--End body-->
+
+
     <!--start-footer-->
     @Html.Partial("_Contact.cshtml")
     <!--end-footer-->
+
     <!--end-footer-text-->
     @Html.Partial("_Footer.cshtml")
 
+
     <a href="#top" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+    
+    
     <script type="text/javascript">
         $(document).ready(function () {
             /*

@@ -40,10 +40,10 @@ namespace LaptopShopOnline.WebApp.Common
 
             List<string> privilegeLevels = this.GetCredentialByLoggedInUser(filterContext, userLoginSession.UserName); // Call another method to get rights of the user from DB
 
-            if (privilegeLevels.Contains(RoleId) || userLoginSession.GroupId == CommonConstants.ADMIN_GROUP)
+            if (privilegeLevels.Contains(RoleId))
             {
                 return;
-            }
+            }   
             else
             {
                 filterContext.Result = new ViewResult

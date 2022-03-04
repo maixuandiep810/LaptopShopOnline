@@ -1,6 +1,5 @@
 ﻿using LaptopShopOnline.Common;
 using LaptopShopOnline.Model.Entities;
-using LaptopShopOnline.Model.ViewModels;
 using LaptopShopOnline.Service;
 using LaptopShopOnline.WebApp.Common;
 using LaptopShopOnline.WebApp.Models;
@@ -29,7 +28,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
         // GET: Admin/Products
-        [HasCredential(RoleId = "BUYER_ROLE")]
+        //[HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             //paged
@@ -83,11 +82,11 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        [HasCredential(RoleId = "BUYER_ROLE")]
+        //[HasCredential(RoleId = "BUYER_ROLE")]
         public ActionResult Create(Guid? cartId, Guid? shopId, bool shouldOrderAll)
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var createOrderVM = new CreateOrderViewModel();
+            var createOrderVM = new CreateOrderModel();
             if (shouldOrderAll)
             {
                 createOrderVM.Carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
@@ -106,7 +105,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             return View(createOrderVM);
         }
         //
-        [HasCredential(RoleId = "BUYER_ROLE")]
+        //[HasCredential(RoleId = "BUYER_ROLE")]
         [HttpPost]
         public ActionResult Create([FromForm] Order order, Guid? cartId, Guid? shopId, bool shouldOrderAll)
         {
@@ -161,7 +160,7 @@ namespace LaptopShopOnline.WebApp.Controllers
                     SetAlert("Bạn đã đặt hàng thành công", "success");
                     return Redirect("/don-hang");
                 }
-                var createOrderVM = new CreateOrderViewModel();
+                var createOrderVM = new CreateOrderModel();
                 createOrderVM.Carts = carts;
                 createOrderVM.Order = order;
                 return View(createOrderVM);
