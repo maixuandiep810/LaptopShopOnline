@@ -56,7 +56,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Số lượng đã bán")]
         public int? QuantityOfSoldProduct { get; set; }
 
-        [Display(Name = "Loại sản phẩm")]
+        [Display(Name = "Danh mục sản phẩm")]
         public Guid? ProductCategoryId { get; set; }
 
         [Column(TypeName = "ntext")]

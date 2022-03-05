@@ -178,7 +178,7 @@
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="/quan-tri/tai-khoan-nguoi-dung/cap-nhat?id=@userLoginSession.UserId">
+                <a class="dropdown-item" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = userLoginSession.UserId })>
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Hồ sơ
                 </a>

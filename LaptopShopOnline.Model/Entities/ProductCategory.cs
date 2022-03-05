@@ -25,7 +25,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Tên")]
         public string Name { get; set; }
 
-        public int? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
 
         [Display(Name = "Thứ tự")]

@@ -43,9 +43,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         // GET: Admin/ProductCategories/Details/5
         public ActionResult Details(Guid? id)
         {
-            CountMessage();
-            CountProduct();
-            CountOrder();
             if (id == null)
             {
                 return BadRequest();
@@ -68,7 +65,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountMessage();
             CountOrder();
             CountProduct();
-            ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
+            ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
             return View();
         }
         // POST: Admin/ProductCategories/Create
@@ -76,9 +73,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductCategory productCategory)
         {
-            CountMessage();
-            CountOrder();
-            CountProduct();
             if (ModelState.IsValid)
             {
                 productCategory.Id = Guid.NewGuid();
@@ -87,7 +81,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.ProductCategory.Add(productCategory);
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect("/quan-tri/loai-san-pham");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_DANH_MUC_SAN_PHAM_PARAMS);
             }
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
             return View(productCategory);
@@ -112,7 +106,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
+            ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
             return View(productCategory);
         }
         // POST: Admin/ProductCategories/Edit/5
@@ -120,9 +114,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProductCategory productCategory)
         {
-            CountMessage();
-            CountOrder();
-            CountProduct();
             if (ModelState.IsValid)
             {
                 var oldProductCategory = _serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false && x.Id == productCategory.Id).FirstOrDefault();
@@ -135,7 +126,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Entry(productCategory).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/loai-san-pham");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_DANH_MUC_SAN_PHAM_PARAMS);
             }
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
             return View(productCategory);
@@ -144,36 +135,19 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         // GET: Admin/ProductCategories/Delete/5
         public ActionResult Delete(Guid? id)
         {
-            var existProduct = _serviceWrapper.Db.Product.Where(x => x.ProductCategoryId == id && x.IsDeleted == false);
-            if (existProduct != null)
-            {
-                return PartialView("_Delete");
-            }
             if (id == null)
             {
-                return BadRequest();
+                return PartialView("_Delete");
             }
             ProductCategory productCategory = _serviceWrapper.Db.ProductCategory.Find(id);
             if (productCategory == null)
             {
-                return NotFound();
+                return PartialView("_Delete");
             }
-            return View(productCategory);
+            return PartialView();
         }
         // POST: Admin/ProductCategories/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -184,7 +158,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             productCategory.IsDeleted = true;
             _serviceWrapper.Db.SaveChanges();
             SetAlert("Xóa thành công", "success");
-            return Redirect("/quan-tri/loai-san-pham");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_DANH_MUC_SAN_PHAM_PARAMS);
         }
     }
 }

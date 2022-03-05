@@ -18,7 +18,7 @@
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <div class="form-group">
-                        <a href="/quan-tri/tai-khoan-nguoi-dung/them-moi" class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
+                        <a href=@CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_THEM_MOI_PARAMS class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
                     </div>
                 <thead>
                     <tr>
@@ -63,12 +63,12 @@
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
                             <td>
-                                <a href="#" class="btn-user btn btn-primary btn-sm" data-id="@item.Id">@(item.IsDeleted ? "Khóa" : "Hoạt động")</a>
+                                <a class="btn btn-primary btn-sm dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_XOA_PARAMS, new {id = item.Id})>@(item.IsDeleted ? "Khóa" : "Hoạt động")</a>
                             </td>
                             <td>
-                                <a class="btn-sm btn-group-sm btn-success" href="/quan-tri/tai-khoan-nguoi-dung/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
-                                <a class="btn-sm btn-group-sm btn-secondary dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>
-                                @*<a class="btn-sm btn-group-sm btn-danger dialog-link" href="@Url.Action("Delete", new { id = item.Id })"><i class="far fa-trash-alt"></i></a>*@
+                                <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new {id = item.Id})><i class="far fa-edit"></i></a>
+                                <a class="btn-sm btn-group-sm btn-secondary dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CHI_TIET_PARAMS, new {id = item.Id})><i class="fas fa-info"></i></a>
+                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_XOA_PARAMS, new {id = item.Id})><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         i++;

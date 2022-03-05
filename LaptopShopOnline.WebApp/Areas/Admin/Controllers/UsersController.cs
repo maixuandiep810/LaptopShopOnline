@@ -28,14 +28,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users
-        [HasCredential(RoleId = "VIEW_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
         public ActionResult Index(int? page)
         {
             CountMessage();
             CountProduct();
             CountOrder();
             var user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false).Include(u => u.UserGroup).Select(p => p);
-
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(user.ToPagedList(pageNumber, pageSize));
@@ -46,7 +45,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Details/5
-        [HasCredential(RoleId = "VIEW_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
         public ActionResult Details(Guid? id)
         {
             CountMessage();
@@ -69,7 +68,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Create
-        [HasCredential(RoleId = "ADD_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
@@ -79,7 +78,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View();
         }
         // POST: Admin/Users/Create
-        [HasCredential(RoleId = "ADD_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
@@ -102,7 +101,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     _serviceWrapper.Db.User.Add(user);
                     _serviceWrapper.Db.SaveChanges();
                     SetAlert("Thêm mới thành công", "success");
-                    return Redirect("/quan-tri/tai-khoan-nguoi-dung");
+                    return Redirect(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS);
                 }
             }
             ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.GroupId);
@@ -114,7 +113,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Edit/5
-        [HasCredential(RoleId = "EDIT_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
         public ActionResult Edit(Guid? id)
         {
             CountMessage();
@@ -133,7 +132,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View(user);
         }
         // POST: Admin/Users/Edit/5
-        [HasCredential(RoleId = "EDIT_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(User user)
@@ -149,11 +148,10 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     return NotFound();
                 }
                 AuditTable.UpdateAuditFields(user, _userLoginSession?.UserName);
-                user.Password = Encryptor.MD5Hash(user.Password);
                 _serviceWrapper.Db.Entry(user).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/tai-khoan-nguoi-dung");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS);
             }
             ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.GroupId);
             return View(user);
@@ -179,22 +177,22 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Delete/5
-        [HasCredential(RoleId = "DELETE_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
-                return BadRequest();
+                return PartialView("_Delete");
             }
-            User user = _serviceWrapper.Db.User.Find(id);
+            User user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false && u.Id == id).Include(u => u.UserGroup).Select(p => p).FirstOrDefault();
             if (user == null)
             {
-                return NotFound();
+                return PartialView("_Delete");
             }
-            return View(user);
+            return PartialView();
         }
         // POST: Admin/Users/Delete/5
-        [HasCredential(RoleId = "DELETE_AUTH")]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid? id)
@@ -203,26 +201,28 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            User user = _serviceWrapper.Db.User.Find(id);
+            User user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false && u.Id == id).Include(u => u.UserGroup).Select(p => p).FirstOrDefault();
             if (user == null)
             {
                 return NotFound();
             }
             user.IsDeleted = true;
             _serviceWrapper.Db.SaveChanges();
-            return Redirect("/quan-tri/tai-khoan-nguoi-dung");
+            return Redirect(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS);
         }
 
 
 
-        //Change status order
-        public JsonResult ChangeStatus(Guid? id)
-        {
-            var result = _serviceWrapper.UserService.ChangeStatus(id);
-            return Json(new
-            {
-                status = result
-            });
-        }
+
+
+        ////Change status order
+        //public JsonResult ChangeStatus(Guid? id)
+        //{
+        //    var result = _serviceWrapper.UserService.ChangeStatus(id);
+        //    return Json(new
+        //    {
+        //        status = result
+        //    });
+        //}
     }
 }
