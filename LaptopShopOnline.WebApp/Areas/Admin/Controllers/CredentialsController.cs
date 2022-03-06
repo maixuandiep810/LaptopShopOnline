@@ -31,7 +31,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Index()
         {
             CountMessage();
@@ -42,7 +42,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View(credentials);
         }
         // GET: Admin/Credentials/Details/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Details(string userGroupId, string roleId)
         {
             if (String.IsNullOrEmpty(userGroupId) || String.IsNullOrEmpty(roleId))
@@ -60,7 +60,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
@@ -71,7 +71,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View();
         }
         // POST: Admin/Credentials/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromForm] Credential credential)
@@ -92,7 +92,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Credentials/Delete/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_DELETE_ID)]
         public ActionResult Delete(string userGroupId, string roleId)
         {
             if (userGroupId == null || roleId == null)
@@ -107,7 +107,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View(credential);
         }
         // POST: Admin/Credentials/Delete/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string userGroupId, string roleId)

@@ -28,6 +28,7 @@ namespace LaptopShopOnline.Service
         private IImageService _imageService;
         private IUserService _userService;
         private IOrderService _orderService;
+        private IProductService _productService;
 
 
 
@@ -67,6 +68,18 @@ namespace LaptopShopOnline.Service
                     _orderService = (OrderService)ActivatorUtilities.CreateInstance(_serviceProvider, typeof(OrderService));
                 }
                 return _orderService;
+            }
+        }
+
+        public IProductService ProductService
+        {
+            get
+            {
+                if (_productService == null)
+                {
+                    _productService = (ProductService)ActivatorUtilities.CreateInstance(_serviceProvider, typeof(ProductService));
+                }
+                return _productService;
             }
         }
     }

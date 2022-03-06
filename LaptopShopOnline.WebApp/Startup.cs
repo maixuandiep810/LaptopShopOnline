@@ -307,35 +307,42 @@ namespace LaptopShopOnline.WebApp
                 //
                 endpoints.MapControllerRoute(
                     name: "Admin-Shop",
-                    pattern: "quan-tri/quan-ly-cua-hang",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_CUA_HANG,
                     defaults: new { area = "Admin", controller = "Shops", action = "Index" },
                     dataTokens: new { area = "Admin" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Admin-Shop",
-                    pattern: "quan-tri/quan-ly-cua-hang/{id:regex(^(?!((them-moi)|(cap-nhat))$).*)?}",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CHI_TIET,
                     defaults: new { area = "Admin", controller = "Shops", action = "Details" },
                     dataTokens: new { area = "Admin" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Admin-Shop-Create",
-                    pattern: "quan-tri/quan-ly-cua-hang/them-moi",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_THEM_MOI,
                     defaults: new { area = "Admin", controller = "Shops", action = "Create" },
                     dataTokens: new { area = "Admin" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Admin-Shop-Edit",
-                    pattern: "quan-tri/quan-ly-cua-hang/cap-nhat",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CAP_NHAT,
                     defaults: new { area = "Admin", controller = "Shops", action = "Edit" },
+                    dataTokens: new { area = "Admin" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Admin-Seller-Shop-Edit",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_XOA,
+                    defaults: new { area = "Admin", controller = "Shops", action = "Delete" },
                     dataTokens: new { area = "Admin" });
 
                 //  S
                 endpoints.MapControllerRoute(
                     name: "Admin-Seller-Shop-Edit",
-                    pattern: "quan-tri/nguoi-ban/quan-ly-cua-hang",
+                    pattern: CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CAP_NHAT_SG_PARAMS,
                     defaults: new { area = "Admin", controller = "Shops", action = "EditSG" },
                     dataTokens: new { area = "Admin" });
 

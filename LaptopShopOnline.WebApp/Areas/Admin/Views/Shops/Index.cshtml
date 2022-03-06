@@ -18,18 +18,27 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <div class="form-group">
-                        <a href="/quan-tri/quan-ly-cua-hang/them-moi" class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
-                    </div
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_QUAN_TRI_CUA_HANG }))
+                {
+                <div class="form-group">
+                    @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
+                    <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+                    <a href=@CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_THEM_MOI_PARAMS class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i>Thêm mới</a>
+                </div>
+                }
                 <thead>
                     <tr>
-                        <th>
+                        <th style="width: 5%;">
                             STT
                         </th>
-                        <th style="width: 240px;">
+                        <th style="width: 40%;">
                             Tên cửa hàng
+                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.NameSortParm, page = 1, searchString = ViewBag.SearchString   })><i class="fas fa-sort text-dark"></i></a>
                         </th>
-                        <th class="text-center" style="width: 115px;"></th>
+                        <th style="width: 20%;">
+                            Người bán
+                        </th>
+                        <th class="text-center"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,10 +52,15 @@
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td>
-                                <a class="btn-sm btn-group-sm btn-success" href="/quan-tri/quan-ly-cua-hang/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
-                                <a class="btn-sm btn-group-sm btn-secondary dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>
-                                @*<a class="btn-sm btn-group-sm btn-danger dialog-link" href="@Url.Action("Delete", new { id = item.Id })"><i class="far fa-trash-alt"></i></a>*@
+                                <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.Id })>
+                                    @Html.DisplayFor(modelItem => item.SellerId)
+                                </a>
                             </td>
+                            <td>
+                                <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CAP_NHAT_PARAMS, new {id = item.Id})><i class="far fa-edit"></i></a>
+                                <a class="btn-sm btn-group-sm btn-secondary dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CHI_TIET_PARAMS, new { id = item.Id })><i class="fas fa-info"></i></a>
+                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_XOA_PARAMS, new { id = item.Id })><i class="far fa-trash-alt"></i></a>                  
+                                          </td>
                         </tr>
                         i++;
                     }
@@ -59,7 +73,7 @@
         </div>
         <div class="text-center">
             Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            @Html.PagedListPager(Model, page => Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.SortOrder, page = page, searchString = ViewBag.SearchString }))
         </div>
     </div>
 </div>

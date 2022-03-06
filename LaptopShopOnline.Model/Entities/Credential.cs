@@ -10,15 +10,17 @@ namespace LaptopShopOnline.Model.Entities
     [Serializable]
     public class Credential
     {
-        [Column(Order = 0)]
-        [StringLength(50)]
-        [Display(Name = "Nhóm")]
+        [Required(ErrorMessage = "Bạn chưa nhập mã nhóm người dùng")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Nhóm người dùng")]
         public string UserGroupId { get; set; }
 
 
-        [Column(Order = 1)]
-        [StringLength(50)]
-        [Display(Name = "Quyền")]
+        [Required(ErrorMessage = "Bạn chưa nhập mã quyền")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Quyền")]
         public string RoleId { get; set; }
 
 

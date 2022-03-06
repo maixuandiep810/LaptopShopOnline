@@ -33,7 +33,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Roles
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Index()
         {
             CountMessage();
@@ -43,7 +43,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Roles/Details/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -60,7 +60,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Roles/Edit/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_UPDATE_ID)]
         public ActionResult Edit(string id)
         {
             CountMessage();
@@ -79,7 +79,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
         // POST: Admin/Roles/Edit/5
 
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Role role)
@@ -103,7 +103,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         //// GET: Admin/Roles/Create
-        //[HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        //[HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]
         //public ActionResult Create()
         //{
         //    CountMessage();
@@ -112,7 +112,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         //    return View();
         //}
         //// POST: Admin/Roles/Create
-        //[HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        //[HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult Create(Role role)
@@ -134,7 +134,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         //// GET: Admin/Roles/Delete/5
-        //[HasCredential(RoleId = "DELETE_AUTH")]
+        //[HasCredential(RoleId = "DELETE_SYS")]
         //public ActionResult Delete(string id)
         //{
         //    var existCredential = _serviceWrapper.Db.Credentials.Where(x => x.RoleId == id).FirstOrDefault();
@@ -154,7 +154,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         //    return View(role);
         //}
         //// POST: Admin/Roles/Delete/5
-        //[HasCredential(RoleId = "DELETE_AUTH")]
+        //[HasCredential(RoleId = "DELETE_SYS")]
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
         //public ActionResult DeleteConfirmed(string id)

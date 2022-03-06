@@ -20,7 +20,8 @@ namespace LaptopShopOnline.Model.Entities
 
         public Guid Id { get; set; }
 
-        [StringLength(256)]
+        [Column(TypeName = "nvarchar(100)")]
+        [StringLength(100)]
         [Display(Name = "Tên shop")]
         [Required(ErrorMessage = "Bạn chưa nhập tên Shop")]
         public string Name { get; set; }
@@ -28,24 +29,35 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Người bán")]
         public Guid? SellerId { get; set; }
 
+        [Column(TypeName = "nvarchar(1000)")]
+        [StringLength(100)]
         [Display(Name = "Mô tả")]
         public string Description { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ảnh")]
+        [Column(TypeName = "varchar(1000)")]
+        [StringLength(1000)]
+        public string UrlImage { get; set; }
 
-        [Display(Name = "Ngày tạo")]
+        [Display(Name = "Trạng thái cửa hàng")]
+        public int ShopStatus { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người tạo")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người tạo")]
         public string CreatedBy { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày cập nhật")]
+        [Display(Name = "Ngày cập nhật")]
         public DateTimeOffset? ModifiedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người cập nhật")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
         [Display(Name = "Trạng thái Soft Delete")]

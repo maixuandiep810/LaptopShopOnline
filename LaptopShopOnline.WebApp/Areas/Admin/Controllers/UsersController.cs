@@ -28,16 +28,53 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
-        public ActionResult Index(int? page)
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
+        public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             CountMessage();
             CountProduct();
             CountOrder();
+
+            if (page == null || sortOrder == null)
+            {
+                page = page ?? 1;
+                sortOrder = sortOrder ?? "UserName";
+                searchString = searchString ?? "";
+                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_SEARCH_PARAMS, 
+                    new {sortOrder = sortOrder, page = page, searchString })));
+            }
+
+
+            //Sort order
+            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "user_name_desc" : "UserName";
+            ViewBag.SearchString = searchString;
+
             var user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false).Include(u => u.UserGroup).Select(p => p);
-            int pageSize = 10;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                user = user.Where(s => s.UserName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "UserName":
+                    user = user.OrderBy(s => s.UserName);
+                    break;
+                case "user_name_desc":
+                    user = user.OrderByDescending(s => s.UserName);
+                    break;
+                default:
+                    break;
+            }
+
+            ViewBag.SortOrder = sortOrder;
+
+            int pageSize = 2;
             int pageNumber = (page ?? 1);
+            // Đếm được số trang vì là IQueryable
             return View(user.ToPagedList(pageNumber, pageSize));
+            
         }
 
 
@@ -45,7 +82,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Details/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Details(Guid? id)
         {
             CountMessage();
@@ -68,17 +105,17 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
             CountProduct();
             CountOrder();
-            ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name");
+            ViewBag.UserGroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name");
             return View();
         }
         // POST: Admin/Users/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
@@ -104,7 +141,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     return Redirect(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS);
                 }
             }
-            ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.GroupId);
+            ViewBag.UserGroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.UserGroupId);
             return View(user);
         }
 
@@ -113,7 +150,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Edit/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_UPDATE_ID)]
         public ActionResult Edit(Guid? id)
         {
             CountMessage();
@@ -128,32 +165,26 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.GroupId);
+            user.ConfirmPassword = user.Password;
+            ViewBag.UserGroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.UserGroupId);
             return View(user);
         }
         // POST: Admin/Users/Edit/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(User user)
         {
-            CountMessage();
-            CountProduct();
-            CountOrder();
             if (ModelState.IsValid)
             {
-                User oldUser = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false && u.Id == user.Id).Include(u => u.UserGroup).Select(p => p).FirstOrDefault();
-                if (user == null)
-                {
-                    return NotFound();
-                }
                 AuditTable.UpdateAuditFields(user, _userLoginSession?.UserName);
                 _serviceWrapper.Db.Entry(user).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
                 return Redirect(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS);
             }
-            ViewBag.GroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.GroupId);
+            ViewBag.UserGroupId = new SelectList(_serviceWrapper.Db.UserGroup, "Id", "Name", user.UserGroupId);
+            SetAlert("Cập nhật lỗi", "danger");
             return View(user);
         }
 
@@ -177,7 +208,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Users/Delete/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_DELETE_ID)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -192,7 +223,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return PartialView();
         }
         // POST: Admin/Users/Delete/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid? id)

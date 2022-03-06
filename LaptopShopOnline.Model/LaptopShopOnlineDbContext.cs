@@ -58,6 +58,7 @@ namespace LaptopShopOnline.Model
 
             //  CREDENTIAL
             modelBuilder.Entity<Credential>().HasKey(p => new { p.UserGroupId, p.RoleId });
+
             modelBuilder.Entity<Credential>()
                 .HasOne(e => e.UserGroup)
                 .WithMany(e => e.Credentials)
@@ -69,67 +70,65 @@ namespace LaptopShopOnline.Model
 
 
 
-            //  LAYOUT
-            modelBuilder.Entity<NewsCategory>()
-                .Property(e => e.MetaTitle)
-                .IsUnicode(false);
+            ////  LAYOUT
+            //modelBuilder.Entity<NewsCategory>()
+            //    .Property(e => e.MetaTitle)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<News>()
-                .Property(e => e.MetaTitle)
-                .IsUnicode(false);
+            //modelBuilder.Entity<News>()
+            //    .Property(e => e.MetaTitle)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<News>()
-                .HasOne(e => e.NewsCategory)
-                .WithMany(e => e.News)
-                .HasForeignKey(e => e.NewsCategoryId);
+            //modelBuilder.Entity<News>()
+            //    .HasOne(e => e.NewsCategory)
+            //    .WithMany(e => e.News)
+            //    .HasForeignKey(e => e.NewsCategoryId);
 
-            modelBuilder.Entity<Feedback>()
-                .Property(e => e.Phone)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Feedback>()
+            //    .Property(e => e.Phone)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Feedback>()
-                .Property(e => e.Email)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Feedback>()
+            //    .Property(e => e.Email)
+            //    .IsUnicode(false);
 
 
 
 
             //  ORDER
-            modelBuilder.Entity<Order>()
-                .Property(e => e.ShipEmail)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Order>()
+            //    .Property(e => e.ShipEmail)
+            //    .IsUnicode(false);
 
 
 
             //  ORDER DETAIL
             modelBuilder.Entity<OrderDetail>()
-                .Property(e => e.Price)
-                .HasPrecision(18, 0);
+               .Property(e => e.Price)
+               .HasPrecision(18, 0);
 
             modelBuilder.Entity<OrderDetail>().HasKey(p => new { p.ProductId, p.OrderId });
             modelBuilder.Entity<OrderDetail>()
                 .HasOne(e => e.Product)
                 .WithMany()
-                .HasForeignKey(e => e.ProductId);
+                .HasForeignKey(e => e.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<OrderDetail>()
                 .HasOne(e => e.Order)
                 .WithMany(e => e.OrderDetails)
-                .HasForeignKey(e => e.OrderId);
+                .HasForeignKey(e => e.OrderId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
             //  PRODUCT
             modelBuilder.Entity<Product>()
-                .Property(e => e.Code)
-                .HasPrecision(18, 0);
+               .Property(e => e.Price)
+               .HasPrecision(18, 0);
 
             modelBuilder.Entity<Product>()
-                .Property(e => e.Price)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<Product>()
-                .Property(e => e.PromotionPrice)
-                .HasPrecision(18, 0);
+               .Property(e => e.PromotionPrice)
+               .HasPrecision(18, 0);
 
             //modelBuilder.Entity<Product>().Ignore(e => e.Image);
             //modelBuilder.Entity<Product>().Ignore(e => e.Sub1Image);
@@ -148,9 +147,9 @@ namespace LaptopShopOnline.Model
 
 
             // ROLE
-            modelBuilder.Entity<Role>()
-                .Property(e => e.Id)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Role>()
+            //    .Property(e => e.Id)
+            //    .IsUnicode(false);
 
 
 
@@ -160,7 +159,7 @@ namespace LaptopShopOnline.Model
 
             // USER
             modelBuilder.Entity<User>()
-                .Property(e => e.GroupId)
+                .Property(e => e.UserGroupId)
                 .IsUnicode(false);
 
             modelBuilder.Entity<User>()
@@ -182,7 +181,7 @@ namespace LaptopShopOnline.Model
             modelBuilder.Entity<User>()
                 .HasOne(e => e.UserGroup)
                 .WithMany(e => e.Users)
-                .HasForeignKey(e => e.GroupId);
+                .HasForeignKey(e => e.UserGroupId);
 
             modelBuilder.Entity<User>()
                 .HasOne(e => e.Shop)

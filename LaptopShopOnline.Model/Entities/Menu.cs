@@ -12,40 +12,45 @@ namespace LaptopShopOnline.Model.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Bạn chưa nhập tên menu")]
-        [StringLength(256)]
+        [Column(TypeName = "nvarchar(100)")]
+        [StringLength(100)]
         [Display(Name = "Tên")]
         public string MenuName { get; set; }
 
         [Display(Name = "Liên kết")]
-        [StringLength(256)]
+        [Column(TypeName = "varchar(1000)")]
+        [StringLength(1000)]
         [Required(ErrorMessage = "Bạn chưa nhập liên kết")]
         public string Link { get; set; }
 
         [Display(Name = "Thứ tự")]
-        public int? DisplayOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
         [Display(Name = "Menu cha")]
         public int? ParentId { get; set; }
 
         [Display(Name = "Kiểu sang trang")]
         [Required(ErrorMessage = "Bạn chưa nhập kiểu sang trang")]
-        [StringLength(256)]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)] 
         public string Target { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày tạo")]
+        [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người tạo")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người tạo")]
         public string CreatedBy { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày cập nhật")]
+        [Display(Name = "Ngày cập nhật")]
         public DateTimeOffset? ModifiedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người cập nhật")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
         [Display(Name = "Trạng thái Soft Delete")]

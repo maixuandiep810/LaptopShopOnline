@@ -10,40 +10,41 @@ namespace LaptopShopOnline.Model.Entities
     {
         public Guid Id { get; set; }
 
-        [Column(Order = 0)]
         [Display(Name = "Mã sản phẩm")]
         public Guid ProductId { get; set; }
 
-        [Column(Order = 1)]
+        [Display(Name = "Mã đơn hàng")]
         public Guid OrderId { get; set; }
 
         [Display(Name = "Số lượng")]
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [Display(Name = "Giá")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C0}")]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
         [Display(Name = "Thành tiền")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C0}")]
-        public decimal? Total => Price * Quantity;
+        public decimal Total => Price * Quantity;
 
-        [Display(Name = "Ngày tạo")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người tạo")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người tạo")]
         public string CreatedBy { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày cập nhật")]
+        [Display(Name = "Ngày cập nhật")]
         public DateTimeOffset? ModifiedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người cập nhật")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
         [Display(Name = "Trạng thái Soft Delete")]

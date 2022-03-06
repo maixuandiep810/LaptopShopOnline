@@ -238,9 +238,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     product.Sub2UrlImage = Path.Combine(_contentFolder, _serviceWrapper.ImageService.SaveImage(product.Sub2Image, _uploadFolder));
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect("/quan-tri/danh-muc-san-pham");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
             }
-
+                SetAlert("Thêm mới lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
             return View(product);
@@ -275,9 +275,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     product.Sub2UrlImage = Path.Combine(_contentFolder, _serviceWrapper.ImageService.SaveImage(product.Sub2Image, _uploadFolder));
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect("/quan-tri/nguoi-ban/danh-muc-san-pham");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
             }
-
+                SetAlert("Thêm mới lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             return View(product);
         }
@@ -319,8 +319,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Entry(product).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/danh-muc-san-pham");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
             }
+                SetAlert("Cập nhật lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
             return View(product);
@@ -360,8 +361,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Entry(product).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/nguoi-ban/danh-muc-san-pham");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
             }
+                SetAlert("Cập nhật lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             return View(product);
         }
@@ -375,12 +377,12 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return BadRequest();
+                return PartialView("_Delete");
             }
             Product product = _serviceWrapper.Db.Product.Find(id);
             if (product == null)
             {
-                return NotFound();
+                return PartialView("_Delete");
             }
             return View(product);
         }
@@ -393,7 +395,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             product.IsDeleted = true;
             _serviceWrapper.Db.SaveChanges();
             SetAlert("Xóa thành công", "success");
-            return Redirect("/quan-tri/danh-muc-san-pham");
+            return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
         }
     }
 }

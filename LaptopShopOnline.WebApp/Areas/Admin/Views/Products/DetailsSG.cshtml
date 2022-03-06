@@ -30,7 +30,7 @@
                         <td>
                             @Html.DisplayFor(model => model.ShopId)
                             <br>
-                            <a href="/quan-tri/nguoi-ban/quan-ly-cua-hang">Xem</a>
+                            <a href=@CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CAP_NHAT_SG_PARAMS>Xem</a>
                         </td>
                     </tr>
                     <tr>
@@ -58,8 +58,8 @@
                         <td>@Html.DisplayFor(model => model.Quantity)</td>
                     </tr>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.TopHot)</th>
-                        <td>@Html.DisplayFor(model => model.TopHot)</td>
+                        <th>@Html.DisplayNameFor(model => model.IsTopHot)</th>
+                        <td>@Html.DisplayFor(model => model.IsTopHot)</td>
                     </tr>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.IsNewProduct)</th>

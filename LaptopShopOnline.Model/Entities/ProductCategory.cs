@@ -8,7 +8,7 @@ namespace LaptopShopOnline.Model.Entities
 
 
     [Table("ProductCategory")]
-    public partial class ProductCategory : IAuditable
+    public class ProductCategory : IAuditable
     {
 
 
@@ -21,7 +21,9 @@ namespace LaptopShopOnline.Model.Entities
         public Guid Id { get; set; }
 
 
-        [StringLength(256)]
+        [Required(ErrorMessage = "Bạn chưa nhập Tên")]
+        [Column(TypeName = "nvarchar(100)")]
+        [StringLength(100)]
         [Display(Name = "Tên")]
         public string Name { get; set; }
 
@@ -31,9 +33,9 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Thứ tự")]
         public int? DisplayOrder { get; set; }
 
-
+        [Column(TypeName = "nvarchar(1000)")]
         [Display(Name = "Mô tả")]
-        [StringLength(256)]
+        [StringLength(1000)]
         public string Descriptions { get; set; }
 
 
@@ -41,18 +43,18 @@ namespace LaptopShopOnline.Model.Entities
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTimeOffset? CreatedOn { get; set; }
 
-
-        [StringLength(256)]
+        [Column(TypeName = "nvarchar(100)")]
+        [StringLength(100)]
         [Display(Name = "Người tạo")]
         public string CreatedBy { get; set; }
 
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngà cập nhật")]
+        [Display(Name = "Ngày cập nhật")]
         public DateTimeOffset? ModifiedOn { get; set; }
 
-
-        [StringLength(256)]
+        [Column(TypeName = "nvarchar(100)")]
+        [StringLength(100)]
         [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 

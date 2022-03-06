@@ -16,15 +16,16 @@ namespace LaptopShopOnline.Model.Entities
             Credentials = new HashSet<Credential>();
         }
 
-
-
-        [StringLength(50)]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
         [Display(Name = "Id")]
+        [Required(ErrorMessage = "Bạn chưa nhập Id")]
         public string Id { get; set; }
 
-
+        [Required(ErrorMessage = "Bạn chưa nhập Tên")]
+        [Column(TypeName = "varchar(100)")]
         [Display(Name = "Tên")]
-        [StringLength(256)]
+        [StringLength(100)]
         public string Name { get; set; }
 
 

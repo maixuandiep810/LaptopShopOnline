@@ -1,0 +1,50 @@
+USE [aspnet-LaptopShopOnline]
+GO
+INSERT [dbo].[User] ([Id], [GroupId], [UserName], [Password], [ConfirmPassword], [FirstName], [LastName], [Email], [ResetPasswordCode], [Address], [CreatedOn], [CreatedBy], [ModifiedOn], [ModifiedBy], [IsDeleted]) 
+VALUES 
+(
+N'b9c6d5c0-e616-40a0-9f04-202a371075b3', 
+N'ADMIN_DEFAULT', 
+N'admin', 
+N'202cb962ac59075b964b07152d234b70', 
+N'0192023a7bbd73250516f069df18b500', 
+N'Nguyễn', N'Anh', 
+N'admin@gmail.com', 
+NULL, 
+N'Đà Nẵng', 
+CAST(N'2019-04-21T15:31:55.0000000+07:00' AS DateTimeOffset), 
+NULL, 
+CAST(N'2022-02-18T20:29:15.1310553+07:00' AS DateTimeOffset), 
+N'admin', 
+0),
+(
+N'b9c6d5c0-e616-40a0-9f04-202a371d75a3', 
+N'ADMIN_DEFAULT', 
+N'admin', 
+N'202cb962ac59075b964b07152d234b70', 
+N'0192023a7bbd73250516f069df18b500', 
+N'nguyen van', N'A', 
+N'admin@gmail.com', 
+NULL, 
+N'Đà Nẵng', 
+CAST(N'2019-04-21T15:31:55.0000000+07:00' AS DateTimeOffset), 
+NULL, 
+CAST(N'2022-02-18T20:29:15.1310553+07:00' AS DateTimeOffset), 
+N'admin', 
+0),
+(
+N'b9c6d5c0-e616-40a0-9f04-202a371075b3', 
+N'ADMIN_DEFAULT', 
+N'admin', 
+N'202cb962ac59075b964b07152d234b70', 
+N'0192023a7bbd73250516f069df18b500', 
+N'nguyen van', N'A', 
+N'admin@gmail.com', 
+NULL, 
+N'Đà Nẵng', 
+CAST(N'2019-04-21T15:31:55.0000000+07:00' AS DateTimeOffset), 
+NULL, 
+CAST(N'2022-02-18T20:29:15.1310553+07:00' AS DateTimeOffset), 
+N'admin', 
+0)
+GO

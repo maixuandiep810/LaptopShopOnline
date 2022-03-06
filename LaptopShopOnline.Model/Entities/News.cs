@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,42 +16,46 @@ namespace LaptopShopOnline.Model.Entities
         [Required(ErrorMessage = "Bạn chưa nhập Tên")]
         public string Name { get; set; }
 
+        [Column(TypeName = "nvarchar(1000)")]
+        [StringLength(1000)]
+        [DisplayName("Tóm tắt")]
         public string Summary { get; set; }
 
-        [StringLength(256)]
-        public string MetaTitle { get; set; }
+        [Column(TypeName = "nvarchar(2000)")]
+        [StringLength(2000)]
+        [DisplayName("Nội dung")]
+        public string Content { get; set; }
 
-        public string Description { get; set; }
-
-        [StringLength(256)]
+        [Display(Name = "Ảnh")]
+        [Column(TypeName = "varchar(1000)")]
+        [StringLength(1000)]
         public string UrlImage { get; set; }
 
-        public Guid? NewsCategoryId { get; set; }
+        public Guid NewsCategoryId { get; set; }
 
-        public int? Warranty { get; set; }
-
-        [StringLength(256)]
-        public string MetaDescriptions { get; set; }
-
-        public DateTime? TopHot { get; set; }
+        public bool  IsTopHot { get; set; }
 
         public int? ViewCount { get; set; }
 
-        [StringLength(256)]
-        public string Tag { get; set; }
-
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày tạo")]
+        [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }
 
-        [StringLength(256)]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người tạo")]
         public string CreatedBy { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ngày cập nhật")]
         public DateTimeOffset? ModifiedOn { get; set; }
 
-        [StringLength(256)]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
+        [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
 
         public virtual NewsCategory NewsCategory { get; set; }

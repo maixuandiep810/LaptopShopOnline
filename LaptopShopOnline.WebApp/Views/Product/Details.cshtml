@@ -35,12 +35,12 @@
                 </p>
                 @if (Model.PromotionPrice > 0)
                 {
-                        <p><span class=""><strike>Giá gốc: @(Model.Price.Value.ToString("N0"))</strike></span></p>
+                        <p><span class=""><strike>Giá gốc: @(Model.Price.ToString("N0"))</strike></span></p>
                         <p><span>Chỉ còn: @(Model.PromotionPrice.Value.ToString("N0"))</span></p>
                 }
                 else
                 {
-                        <p><span>Giá: @(Model.Price.Value.ToString("N0"))</span></p>
+                        <p><span>Giá: @(Model.Price.ToString("N0"))</span></p>
                 }
                 <form action="/gio-hang/them-vao" method="post">
                     <input type="text" name="productId" value="@Model.Id" hidden />

@@ -48,7 +48,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                         userLoginSession.LastName = user.LastName;
                         userLoginSession.Email = user.Email;
                         userLoginSession.Address = user.Address;
-                        if (Regex.IsMatch(user.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER))
+                        if (Regex.IsMatch(user.UserGroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER))
                             userLoginSession.ShopId = _serviceWrapper.Db.Shop.Where(p => p.SellerId == user.Id).First().Id;
                         //Phan quyen dua tren userLoginSession_credential
                         var listCredentials = _serviceWrapper.UserService.GetListCredential(model.UserName);

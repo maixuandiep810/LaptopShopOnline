@@ -28,7 +28,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             //Sort order
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "Name";
+            ViewBag.NameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
             ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
             ViewBag.PromotionPriceSortParm = sortOrder == "PromotionPrice" ? "promotion_price_desc" : "PromotionPrice";
             ViewBag.QuantitySortParm = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
@@ -42,10 +42,9 @@ namespace LaptopShopOnline.WebApp.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 product = product.Where(s => s.Name.Contains(searchString)
-                    || s.Price.ToString().Contains(searchString)
-                    || s.PromotionPrice.ToString().Contains(searchString)
                     || s.ProductCategory.Name.Contains(searchString));
             }
+
             switch (sortOrder)
             {
                 case "Name":
@@ -81,6 +80,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.SearchString = searchString;
+            // Đếm được số trang vì là IQueryable
             return View(product.ToPagedList(pageNumber, pageSize));
         }
 

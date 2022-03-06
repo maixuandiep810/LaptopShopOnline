@@ -83,6 +83,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 SetAlert("Thêm mới thành công", "success");
                 return Redirect(CommonConstants.ROUTE_QUAN_TRI_DANH_MUC_SAN_PHAM_PARAMS);
             }
+                SetAlert("Thêm mới lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
             return View(productCategory);
         }
@@ -116,11 +117,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var oldProductCategory = _serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false && x.Id == productCategory.Id).FirstOrDefault();
-                if (oldProductCategory == null)
-                {
-                    return NotFound();
-                }
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
                 AuditTable.UpdateAuditFields(productCategory, userLoginSession.UserName);
                 _serviceWrapper.Db.Entry(productCategory).State = EntityState.Modified;
@@ -128,6 +124,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 SetAlert("Cập nhật thành công", "success");
                 return Redirect(CommonConstants.ROUTE_QUAN_TRI_DANH_MUC_SAN_PHAM_PARAMS);
             }
+                SetAlert("Thêm mới lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false), "Id", "ProductCategoryId");
             return View(productCategory);
         }

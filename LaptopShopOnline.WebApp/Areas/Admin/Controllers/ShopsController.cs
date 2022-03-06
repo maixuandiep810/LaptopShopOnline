@@ -30,15 +30,52 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/Products
-        public ActionResult Index(int? page)
+        public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             CountMessage();
             CountProduct();
             CountOrder();
+
+            if (page == null || sortOrder == null)
+            {
+                page = page ?? 1;
+                sortOrder = sortOrder ?? "Name";
+                searchString = searchString ?? "";
+                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_SEARCH_PARAMS,
+                    new { sortOrder = sortOrder, page = page, searchString })));
+            }
+
+
+            //Sort order
+            ViewBag.UserNameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewBag.SearchString = searchString;
+
             var shops = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false);
-            int pageSize = 10;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                shops = shops.Where(s => s.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "Name":
+                    shops = shops.OrderBy(s => s.Name);
+                    break;
+                case "name_desc":
+                    shops = shops.OrderByDescending(s => s.Name);
+                    break;
+                default:
+                    break;
+            }
+
+            ViewBag.SortOrder = sortOrder;
+
+            int pageSize = 2;
             int pageNumber = (page ?? 1);
+            // Đếm được số trang vì là IQueryable
             return View(shops.ToPagedList(pageNumber, pageSize));
+
         }
 
 
@@ -71,7 +108,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountMessage();
             CountOrder();
             CountProduct();
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
             return View();
         }
         // POST: Admin/Products/Create
@@ -79,9 +115,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Shop shop)
         {
-            CountMessage();
-            CountProduct();
-            CountOrder();
             if (ModelState.IsValid)
             {
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -90,9 +123,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Shop.Add(shop);
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect("/quan-tri/quan-ly-cua-hang");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_PARAMS);
             }
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
+            SetAlert("Thêm mới lỗi", "danger");
             return View(shop);
         }
 
@@ -115,7 +148,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
             return View(shop);
         }
         // POST: Admin/Products/Edit/5
@@ -133,18 +165,16 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Entry(shop).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/quan-ly-cua-hang");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_PARAMS);
             }
-            ViewBag.SellerId = new SelectList(_serviceWrapper.Db.User.Where(x => x.IsDeleted == false && Regex.IsMatch(x.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER)), "Id", "UserName");
+            SetAlert("Cập nhật lỗi", "danger");
             return View(shop);
         }
         // GET: Admin/Seller/Shops
         public ActionResult EditSG()
         {
-            //CountOrder();
-            //CountProduct();
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var shop = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false && x.Id ==  userLoginSession.ShopId).FirstOrDefault();
+            var shop = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false && x.Id == userLoginSession.ShopId).FirstOrDefault();
             return View(shop);
         }
         // POST: Admin/Seller/Shops/Edit
@@ -163,8 +193,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Entry(shop).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect("/quan-tri/nguoi-ban/quan-ly-cua-hang");
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CAP_NHAT_SG_PARAMS);
             }
+            SetAlert("Cập nhật lỗi", "danger");
             return View(shop);
         }
 
@@ -190,30 +221,26 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return BadRequest();
+                return PartialView("_Delete");
             }
-            Product product = _serviceWrapper.Db.Product.Find(id);
-            if (product == null)
+            var shop = _serviceWrapper.Db.Shop.Find(id);
+            if (shop == null)
             {
-                return NotFound();
+                return PartialView("_Delete");
             }
-            return View(product);
+            return View(shop);
         }
-
-
-
-
 
         // POST: Admin/Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Product product = _serviceWrapper.Db.Product.Find(id);
-            product.IsDeleted = true;
+            var shop = _serviceWrapper.Db.Shop.Find(id);
+            shop.IsDeleted = true;
             _serviceWrapper.Db.SaveChanges();
             SetAlert("Xóa thành công", "success");
-            return Redirect("/quan-tri/cua-hang");
+            return Redirect(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_PARAMS);
         }
     }
 }

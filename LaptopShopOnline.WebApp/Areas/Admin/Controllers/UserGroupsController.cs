@@ -30,7 +30,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Index()
         {
             CountMessage();
@@ -42,7 +42,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Details/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_VIEW_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -60,7 +60,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
@@ -69,7 +69,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View();
         }
         // POST: Admin/UserGroups/Create
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_CREATE_ID)]       
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_CREATE_ID)]       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserGroup userGroup)
@@ -91,7 +91,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Edit/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_UPDATE_ID)]
         public ActionResult Edit(string id)
         {
             CountMessage();
@@ -108,7 +108,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(userGroup);
         }
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_UPDATE_ID)]        
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_UPDATE_ID)]        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserGroup userGroup)
@@ -129,7 +129,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
         // GET: Admin/UserGroups/Delete/5
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_DELETE_ID)]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -144,7 +144,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return PartialView();
         }
         //
-        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_AUTH_DELETE_ID)]
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

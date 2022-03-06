@@ -41,19 +41,21 @@ namespace LaptopShopOnline.Model.Entities
         public string Reply { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày tạo")]
+        [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người tạo")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người tạo")]
         public string CreatedBy { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày cập nhật")]
+        [Display(Name = "Ngày cập nhật")]
         public DateTimeOffset? ModifiedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người cập nhật")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
         [Display(Name = "Trạng thái Soft Delete")]

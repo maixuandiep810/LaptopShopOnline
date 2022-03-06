@@ -123,17 +123,17 @@
 
     <div class="row pt-1">
         <div class="col-md-6">
-            @Html.LabelFor(model => model.TopHot, htmlAttributes: new { @class = "control-label col-md-6" })
+            @Html.LabelFor(model => model.IsTopHot, htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
                 <div class="checkbox">
-                    @Html.DropDownListFor(m => m.TopHot, new SelectList(new[]
+                    @Html.DropDownListFor(m => m.IsTopHot, new SelectList(new[]
                     {
                         new SelectListItem { Value = null, Text = "Trạng thái" },
                         new SelectListItem { Value = "false", Text = "Không kích hoạt" },
                         new SelectListItem { Value = "true", Text = "Kích hoạt" },
                     }, "Value", "Text"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsNewProduct, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(model => model.TopHot, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.IsTopHot, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -194,7 +194,7 @@
 }
 
 <div>
-    <a href="/quan-tri/danh-muc-san-pham" class="btn btn-secondary"><i class="fas fa-angle-left"></i> Trở về</a>
+    <a href=@CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS class="btn btn-secondary"><i class="fas fa-angle-left"></i> Trở về</a>
 </div>
 @section Scripts{
     <script>

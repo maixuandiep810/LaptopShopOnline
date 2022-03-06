@@ -27,22 +27,24 @@
 </td>
 <td>
     @if (Model.Product.PromotionPrice != null)
-        {
-        @Model.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")
-        }
-        else
-        {
-        @Model.Product.Price.GetValueOrDefault(0).ToString("N0")
-        }
+    {
+    <strike>@Model.Product.Price.ToString("N0")</strike>
+    <span>/</span>
+    @Model.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")
+    }
+    else
+    {
+    @Model.Product.Price.ToString("N0")
+    }
 </td>
 <td>
     @if (Model.Product.PromotionPrice != null)
     {
-        @((Model.Product.PromotionPrice.GetValueOrDefault(0) * Model.Quantity)?.ToString("N0"))
+        @((Model.Product.PromotionPrice.GetValueOrDefault(0) * Model.Quantity).ToString("N0"))
     }
     else
     {
-        @((Model.Product.Price.GetValueOrDefault(0) * Model.Quantity)?.ToString("N0"))
+        @((Model.Product.Price * Model.Quantity).ToString("N0"))
     }
 </td>
 <td>

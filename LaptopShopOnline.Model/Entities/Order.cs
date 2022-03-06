@@ -16,25 +16,30 @@ namespace LaptopShopOnline.Model.Entities
 
         public Guid Id { get; set; }
 
+        [Display(Name = "Mã tài khoản người dùng")]
         public Guid BuyerId { get; set; }
 
+        [Display(Name = "Mã cửa hàng")]
         public Guid ShopId { get; set; }
 
 
         [Required]
-        [StringLength(256)]
-        [Display(Name = "Tên")]
+        [Column(TypeName = "nvarchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Tên người nhận")]
         public string ShipName { get; set; }
 
-        [Display(Name = "Số điện thoại")]
+        [Display(Name = "Số điện thoại người nhận")]
         [Required]
-        [StringLength(50)]
+        [Column(TypeName = "varchar(20)")]
+        [StringLength(20)]
         [DataType(DataType.PhoneNumber)]
         public string ShipPhone { get; set; }
 
         [Display(Name = "Địa chỉ")]
         [Required]
-        [StringLength(256)]
+        [Column(TypeName = "nvarchar(1000)")]
+        [StringLength(1000)]
         public string ShipAddress { get; set; }
 
         [Display(Name = "Email")]
@@ -53,19 +58,21 @@ namespace LaptopShopOnline.Model.Entities
         public int OrderStatus { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày đặt hàng")]
+        [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người tạo")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người tạo")]
         public string CreatedBy { get; set; }
 
-        [Display(Name = "Ngày cập nhật")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ngày cập nhật")]
         public DateTimeOffset? ModifiedOn { get; set; }
 
-        [StringLength(256)]
-        [Display(Name = "Người cập nhật")]
+        [Column(TypeName = "varchar(100)")]
+        [StringLength(100)]
+        [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 
         [Display(Name = "Trạng thái Soft Delete")]

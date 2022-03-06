@@ -32,7 +32,7 @@ namespace LaptopShopOnline.Service.Implement
             switch (loginAsPrefixUserGroupId)
             {
                 case CommonConstants.USER_GROUP_ID_PREFIX_MANAGER:
-                    if (Regex.IsMatch(result.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_MANAGER))
+                    if (Regex.IsMatch(result.UserGroupId, CommonConstants.USER_GROUP_ID_PREFIX_MANAGER))
                     {
                         if (result.IsDeleted == true)
                         {
@@ -51,7 +51,7 @@ namespace LaptopShopOnline.Service.Implement
                         return -3;
                     }
                 case CommonConstants.USER_GROUP_ID_PREFIX_SELLER:
-                    if (Regex.IsMatch(result.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER))
+                    if (Regex.IsMatch(result.UserGroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER))
                     {
                         if (result.IsDeleted == true)
                         {
@@ -70,7 +70,7 @@ namespace LaptopShopOnline.Service.Implement
                         return -3;
                     }
                 default:
-                    if (Regex.IsMatch(result.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_BUYER))
+                    if (Regex.IsMatch(result.UserGroupId, CommonConstants.USER_GROUP_ID_PREFIX_BUYER))
                     {
                         if (result.IsDeleted == true)
                         {
@@ -106,7 +106,7 @@ namespace LaptopShopOnline.Service.Implement
             var data = (from a in _db.Credentials
                         join b in _db.UserGroup on a.UserGroupId equals b.Id
                         join c in _db.Role on a.RoleId equals c.Id
-                        where b.Id == user.GroupId
+                        where b.Id == user.UserGroupId
                         select new
                         {
                             RoleId = a.RoleId,

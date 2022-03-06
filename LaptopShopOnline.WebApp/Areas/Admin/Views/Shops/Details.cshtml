@@ -51,7 +51,7 @@
             <!-- /.modal-body -->
             <div class="modal-footer">
                 <div class="form-actions no-color text-center">
-                    <a href="/quan-tri/quan-ly-cua-hang/cap-nhat?id=@Model.Id" class="btn-sm btn-group-sm btn-primary"><i class="far fa-edit"></i>Sửa</a>
+                    <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CAP_NHAT_PARAMS, new {id = Model.Id}) class="btn-sm btn-group-sm btn-primary"><i class="far fa-edit"></i>Sửa</a>
                     <button type="button" class="btn btn-sm btn-secondary" style=" border: 0.5px solid #a8a9ad;" data-dismiss="modal">Thoát</button>
                 </div>
             </div>
