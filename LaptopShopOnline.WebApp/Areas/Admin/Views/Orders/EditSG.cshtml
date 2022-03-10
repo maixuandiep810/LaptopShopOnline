@@ -1,0 +1,97 @@
+﻿@model LaptopShopOnline.Model.Entities.Order
+
+@{
+    ViewBag.Title = "Cập nhật đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.ShopId, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                @Html.EditorFor(model => model.ShopId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.ShopId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.BuyerId, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                @Html.EditorFor(model => model.BuyerId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.BuyerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.ShipName, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                @Html.EditorFor(model => model.ShipName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.ShipPhone, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                @Html.EditorFor(model => model.ShipPhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShipPhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                @Html.EditorFor(model => model.ShipAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShipAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.ShipEmail, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                @Html.EditorFor(model => model.ShipEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShipEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-1">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.OrderStatus, "Trạng thái", htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                @Html.DropDownList("OrderStatus", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.OrderStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-11">
+                <div id="IsDeleted" class="form-control" readonly="readonly">
+                    @(Model.IsDeleted ? "Đã xóa" : "Chưa xóa")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-1">
+        <div class="form-group col-md-11">
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS class="btn-sm btn-group-sm btn-secondary"><i class="fas fa-angle-left"></i> Trở về</a>
+            <button type="submit" class="btn-sm btn-group-sm btn-primary">Cập nhật</button>
+            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_XOA_PARAMS, new {id = Model.Id}) class="btn-sm btn-group-sm btn-danger dialog-link">Xóa</a>
+        </div>
+    </div>
+</div>
+}
+@section Scripts{
+    <script>
+        CKEDITOR.replace("Description");
+    </script>
+}

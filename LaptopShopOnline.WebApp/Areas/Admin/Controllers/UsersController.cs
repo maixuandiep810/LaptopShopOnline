@@ -48,6 +48,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             //Sort order
             ViewBag.UserNameSortParm = sortOrder == "UserName" ? "user_name_desc" : "UserName";
             ViewBag.SearchString = searchString;
+            ViewBag.SortOrder = sortOrder;
 
             var user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false).Include(u => u.UserGroup).Select(p => p);
 
@@ -68,9 +69,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     break;
             }
 
-            ViewBag.SortOrder = sortOrder;
-
-            int pageSize = 2;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             // Đếm được số trang vì là IQueryable
             return View(user.ToPagedList(pageNumber, pageSize));

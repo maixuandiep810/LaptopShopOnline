@@ -67,16 +67,15 @@
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </div>
         </div>
+    </div>
+
+    <div class="row">
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
-                @Html.DropDownListFor(m => m.IsDeleted, new SelectList(new[]
-                    {
-                        new SelectListItem { Value = null, Text = "Trạng thái" },
-                        new SelectListItem { Value = "false", Text = "Hoạt động" },
-                        new SelectListItem { Value = "true", Text = "Khóa" },
-                    }, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
+                <div id="IsDeleted" class="form-control"  readonly = "readonly">
+                    @(Model.IsDeleted ? "Đã xóa" : "Chưa xóa")
+                </div>
             </div>
         </div>
     </div>
@@ -85,14 +84,13 @@
     @Html.HiddenFor(model => model.CreatedBy)
     @Html.HiddenFor(model => model.CreatedOn)
     @Html.HiddenFor(model => model.IsDeleted)
-    <div class="form-group text-right">
-        <div class="col-md-offset-2 col-md-12">
+
+    <div class="row pt-1">
+        <div class="form-group col-md-11">
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS class="btn-sm btn-group-sm btn-secondary"><i class="fas fa-angle-left"></i> Trở về</a>
             <button type="submit" class="btn-sm btn-group-sm btn-primary">Cập nhật</button>
+            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_XOA_PARAMS, new {id = Model.Id}) class="btn-sm btn-group-sm btn-danger dialog-link">Xóa</a>
         </div>
     </div>
 </div>
 }
-
-<div>
-    <a href=@CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS class="btn btn-secondary"><i class="fas fa-angle-left"></i> Trở về</a>
-</div>

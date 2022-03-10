@@ -16,21 +16,21 @@ namespace LaptopShopOnline.Model.Entities
             Credentials = new HashSet<Credential>();
         }
 
-        [Column(TypeName = "varchar(100)")]
+        [RegularExpression("^[a-zA-Z0-9]+$", ErrorMessage = "Id nhóm người dùng chỉ được chưa số và chữ.")]
         [StringLength(100)]
-        [Display(Name = "Id")]
         [Required(ErrorMessage = "Bạn chưa nhập Id")]
+        [Column(TypeName = "varchar(100)")]
+        [Display(Name = "Id")]
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Bạn chưa nhập Tên")]
-        [Column(TypeName = "varchar(100)")]
-        [Display(Name = "Tên")]
         [StringLength(100)]
+        [Required(ErrorMessage = "Bạn chưa nhập Tên")]
+        [Column(TypeName = "nvarchar(100)")]
+        [Display(Name = "Tên")]
         public string Name { get; set; }
 
 
         public virtual ICollection<User> Users { get; set; }
-
 
         public virtual ICollection<Credential> Credentials { get; set; }
     }

@@ -127,7 +127,7 @@
                 <h6 class="dropdown-header">
                     Thông tin sản phẩm
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = "Quantity", page = 1 })>
+                <a class="dropdown-item d-flex align-items-center" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = "Quantity", page = 1, searchString = "" })>
                     <div class="mr-3">
                         <div class="icon-circle bg-primary">
                             <i class="fas fa-file-alt text-white"></i>
@@ -154,7 +154,7 @@
                 <h6 class="dropdown-header">
                     Đơn đặt hàng
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="/quan-tri/don-dat-hang">
+                <a class="dropdown-item d-flex align-items-center" href=@CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS>
                     <div class="mr-3">
                         <div class="icon-circle bg-primary">
                             <i class="fas fa-file-alt text-white"></i>

@@ -9,58 +9,56 @@ namespace LaptopShopOnline.Model.Entities
     {
         public Guid Id { get; set; }
 
-        [StringLength(100)]
         [Column(TypeName = "varchar(100)")]
         [Display(Name = "Nhóm người dùng")]
         public string UserGroupId { get; set; }
 
-        //[RegularExpression("[^A-Za-z0-9]+", ErrorMessage = "Tên người dùng chỉ được chưa số và chữ.")]
-        [Display(Name = "Tên đăng nhập")]
-        [Required(ErrorMessage = "Bạn chưa nhập tên tài khoản")]
         [StringLength(100)]
+        [RegularExpression("^[a-zA-Z0-9]+$", ErrorMessage = "Tên người dùng chỉ được chưa số và chữ.")]
+        [Required(ErrorMessage = "Bạn chưa nhập tên tài khoản")]
+        [Column(TypeName = "varchar(100)")]
+        [Display(Name = "Tên đăng nhập")]
         public string UserName { get; set; }
 
-        [Display(Name = "Mật khẩu")]
         [Required(ErrorMessage = "Bạn chưa nhập mật khẩu")]
-        [Column(TypeName = "varchar(50)")]
         [StringLength(50)]
+        [Column(TypeName = "varchar(50)")]
+        [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
 
-        [Display(Name = "Xác nhận mật khẩu")]
-        [Compare("Password", ErrorMessage = "Mật khẩu không khớp")]
-        [NotMapped]
-        [Column(TypeName = "varchar(50)")]
         [StringLength(50)]
+        [Compare("Password", ErrorMessage = "Mật khẩu không khớp")]
+        [Column(TypeName = "varchar(50)")]
+        [Display(Name = "Xác nhận mật khẩu")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "Họ lót")]
-        [Column(TypeName = "nvarchar(100)")]
         [StringLength(100)]
+        [Column(TypeName = "nvarchar(100)")]
+        [Display(Name = "Họ lót")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Tên")]
-        [Column(TypeName = "nvarchar(100)")]
         [StringLength(100)]
+        [Column(TypeName = "nvarchar(100)")]
+        [Display(Name = "Tên")]
         public string LastName { get; set; }
 
         [NotMapped]
         [Display(Name = "Họ và tên")]
         public string FullName => FirstName + ' ' + LastName;
 
+        [StringLength(100)]
         [Required(ErrorMessage = "Bạn chưa nhập email")]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Định dạng email không đúng.")]
-        [Display(Name = "Email")]
         [Column(TypeName = "varchar(100)")]
-        [StringLength(100)]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Mã đặt lại mật khẩu")]
         [Column(TypeName = "varchar(100)")]
-        [StringLength(100)]
+        [Display(Name = "Mã đặt lại mật khẩu")]
         public string ResetPasswordCode { get; set; }
 
-        [Display(Name = "Địa chỉ")]
         [Column(TypeName = "nvarchar(1000)")]
+        [Display(Name = "Địa chỉ")]
         public string Address { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
@@ -77,7 +75,6 @@ namespace LaptopShopOnline.Model.Entities
         public DateTimeOffset? ModifiedOn { get; set; }
 
         [Column(TypeName = "varchar(100)")]
-        [StringLength(100)]
         [Display(Name = "Người cập nhật")]
         public string ModifiedBy { get; set; }
 

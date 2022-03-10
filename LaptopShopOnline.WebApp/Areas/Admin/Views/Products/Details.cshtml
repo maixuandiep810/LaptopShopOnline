@@ -1,4 +1,6 @@
-﻿@model LaptopShopOnline.Model.Entities.Product
+﻿@using LaptopShopOnline.Model.Entities
+
+@model LaptopShopOnline.Model.Entities.Product
 
 @{
     Layout = null;
@@ -12,7 +14,7 @@
             <div class="modal-body">
                 <table class="table table-bordered table-striped">
                     <tr>
-                        <th style="width: 140px;">@Html.DisplayNameFor(model => model.ProductCategory.Name)</th>
+                        <th>@Html.DisplayNameFor(model => model.ProductCategory.Name)</th>
                         <td>@Html.DisplayFor(model => model.ProductCategory.Name)</td>
                     </tr>
                     <tr>
@@ -26,22 +28,8 @@
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.ShopId)</th>
                         <td>
-                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CHI_TIET_PARAMS, new {id = Model.Id})>
-                                                        @Html.DisplayFor(model => model.ShopId)
-                            </a>
+                                @Html.DisplayFor(model => model.ShopId)
                         </td>
-                    </tr>
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.UrlImage)</th>
-                        <td><img src="@Html.DisplayFor(model => model.UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
-                    </tr>
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.Sub1UrlImage)</th>
-                        <td><img src="@Html.DisplayFor(model => model.Sub1UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
-                    </tr>
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.Sub2UrlImage)</th>
-                        <td><img src="@Html.DisplayFor(model => model.Sub2UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
                     </tr>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Price)</th>
@@ -54,6 +42,18 @@
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Quantity)</th>
                         <td>@Html.DisplayFor(model => model.Quantity)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.UrlImage)</th>
+                        <td><img src="@Html.DisplayFor(model => model.UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Sub1UrlImage)</th>
+                        <td><img src="@Html.DisplayFor(model => model.Sub1UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Sub2UrlImage)</th>
+                        <td><img src="@Html.DisplayFor(model => model.Sub2UrlImage)" alt="Alternate Text" width="100" height="70" /></td>
                     </tr>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.IsTopHot)</th>
@@ -88,14 +88,20 @@
                         <td>@Html.DisplayFor(model => model.ModifiedOn)</td>
                     </tr>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.IsDeleted)</th>
+                        <th>@Html.DisplayNameFor(model => model.Description)</th>
+                        <td>@Html.Raw(Model.Description)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.ProductStatus)</th>
                         <td>
-                            <a href="#" class="btn-primary btn-sm text-decoration-none">@(Model.IsDeleted ? "Không hiển thị" : "Hiển thị")</a>
+                            @(((ENUM.ProductStatus)Model.ProductStatus).ToString())
                         </td>
                     </tr>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.Description)</th>
-                        <td>@Html.Raw(Model.Description)</td>
+                        <th>@Html.DisplayNameFor(model => model.IsDeleted)</th>
+                        <td>
+                            <a href="#" class="btn-primary btn-sm text-decoration-none">@(Model.IsDeleted ? "Đã xóa" : "Chưa xóa")</a>
+                        </td>
                     </tr>
                 </table>
 

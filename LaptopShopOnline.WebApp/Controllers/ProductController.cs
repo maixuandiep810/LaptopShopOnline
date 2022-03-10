@@ -27,61 +27,18 @@ namespace LaptopShopOnline.WebApp.Controllers
         // GET: Admin/Products
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
-            //Sort order
-            ViewBag.NameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
-            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewBag.PromotionPriceSortParm = sortOrder == "PromotionPrice" ? "promotion_price_desc" : "PromotionPrice";
-            ViewBag.QuantitySortParm = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
-            var product = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
-
-            if (searchString == null)
+            if (page == null || sortOrder == null)
             {
-                page = 1;
+                page = page ?? 1;
+                sortOrder = sortOrder ?? "Name";
+                searchString = searchString ?? "";
             }
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                product = product.Where(s => s.Name.Contains(searchString)
-                    || s.ProductCategory.Name.Contains(searchString));
-            }
+            var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            switch (sortOrder)
-            {
-                case "Name":
-                    product = product.OrderBy(s => s.Name);
-                    break;
-                case "name_desc":
-                    product = product.OrderByDescending(s => s.Name);
-                    break;
-                case "Price":
-                    product = product.OrderBy(s => s.Price);
-                    break;
-                case "price_desc":
-                    product = product.OrderByDescending(s => s.Price);
-                    break;
-                case "PromotionPrice":
-                    product = product.OrderBy(s => s.PromotionPrice);
-                    break;
-                case "promotion_price_desc":
-                    product = product.OrderByDescending(s => s.PromotionPrice);
-                    break;
-                case "Quantity":
-                    product = product.OrderBy(s => s.Quantity);
-                    break;
-                case "quantity_desc":
-                    product = product.OrderByDescending(s => s.Quantity);
-                    break;
-                default:
-                    sortOrder = "Name";
-                    product = product.OrderBy(s => s.Name);
-                    break;
-            }
-            int pageSize = 16;
-            int pageNumber = (page ?? 1);
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.SearchString = searchString;
-            // Đếm được số trang vì là IQueryable
-            return View(product.ToPagedList(pageNumber, pageSize));
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, page, ViewBag);
+
+            return View(productsPaging);
         }
 
 
@@ -92,7 +49,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             {
                 return BadRequest();
             }
-            var product = _serviceWrapper.Db.Product.Include(x => x.Shop).Where(x => x.Id == id).FirstOrDefault();
+            var product = _serviceWrapper.Db.Product.Include(x => x.Shop).Where(x => x.IsDeleted == false && x.Id == id).FirstOrDefault();
             if (product == null)
             {
                 return NotFound();

@@ -158,21 +158,112 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_SAN_PHAM_XOA_PARAMS = "/quan-tri/san-pham/xoa/{id}";
 
 
-
-                //
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_PARAMS = "/quan-tri/nguoi-ban/san-pham";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_SEARCH_PARAMS = "/quan-tri/nguoi-ban/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CHI_TIET_PARAMS = "/quan-tri/nguoi-ban/san-pham/chi-tiet/{id}";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CAP_NHAT_SG_PARAMS = "/quan-tri/nguoi-ban/san-pham/cap-nhat/{id}";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_THEM_MOI_PARAMS = "/quan-tri/nguoi-ban/san-pham/them-moi";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_XOA_PARAMS = "/quan-tri/nguoi-ban/san-pham/xoa/{id}";
         
         //
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG = "/quan-tri/nguoi-ban/san-pham";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CHI_TIET = "/quan-tri/nguoi-ban/san-pham/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CAP_NHAT_SG = "/quan-tri/nguoi-ban/san-pham/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_THEM_MOI = "/quan-tri/nguoi-ban/san-pham/them-moi";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_XOA = "/quan-tri/nguoi-ban/san-pham/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM = "/quan-tri/nguoi-ban/san-pham";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CHI_TIET = "/quan-tri/nguoi-ban/san-pham/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CAP_NHAT = "/quan-tri/nguoi-ban/san-pham/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_THEM_MOI = "/quan-tri/nguoi-ban/san-pham/them-moi";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_XOA = "/quan-tri/nguoi-ban/san-pham/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        //
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_PARAMS = "/quan-tri/nguoi-ban/san-pham";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS = "/quan-tri/nguoi-ban/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CHI_TIET_PARAMS = "/quan-tri/nguoi-ban/san-pham/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CAP_NHAT_PARAMS = "/quan-tri/nguoi-ban/san-pham/cap-nhat/{id}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_THEM_MOI_PARAMS = "/quan-tri/nguoi-ban/san-pham/them-moi";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_XOA_PARAMS = "/quan-tri/nguoi-ban/san-pham/xoa/{id}";
+
+
+
+
+        //
+        public const string ROUTE_QUAN_TRI_DON_HANG = "/quan-tri/don-hang";
+        public const string ROUTE_QUAN_TRI_DON_HANG_CHI_TIET = "/quan-tri/don-hang/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_DON_HANG_CAP_NHAT = "/quan-tri/don-hang/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_DON_HANG_THEM_MOI = "/quan-tri/don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_DON_HANG_XOA = "/quan-tri/don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        //
+        public const string ROUTE_QUAN_TRI_DON_HANG_PARAMS = "/quan-tri/don-hang";
+        public const string ROUTE_QUAN_TRI_DON_HANG_SEARCH_PARAMS = "/quan-tri/don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}&orderStatus={orderStatus}";
+        public const string ROUTE_QUAN_TRI_DON_HANG_CHI_TIET_PARAMS = "/quan-tri/don-hang/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_DON_HANG_CAP_NHAT_PARAMS = "/quan-tri/don-hang/cap-nhat/{id}";
+        public const string ROUTE_QUAN_TRI_DON_HANG_THEM_MOI_PARAMS = "/quan-tri/don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_DON_HANG_XOA_PARAMS = "/quan-tri/don-hang/xoa/{id}";
+
+
+
+        //
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG = "/quan-tri/nguoi-ban/don-hang";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CHI_TIET = "/quan-tri/nguoi-ban/don-hang/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CAP_NHAT = "/quan-tri/nguoi-ban/don-hang/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_THEM_MOI = "/quan-tri/nguoi-ban/don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_XOA = "/quan-tri/nguoi-ban/don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        //
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_PARAMS = "/quan-tri/nguoi-ban/don-hang";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_SEARCH_PARAMS = "/quan-tri/nguoi-ban/don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}&orderStatus={orderStatus}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CHI_TIET_PARAMS = "/quan-tri/nguoi-ban/don-hang/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CAP_NHAT_PARAMS = "/quan-tri/nguoi-ban/don-hang/cap-nhat/{id}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_THEM_MOI_PARAMS = "/quan-tri/nguoi-ban/don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_XOA_PARAMS = "/quan-tri/nguoi-ban/don-hang/xoa/{id}";
+
+
+
+        //
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG = "/quan-tri/chi-tiet-don-hang/{orderId}";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_CHI_TIET = "/quan-tri/chi-tiet-don-hang/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_CAP_NHAT = "/quan-tri/chi-tiet-don-hang/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_THEM_MOI = "/quan-tri/chi-tiet-don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_XOA = "/quan-tri/chi-tiet-don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        //
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_PARAMS = "/quan-tri/chi-tiet-don-hang/{orderId}";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_SEARCH_PARAMS = "/quan-tri/chi-tiet-don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}&orderStatus={orderStatus}";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_CHI_TIET_PARAMS = "/quan-tri/chi-tiet-don-hang/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_CAP_NHAT_PARAMS = "/quan-tri/chi-tiet-don-hang/cap-nhat/{id}";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_THEM_MOI_PARAMS = "/quan-tri/chi-tiet-don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_CHI_TIET_DON_HANG_XOA_PARAMS = "/quan-tri/chi-tiet-don-hang/xoa/{id}";
+
+
+
+
+        //
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG = "/quan-tri/nguoi-ban/chi-tiet-don-hang/{orderId}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_CHI_TIET = "/quan-tri/nguoi-ban/chi-tiet-don-hang/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_CAP_NHAT = "/quan-tri/nguoi-ban/chi-tiet-don-hang/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_THEM_MOI = "/quan-tri/nguoi-ban/chi-tiet-don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_XOA = "/quan-tri/nguoi-ban/chi-tiet-don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        //
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_PARAMS = "/quan-tri/nguoi-ban/chi-tiet-don-hang/{orderId}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_SEARCH_PARAMS = "/quan-tri/nguoi-ban/chi-tiet-don-han?sortOrder={sortOrder}&searchString={searchString}&page={page}&orderStatus={orderStatus}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_CHI_TIET_PARAMS = "/quan-tri/nguoi-ban/chi-tiet-don-hang/chi-tiet/{id}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_CAP_NHAT_PARAMS = "/quan-tri/nguoi-ban/chi-tiet-don-hang/cap-nhat/{id}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_THEM_MOI_PARAMS = "/quan-tri/nguoi-ban/chi-tiet-don-hang/them-moi";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_CHI_TIET_DON_HANG_XOA_PARAMS = "/quan-tri/nguoi-ban/chi-tiet-don-hang/xoa/{id}";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //
+        public const string ROUTE_SAN_PHAM = "/san-pham";
+        public const string ROUTE_SAN_PHAM_CHI_TIET = "/san-pham/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        //
+        public const string ROUTE_SAN_PHAM_PARAMS = "/san-pham";
+        public const string ROUTE_SAN_PHAM_SEARCH_PARAMS = "/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}";
+        public const string ROUTE_SAN_PHAM_CHI_TIET_PARAMS = "/san-pham/chi-tiet/{id}";
+
 
 
 

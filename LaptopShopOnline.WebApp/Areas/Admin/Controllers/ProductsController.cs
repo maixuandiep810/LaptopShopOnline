@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -43,131 +44,45 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountMessage();
             CountProduct();
             CountOrder();
-            //paged
-            ViewBag.CurrentSort = sortOrder;
-            //Sort order
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "Name";
-            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewBag.PromotionPriceSortParm = sortOrder == "PromotionPrice" ? "promotion_price_desc" : "PromotionPrice";
-            ViewBag.QuantitySortParm = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
-            var product = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            if (searchString == null)
+            if (page == null || sortOrder == null)
             {
-                page = 1;
+                page = page ?? 1;
+                sortOrder = sortOrder ?? "Name";
+                searchString = searchString ?? "";
+                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_SEARCH_PARAMS,
+                    new { sortOrder = sortOrder, page = page, searchString = searchString })));
             }
 
-            ViewBag.CurrentFilter = searchString;
+            var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                product = product.Where(s => s.Name.Contains(searchString)
-                    || s.Price.ToString().Contains(searchString)
-                    || s.PromotionPrice.ToString().Contains(searchString)
-                    || s.ProductCategory.Name.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "Name":
-                    product = product.OrderBy(s => s.Name);
-                    break;
-                case "name_desc":
-                    product = product.OrderByDescending(s => s.Name);
-                    break;
-                case "Price":
-                    product = product.OrderBy(s => s.Price);
-                    break;
-                case "price_desc":
-                    product = product.OrderByDescending(s => s.Price);
-                    break;
-                case "PromotionPrice":
-                    product = product.OrderBy(s => s.PromotionPrice);
-                    break;
-                case "promotion_price_desc":
-                    product = product.OrderByDescending(s => s.PromotionPrice);
-                    break;
-                case "Quantity":
-                    product = product.OrderBy(s => s.Quantity);
-                    break;
-                case "quantity_desc":
-                    product = product.OrderByDescending(s => s.Quantity);
-                    break;
-                default:
-                    product = product.OrderBy(s => s.Name);
-                    break;
-            }
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            ViewBag.SearchString = searchString;
-            return View(product.ToPagedList(pageNumber, pageSize));
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, page, ViewBag);
+
+            return View(productsPaging);
         }
 
-        // GET: Admin/Products
-        public ActionResult IndexSG(string sortOrder, int? page, string searchString, string currentFilter)
+        //GET: Admin/Products
+         public ActionResult IndexSG(string sortOrder, int? page, string searchString, string currentFilter)
         {
             CountProduct();
             CountOrder();
-            //paged
-            ViewBag.CurrentSort = sortOrder;
-            //Sort order
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewBag.PromotionPriceSortParm = sortOrder == "PromotionPrice" ? "promotion_price_desc" : "PromotionPrice";
-            ViewBag.QuantitySortParm = sortOrder == "Quantity" ? "quantity_desc" : "Quantity";
+
+            if (page == null || sortOrder == null)
+            {
+                page = page ?? 1;
+                sortOrder = sortOrder ?? "Name";
+                searchString = searchString ?? "";
+                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS,
+                    new { sortOrder = sortOrder, page = page, searchString })));
+            }
+
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var product = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false && x.ShopId == userLoginSession.ShopId);
+            var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false && x.ShopId == userLoginSession.ShopId);
 
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, page, ViewBag);
 
-            ViewBag.CurrentFilter = searchString;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                product = product.Where(s => s.Name.Contains(searchString)
-                    || s.Price.ToString().Contains(searchString)
-                    || s.PromotionPrice.ToString().Contains(searchString)
-                    || s.ProductCategory.Name.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    product = product.OrderByDescending(s => s.Name);
-                    break;
-                case "Price":
-                    product = product.OrderBy(s => s.Price);
-                    break;
-                case "price_desc":
-                    product = product.OrderByDescending(s => s.Price);
-                    break;
-                case "PromotionPrice":
-                    product = product.OrderBy(s => s.PromotionPrice);
-                    break;
-                case "promotion_price_desc":
-                    product = product.OrderByDescending(s => s.PromotionPrice);
-                    break;
-                case "Quantity":
-                    product = product.OrderBy(s => s.Quantity);
-                    break;
-                case "quantity_desc":
-                    product = product.OrderByDescending(s => s.Quantity);
-                    break;
-                default:
-                    sortOrder = "Name";
-                    product = product.OrderBy(s => s.Name);
-                    break;
-            }
-            int pageSize = 16;
-            int pageNumber = (page ?? 1);
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.SearchString = searchString;
-            return View(product.ToPagedList(pageNumber, pageSize));
+            //
+            return View(productsPaging);
         }
 
 
@@ -181,21 +96,21 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            Product product = _serviceWrapper.Db.Product.Find(id);
+            Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
             if (product == null)
             {
                 return NotFound();
             }
             return View(product);
         }
-        // GET: Admin/Products/Details/5
-        public ActionResult DetailsSG(Guid? id)
+        //GET: Admin/Products/Details/5
+         public ActionResult DetailsSG(Guid? id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
-            Product product = _serviceWrapper.Db.Product.Find(id);
+            Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (product == null && product.ShopId != userLoginSession.ShopId)
             {
@@ -228,6 +143,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
                 product.Id = Guid.NewGuid();
                 AuditTable.InsertAuditFields(product, userLoginSession.UserName);
+                product.ProductStatus = (int)ENUM.ProductStatus.PENDING;
                 _serviceWrapper.Db.Product.Add(product);
                 _serviceWrapper.Db.SaveChanges();
                 if (product.Image != null)
@@ -239,15 +155,15 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
                 return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
-            }
+            } 
                 SetAlert("Thêm mới lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
             return View(product);
         }
-        //
-        // GET: Admin/Products/Create
-        public ActionResult CreateSG()
+
+        //GET: Admin/Products/Create
+         public ActionResult CreateSG()
         {
             CountOrder();
             CountProduct();
@@ -265,6 +181,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 product.Id = Guid.NewGuid();
                 product.ShopId = userLoginSession.ShopId;
                 AuditTable.InsertAuditFields(product, userLoginSession.UserName);
+                product.ProductStatus = (int)ENUM.ProductStatus.PENDING;
                 _serviceWrapper.Db.Product.Add(product);
                 _serviceWrapper.Db.SaveChanges();
                 if (product.Image != null)
@@ -275,13 +192,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     product.Sub2UrlImage = Path.Combine(_contentFolder, _serviceWrapper.ImageService.SaveImage(product.Sub2Image, _uploadFolder));
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");
-                return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_PARAMS);
             }
-                SetAlert("Thêm mới lỗi", "danger");
+            SetAlert("Thêm mới lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             return View(product);
         }
-        //
+
 
 
 
@@ -295,16 +212,17 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountOrder();
             CountProduct();
             if (id == null)
-            {
+            {   
                 return BadRequest();
             }
-            Product product = _serviceWrapper.Db.Product.Find(id);
+            Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false && p.Id == id).FirstOrDefault();
             if (product == null)
             {
                 return NotFound();
             }
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
+            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
         // POST: Admin/Products/Edit/5
@@ -324,11 +242,28 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 SetAlert("Cập nhật lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
             ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
+            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
-        //
-        // GET: Admin/Products/Edit/5
-        public ActionResult EditSG(Guid? id)
+
+        //public JsonResult ChangeProductStatus(Guid? id, int productStatus) {
+        //    if (id == null)
+        //    {
+        //        return new JsonResult (null) { StatusCode = (int) HttpStatusCode.BadRequest };
+        //    }
+        //    Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
+        //    if (product == null)
+        //    {
+        //        return new JsonResult(null) { StatusCode = (int)HttpStatusCode.NotFound };
+        //    }
+        //    product.ProductStatus = productStatus;
+        //    _serviceWrapper.Db.SaveChanges();
+        //    return new JsonResult(null) { StatusCode = (int)HttpStatusCode.OK };
+        //}
+
+
+        //GET: Admin/Products/Edit/5
+         public ActionResult EditSG(Guid? id)
         {
             CountOrder();
             CountProduct();
@@ -336,13 +271,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
-            Product product = _serviceWrapper.Db.Product.Find(id);
+            Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false && p.Id == id).FirstOrDefault();
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (product == null && product.ShopId != userLoginSession.ShopId)
             {
                 return NotFound();
             }
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
+            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
         // POST: Admin/Products/Edit/5
@@ -363,8 +299,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 SetAlert("Cập nhật thành công", "success");
                 return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
             }
-                SetAlert("Cập nhật lỗi", "danger");
+            SetAlert("Cập nhật lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
+            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
 
@@ -379,7 +316,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             {
                 return PartialView("_Delete");
             }
-            Product product = _serviceWrapper.Db.Product.Find(id);
+            Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
             if (product == null)
             {
                 return PartialView("_Delete");
@@ -391,7 +328,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Product product = _serviceWrapper.Db.Product.Find(id);
+            Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
             product.IsDeleted = true;
             _serviceWrapper.Db.SaveChanges();
             SetAlert("Xóa thành công", "success");

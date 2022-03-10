@@ -28,25 +28,29 @@
 <div class="top-header">
     <div class="container">
         <div class="top-header-main">
-            <div class="col-md-4 top-header-left">
-                <div class="search-bar">
-                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = "/danh-muc-san-pham" }))
-                    {
-                            @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
-                            <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+            <div class="row mb-2">
+                    <div class="row search-bar col-md-4">
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_SAN_PHAM_PARAMS, @class = "col-md-12 row"}))
+                            {
+                                @Html.TextBox("SearchString", null, new { @class = "col-md-8 form-control float-left", @value = ViewBag.SearchString })
+                                <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+                            }
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        @if (userLoginSession != null)
+                        {
+                            @await Component.InvokeAsync("HeaderCart")
                         }
+                    </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-4 text-center">
+                    <a href="/trang-chu"><img src="~/Content/Client/images/LogoBKTech_01.png" alt="LOGO BKTech" class="img-fluid"/></a>
                 </div>
             </div>
-            <div class="col-md-4 top-header-middle">
-                <a href="/trang-chu"><img src="~/Content/Client/images/LogoBKTech_01.png" alt="LOGO BKTech" /></a>
-            </div>
-            <div class="col-md-4 top-header-right">
-                @if (userLoginSession != null)
-                {
-                    @await Component.InvokeAsync("HeaderCart")
-                }
-            </div>
-            <div class="clearfix"></div>
+
         </div>
     </div>
 </div>

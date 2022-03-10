@@ -13,16 +13,18 @@
         <div class="breadcrumbs-main">
             <ol class="breadcrumb">
                 <li><a href="/">Trang chủ</a></li>
-                <li><a href="/">Quay lại</a></li>
+                <span>/</span>
+                <li><a href="#" onclick="history.back()">Quay lại</a></li>
             </ol>
         </div>
     </div>
 </div>
 <!--end-breadcrumbs-->
-<div class="container">
+
+<div class="card shadow my-5">
     <!--start-single-->
     <div class="col-md-12 my-5">
-        <div class="col-md-12 my-5">
+        <div class="col-md-12 my-5 card-body">
             <div class="col-md-4 m-5">
                 <img src="@Model.UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
             </div>
@@ -35,12 +37,12 @@
                 </p>
                 @if (Model.PromotionPrice > 0)
                 {
-                        <p><span class=""><strike>Giá gốc: @(Model.Price.ToString("N0"))</strike></span></p>
-                        <p><span>Chỉ còn: @(Model.PromotionPrice.Value.ToString("N0"))</span></p>
+                    <p><span class=""><strike>Giá gốc: @(Model.Price.ToString("N0"))</strike></span></p>
+                    <p><span>Chỉ còn: @(Model.PromotionPrice.Value.ToString("N0"))</span></p>
                 }
                 else
                 {
-                        <p><span>Giá: @(Model.Price.ToString("N0"))</span></p>
+                    <p><span>Giá: @(Model.Price.ToString("N0"))</span></p>
                 }
                 <form action="/gio-hang/them-vao" method="post">
                     <input type="text" name="productId" value="@Model.Id" hidden />
@@ -49,7 +51,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-12 my-5 py-5">
+        <div class="col-md-12 my-5 py-5 card-body">
             <p class="my-5 text-primary">
                 Hình ảnh mô tả
             </p>
@@ -58,18 +60,18 @@
             </div>
             @if (Model.Sub1UrlImage != null)
             {
-            <div class="col-md-3">
-                <img src="@Model.Sub1UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
-            </div>
+                <div class="col-md-3">
+                    <img src="@Model.Sub1UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+                </div>
             }
             @if (Model.Sub2UrlImage != null)
             {
-            <div class="col-md-3">
-                <img src="@Model.Sub2UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
-            </div>
+                <div class="col-md-3">
+                    <img src="@Model.Sub2UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+                </div>
             }
         </div>
-        <div class="col-md-12 my-5 py-5">
+        <div class="col-md-12 my-5 py-5 card-body">
             <p class="my-5 text-primary">
                 Mô tả
             </p>

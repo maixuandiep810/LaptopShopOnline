@@ -17,7 +17,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG }))
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS }))
                 {
                 <div class="form-group">
                     @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
@@ -70,7 +70,7 @@
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
                             <td>
-                                <a class="btn btn-primary btn-sm dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_XOA_PARAMS, new { id = item.Id })>@(item.IsDeleted ? "Khóa" : "Hoạt động")</a>
+                                <a class="btn btn-primary btn-sm dialog-link" href="#", new { id = item.Id })>@(item.IsDeleted ? "Đã xóa" : "Chưa xóa")</a>
                             </td>
                             <td>
                                 <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.Id })><i class="far fa-edit"></i></a>

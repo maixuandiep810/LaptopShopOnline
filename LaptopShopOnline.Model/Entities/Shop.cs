@@ -30,7 +30,7 @@ namespace LaptopShopOnline.Model.Entities
         public Guid? SellerId { get; set; }
 
         [Column(TypeName = "nvarchar(1000)")]
-        [StringLength(100)]
+        [StringLength(1000)]
         [Display(Name = "Mô tả")]
         public string Description { get; set; }
 

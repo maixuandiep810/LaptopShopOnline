@@ -99,6 +99,14 @@ namespace LaptopShopOnline.Model
             //modelBuilder.Entity<Order>()
             //    .Property(e => e.ShipEmail)
             //    .IsUnicode(false);
+            modelBuilder.Entity<Order>()
+                .HasOne(e => e.Buyer)
+                .WithMany()
+                .HasForeignKey(e => e.BuyerId);
+            modelBuilder.Entity<Order>()
+                .HasOne(e => e.Shop)
+                .WithMany()
+                .HasForeignKey(e => e.ShopId);
 
 
 
@@ -130,9 +138,9 @@ namespace LaptopShopOnline.Model
                .Property(e => e.PromotionPrice)
                .HasPrecision(18, 0);
 
-            //modelBuilder.Entity<Product>().Ignore(e => e.Image);
-            //modelBuilder.Entity<Product>().Ignore(e => e.Sub1Image);
-            //modelBuilder.Entity<Product>().Ignore(e => e.Sub2Image);
+            modelBuilder.Entity<Product>().Ignore(e => e.Image);
+            modelBuilder.Entity<Product>().Ignore(e => e.Sub1Image);
+            modelBuilder.Entity<Product>().Ignore(e => e.Sub2Image);
 
             modelBuilder.Entity<Product>()
                 .HasOne(e => e.ProductCategory)
@@ -158,25 +166,7 @@ namespace LaptopShopOnline.Model
 
 
             // USER
-            modelBuilder.Entity<User>()
-                .Property(e => e.UserGroupId)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<User>()
-                .Property(e => e.UserName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<User>()
-                .Property(e => e.Password)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<User>()
-                .Property(e => e.ConfirmPassword)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<User>()
-                .Property(e => e.Email)
-                .IsUnicode(false);
+            modelBuilder.Entity<User>().Ignore(e => e.ConfirmPassword);
 
             modelBuilder.Entity<User>()
                 .HasOne(e => e.UserGroup)
@@ -187,13 +177,6 @@ namespace LaptopShopOnline.Model
                 .HasOne(e => e.Shop)
                 .WithOne(e => e.Seller)
                 .HasForeignKey<Shop>(e => e.SellerId);
-
-
-
-            // USERGROUP
-            modelBuilder.Entity<UserGroup>()
-                .Property(e => e.Id)
-                .IsUnicode(false);
         }
     }
 }

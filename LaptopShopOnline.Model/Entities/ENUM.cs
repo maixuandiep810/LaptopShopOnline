@@ -35,5 +35,51 @@ namespace LaptopShopOnline.Model.Entities
             CLOSING = 3,
             BANNED = 4
         }
+
+        public static IEnumerable<EnumOption> GetSelectList_OrderStatus()
+        {
+            var orderStatuses = Enum.GetValues(typeof(ENUM.OrderStatus))
+                    .Cast<ENUM.OrderStatus>()
+                    .ToList().Select(x => new EnumOption
+                    {
+                        Id = (int)x,
+                        Name = x.ToString()
+                    }
+                    );
+            return orderStatuses;
+        }
+
+        public static IEnumerable<EnumOption> GetSelectList_ProductStatus()
+        {
+            var productStatuses = Enum.GetValues(typeof(ENUM.ProductStatus))
+                    .Cast<ENUM.ProductStatus>()
+                    .ToList().Select(x => new EnumOption
+                    {
+                        Id = (int)x,
+                        Name = x.ToString()
+                    }
+                    );
+            return productStatuses;
+        }
+
+        public static IEnumerable<EnumOption> GetSelectList_ShopStatus()
+        {
+            var productStatuses = Enum.GetValues(typeof(ENUM.ShopStatus))
+                    .Cast<ENUM.ShopStatus>()
+                    .ToList().Select(x => new EnumOption
+                    {
+                        Id = (int)x,
+                        Name = x.ToString()
+                    }
+                    );
+            return productStatuses;
+        }
+
+        public class EnumOption
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
+
     }
 }

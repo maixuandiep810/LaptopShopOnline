@@ -323,14 +323,11 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<Guid>("ShopId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ShopId");
+                    b.HasIndex("BuyerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ShopId");
 
                     b.ToTable("Order");
                 });
@@ -594,11 +591,6 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("ConfirmPassword")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -726,19 +718,21 @@ namespace LaptopShopOnline.Model.Migrations
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.Order", b =>
                 {
+                    b.HasOne("LaptopShopOnline.Model.Entities.User", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LaptopShopOnline.Model.Entities.Shop", "Shop")
                         .WithMany()
                         .HasForeignKey("ShopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LaptopShopOnline.Model.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.Navigation("Buyer");
 
                     b.Navigation("Shop");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LaptopShopOnline.Model.Entities.OrderDetail", b =>

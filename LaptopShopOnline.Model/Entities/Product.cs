@@ -114,11 +114,8 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Trạng thái Soft Delete")]
         public bool IsDeleted { get; set; }
 
-        [NotMapped]
         public IFormFile Image { get; set; }
-        [NotMapped]
         public IFormFile Sub1Image { get; set; }
-        [NotMapped]
         public IFormFile Sub2Image { get; set; }
 
 

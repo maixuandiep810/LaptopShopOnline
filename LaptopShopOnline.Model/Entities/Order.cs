@@ -80,7 +80,7 @@ namespace LaptopShopOnline.Model.Entities
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User Buyer { get; set; }
         public virtual Shop Shop { get; set; }
     }
 }

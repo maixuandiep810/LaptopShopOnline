@@ -49,6 +49,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             //Sort order
             ViewBag.UserNameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
             ViewBag.SearchString = searchString;
+            ViewBag.SortOrder = sortOrder;
 
             var shops = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false);
 
@@ -69,9 +70,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     break;
             }
 
-            ViewBag.SortOrder = sortOrder;
-
-            int pageSize = 2;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             // Đếm được số trang vì là IQueryable
             return View(shops.ToPagedList(pageNumber, pageSize));
@@ -193,7 +192,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Entry(shop).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CAP_NHAT_SG_PARAMS);
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_CUA_HANG_CAP_NHAT_PARAMS);
             }
             SetAlert("Cập nhật lỗi", "danger");
             return View(shop);

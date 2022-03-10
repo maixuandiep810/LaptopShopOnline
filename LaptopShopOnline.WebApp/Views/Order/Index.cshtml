@@ -45,11 +45,11 @@
                                 </th>
                                 <th>
                                     Ngày tạo
-                                    <a href="/danh-muc-san-pham?sortOrder=@ViewBag.CreatedOnSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
+                                    <a href="/don-hang?sortOrder=@ViewBag.CreatedOnSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
                                 </th>
                                 <th>
                                     Trạng thái đơn hàng
-                                    <a href="/danh-muc-san-pham?sortOrder=@ViewBag.OrderStatusSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
+                                    <a href="/don-hang?sortOrder=@ViewBag.OrderStatusSortParm&searchString=@ViewBag.SearchString"><i class="fas fa-sort text-dark"></i></a>
                                 </th>
                                 <th class="text-center" style="width: 115px;"></th>
                             </tr>
@@ -77,7 +77,7 @@
                                     @Html.DisplayFor(modelItem => item.OrderStatus)
                                 </td>
                                 <td>
-                                    <a class="btn-sm btn-group-sm btn-success" href="/danh-muc-san-pham/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
+                                    <a class="btn-sm btn-group-sm btn-success" href="/don-hang/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
                                     <a class="btn-sm btn-group-sm btn-warning dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>
                                     <a class="btn-sm btn-group-sm btn-danger dialog-link" href="@Url.Action("Delete", new { id = item.Id })"><i class="far fa-trash-alt"></i></a>
                                 </td>

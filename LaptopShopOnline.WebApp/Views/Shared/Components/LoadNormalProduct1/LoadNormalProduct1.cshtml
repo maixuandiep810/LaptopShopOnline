@@ -3,10 +3,9 @@
 {
     foreach (var item in Model)
     {
-        var url = "/danh-muc-san-pham/" + item.Id;
         <div class="col-md-3 product-left" style="margin-top: 20px;">
             <div class="p-one simpleCart_shelfItem" style="height:410px;">
-                <a href="@url">
+                <a href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_CHI_TIET_PARAMS, new { id = item.Id })>
                     <img src="@item.UrlImage" width="223" height="232" alt="" />
                     <div class="mask">
                         <span>Xem chi tiết</span>
