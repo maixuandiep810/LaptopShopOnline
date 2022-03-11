@@ -36,7 +36,8 @@ namespace LaptopShopOnline.WebApp.Controllers
 
             var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, page, ViewBag);
+            int pageSize = 10;
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, pageSize, page, ViewBag);
 
             return View(productsPaging);
         }

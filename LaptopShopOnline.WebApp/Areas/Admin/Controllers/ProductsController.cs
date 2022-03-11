@@ -56,8 +56,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
             var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, page, ViewBag);
-
+            int pageSize = 10;
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, pageSize, page, ViewBag);
+             
             return View(productsPaging);
         }
 
@@ -79,7 +80,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false && x.ShopId == userLoginSession.ShopId);
 
-            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, page, ViewBag);
+            int pageSize = 10;
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, pageSize, page, ViewBag);
 
             //
             return View(productsPaging);

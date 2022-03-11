@@ -10,7 +10,7 @@ namespace LaptopShopOnline.Service.Implement
 {
     public class ProductService : IProductService
     {
-        public IPagedList<Product> GetAll(IQueryable<Product> products, string searchString, string sortOrder, int? page, dynamic ViewBag)
+        public IPagedList<Product> GetAll(IQueryable<Product> products, string searchString, string sortOrder, int? pageSize, int? page, dynamic ViewBag)
         {
 
             if (!String.IsNullOrEmpty(searchString))
@@ -58,9 +58,9 @@ namespace LaptopShopOnline.Service.Implement
             ViewBag.SortOrder = sortOrder;
 
             // paging
-            int pageSize = 3;
             int pageNumber = (page ?? 1);
-            var productsPaging = products.ToPagedList(pageNumber, pageSize);
+            int pageSizeNumber = pageSize ?? 10;
+            var productsPaging = products.ToPagedList(pageNumber, pageSizeNumber);
 
             return productsPaging;
         }

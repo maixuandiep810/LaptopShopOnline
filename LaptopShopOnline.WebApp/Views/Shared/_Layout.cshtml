@@ -63,23 +63,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!--top-header-->
     @Html.Partial("_TopHeader.cshtml")
     <!--top-header-->
-
-
     <!--bottom-header-->
     @await Component.InvokeAsync("MainMenu")
 
     @*thong bao cho nguoi dung*@
-    @if (TempData["AlertMessage"] != null)
-    {
-        <div class="container" style="right: 10px; top: 135px; position: fixed; z-index: 100;">
-            <div id="AlertBox" class="text-center alert @TempData["AlertType"] hide" style="float:right;">
-                @TempData["AlertMessage"]
-            </div>
+    <div id="AlertBox" class="container d-none" style="right: 10px; top: 135px; position: fixed; z-index: 100;">
+        <div id="AlertBoxContent" class="text-center alert @TempData["AlertType"]" style="float:right;">
+            @TempData["AlertMessage"] + HAHAHAHA
         </div>
-    }
+    </div>
+
+
     <!--bottom-header-->
-
-
     <!--Body-->
     <div id="body">
         <div id="content-wrapper" class="d-flex flex-column">
@@ -91,18 +86,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
     </div>
     <!--End body-->
-
-
     <!--start-footer-->
     @Html.Partial("_Contact.cshtml")
     <!--end-footer-->
-
     <!--end-footer-text-->
     @Html.Partial("_Footer.cshtml")
 
 
-    <a href="#top" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;">
-        </span></a>
+    <a href="#top" id="toTop" class="scroll" style="display: block;">
+        <span id="toTopHover" style="opacity: 1;">
+        </span>
+    </a>
 
 
     <script type="text/javascript">
@@ -130,8 +124,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         });
     </script>
     <script>
-        $('#AlertBox').removeClass('hide');
-        $('#AlertBox').delay(3000).slideUp(500);
+        $('#AlertBox').removeClass('d-none').slideDown(500).stop().delay(5000).slideUp(500).delay(0).queue(function () {
+            $(this).addClass('d-none');
     </script>
     <script src="~/Content/Client/js/Controller/baseController.js"></script>
     @RenderSection("Scripts", required: false)

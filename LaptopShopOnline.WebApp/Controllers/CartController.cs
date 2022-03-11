@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -33,7 +34,53 @@ namespace LaptopShopOnline.WebApp.Controllers
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             var carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
-            return View(carts); 
+            return View(carts);
+        }
+
+        [HttpPost]
+        public JsonResult AddCart(Cart cart)
+        {
+            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            JsonResultData jsonResultData = null;
+            if (userLoginSession == null)
+            {
+                jsonResultData = new JsonResultData
+                {
+                    Message = "Bạn phải đăng nhập để có thể mua hàng"
+                };
+                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.Unauthorized };
+            }
+
+            var product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
+            if (product == null)
+            {
+                jsonResultData = new JsonResultData
+                {
+                    Message = "Thêm mới lỗi"
+                };
+                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.NotFound };
+            }
+            var cartBuyer = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted && x.ProductId == cart.Id && x.BuyerId == userLoginSession.UserId).FirstOrDefault();
+            if (cartBuyer != null)
+            {
+                cartBuyer.Quantity += cart.Quantity;
+            }
+            else
+            {
+                var newCartBuyer = new Cart
+                {
+                    BuyerId = userLoginSession.UserId,
+                    ProductId = cart.ProductId,
+                    Quantity = cart.Quantity
+                };
+                _serviceWrapper.Db.Cart.Add(newCartBuyer);
+            }
+            _serviceWrapper.Db.SaveChanges();
+            jsonResultData = new JsonResultData
+            {
+                Message = "Thêm mới thành công"
+            };
+            return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.OK };
         }
 
 
@@ -100,7 +147,8 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
         //[HasCredential(RoleId = "BUYER_ROLE")]
-        public ActionResult Delete(Guid? id) {
+        public ActionResult Delete(Guid? id)
+        {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (id == null)
             {

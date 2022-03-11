@@ -654,8 +654,8 @@ namespace LaptopShopOnline.WebApp
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart-Create",
-                    pattern: "gio-hang/them-vao",
-                    defaults: new { controller = "Cart", action = "Add" });
+                    pattern: "gio-hang/them-moi",
+                    defaults: new { controller = "Cart", action = "AddCart" });
 
                 //
                 endpoints.MapControllerRoute(

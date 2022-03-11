@@ -3,32 +3,32 @@
 @model Product
 
 @{
-    ViewBag.Title = "Sản phẩm";
+    ViewBag.Title = "Chi tiết sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!--start-breadcrumbs-->
-<div class="breadcrumbs">
-    <div class="container">
-        <div class="breadcrumbs-main">
-            <ol class="breadcrumb">
-                <li><a href="/">Trang chủ</a></li>
-                <span>/</span>
-                <li><a href="#" onclick="history.back()">Quay lại</a></li>
-            </ol>
-        </div>
-    </div>
-</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#" onclick="history.back()">Quay lại</a></li>
+    </ol>
+</nav>
 <!--end-breadcrumbs-->
 
-<div class="card shadow my-5">
+<div class="card shadow my-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+    </div>
     <!--start-single-->
-    <div class="col-md-12 my-5">
-        <div class="col-md-12 my-5 card-body">
-            <div class="col-md-4 m-5">
-                <img src="@Model.UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+    <div class="card-body">
+        <div class="row no-gutters m-4">
+            <div class="col-md-5 mt-2 mr-4 border-right">
+                <div class="s-box-square">
+                    <img class="s-box-square-image" src="@Model.UrlImage" alt="Card image top">
+                </div>
             </div>
-            <div class="col-md-4 m-5">
+            <div class="col-md-5 mt-2">
                 <h3>
                     @Model.Name
                 </h3>
@@ -44,39 +44,50 @@
                 {
                     <p><span>Giá: @(Model.Price.ToString("N0"))</span></p>
                 }
-                <form action="/gio-hang/them-vao" method="post">
-                    <input type="text" name="productId" value="@Model.Id" hidden />
-                    <input type="number" name="quantity" />
-                    <button class="btn btn-group-sm btn-primary text-decoration-none" disabled="@(Model.Quantity <= 0)"><i class="fa fa-plus"></i> Thêm mới</button>
-                </form>
+                <div class="form-inline">
+                    <input type="number" name="cart" class="form-control mr-4" min="1" id="cart-input" data-product-id="@Model.Id" />
+                    <button class="btn btn-group-sm btn-primary text-decoration-none form-control" id="btn-add-card-input"><i class="fa fa-plus"></i>Thêm giỏ hàng</button>
+                </div>
             </div>
         </div>
-        <div class="col-md-12 my-5 py-5 card-body">
-            <p class="my-5 text-primary">
-                Hình ảnh mô tả
-            </p>
-            <div class="col-md-3">
-                <img src="@Model.UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
+        <div class="row no-gutters mt-4">
+            <div class="row no-gutters mt-2">
+                <p class="text-primary mb-0">
+                    Hình ảnh mô tả
+                </p>
             </div>
-            @if (Model.Sub1UrlImage != null)
-            {
-                <div class="col-md-3">
-                    <img src="@Model.Sub1UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
-                </div>
-            }
-            @if (Model.Sub2UrlImage != null)
-            {
-                <div class="col-md-3">
-                    <img src="@Model.Sub2UrlImage" style="width: 100%; height: auto;" alt="Alternate Text" />
-                </div>
-            }
+            <div class="row no-gutters mt-2">
+                @if (Model.Sub1UrlImage != null)
+                {
+                    <div class="col-md-3 mr-4">
+                        <img src="@Model.Sub1UrlImage" class="rounded rounded-lg" style="width: 100%; height: auto;" alt="Alternate Text" />
+                    </div>
+                }
+                @if (Model.Sub2UrlImage != null)
+                {
+                    <div class="col-md-3 mr-4">
+                        <img src="@Model.Sub2UrlImage" class="rounded rounded-lg" style="width: 100%; height: auto;" alt="Alternate Text" />
+                    </div>
+                }
+            </div>
         </div>
-        <div class="col-md-12 my-5 py-5 card-body">
-            <p class="my-5 text-primary">
-                Mô tả
-            </p>
-            @Html.Raw(@Model.Description)
+        <div class="row no-gutters mt-4">
+            <div class="row no-gutters mt-2">
+                <p class="text-primary mb-0">
+                    Mô tả
+                </p>
+            </div>
+            <div class="row no-gutters mt-2">
+                @Html.Raw(@Model.Description)
+            </div>
         </div>
+
     </div>
+
+
     <!--end-single-->
 </div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Content/Client/js/Client-Product-Detail.js"></script>
+}

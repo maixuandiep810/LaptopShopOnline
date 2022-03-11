@@ -6,7 +6,28 @@
     var userLoginSession = Context.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
 }
 
-<div class="top-component">
+<div class="container">
+    <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="col-4 pt-1">
+                @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_SAN_PHAM_PARAMS, @class = "row" }))
+                {
+                    @Html.TextBox("searchString", null, new { @class = "col-md-8 form-control mr-1", @value = ViewBag.SearchString })
+                    <button type="submit" class="col-md-1 btn btn-link"><i class="fa fa-search text-secondary"></i></button>
+                }
+            </div>
+            <div class="col-4 text-center">
+                <a href="/trang-chu"><img src="~/Content/Client/images/LogoBKTech_01.png" alt="LOGO BKTech" class="img-fluid" style="width: auto; height: 2.25rem;" /></a>
+            </div>
+            <div class="col-4 d-flex justify-content-end align-items-center">
+                <a class="btn btn-sm btn-outline-secondary mr-1" href="#">Đăng nhập</a>
+                <a class="btn btn-sm btn-outline-secondary mr-1" href="#">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+</div>
+
+@*<div class="top-component">
     <div class="float-left">
         <p>Bạn cần hỗ trợ? <span class="text-danger"> Gọi cho chúng tôi: </span><a href="#"> 0388.333.444</a></p>
     </div>
@@ -53,5 +74,5 @@
 
         </div>
     </div>
-</div>
+</div>*@
 <!--<p>logo-4.png</p>-->
