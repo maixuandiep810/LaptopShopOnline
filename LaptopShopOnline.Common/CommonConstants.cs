@@ -46,7 +46,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI = "/quan-tri/";
         public const string ROUTE_QUAN_TRI_DANG_NHAP = "/quan-tri/dang-nhap";
         public const string ROUTE_QUAN_TRI_DANG_XUAT = "/quan-tri/dang-xuat";
-//
+        //
         public const string ROUTE_QUAN_TRI_PARAMS = "/quan-tri/";
         public const string ROUTE_QUAN_TRI_DANG_NHAP_PARAMS = "/quan-tri/dang-nhap";
         public const string ROUTE_QUAN_TRI_DANG_XUAT_PARAMS = "/quan-tri/dang-xuat";
@@ -57,7 +57,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_QUYEN = "/quan-tri/quyen";
         public const string ROUTE_QUAN_TRI_QUYEN_CHI_TIET = "/quan-tri/quyen/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_QUYEN_CAP_NHAT = "/quan-tri/quyen/cap-nhat/{id}";
-//
+        //
         public const string ROUTE_QUAN_TRI_QUYEN_PARAMS = "/quan-tri/quyen";
         public const string ROUTE_QUAN_TRI_QUYEN_CHI_TIET_PARAMS = "/quan-tri/quyen/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_QUYEN_CAP_NHAT_PARAMS = "/quan-tri/quyen/cap-nhat/{id}";
@@ -71,7 +71,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_THEM_MOI = "/quan-tri/nhom-nguoi-dung/them-moi";
         public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_CAP_NHAT = "/quan-tri/nhom-nguoi-dung/cap-nhat/{id}";
         public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_XOA = "/quan-tri/nhom-nguoi-dung/xoa/{id}";
-//
+        //
         public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_PARAMS = "/quan-tri/nhom-nguoi-dung";
         public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_CHI_TIET_PARAMS = "/quan-tri/nhom-nguoi-dung/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_THEM_MOI_PARAMS = "/quan-tri/nhom-nguoi-dung/them-moi";
@@ -158,7 +158,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_SAN_PHAM_XOA_PARAMS = "/quan-tri/san-pham/xoa/{id}";
 
 
-        
+
         //
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM = "/quan-tri/nguoi-ban/san-pham";
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CHI_TIET = "/quan-tri/nguoi-ban/san-pham/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
@@ -248,11 +248,26 @@ namespace LaptopShopOnline.Common
 
 
 
+        //
+        //  USER
+        //
+
+
+
+        //
+        public const string ROUTE_TRANG_CHU = "/";
+        //
+        public const string ROUTE_TRANG_CHU_PARAMS = "/";
 
 
 
 
-
+        //
+        public const string ROUTE_DANG_NHAP = "/dang-nhap";
+        public const string ROUTE_DANG_XUAT = "/dang-xuat";
+        //
+        public const string ROUTE_DANG_NHAP_PARAMS = "/dang-nhap";
+        public const string ROUTE_DANG_XUAT_PARAMS = "/dang-xuat";
 
 
 
@@ -263,6 +278,24 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_SAN_PHAM_PARAMS = "/san-pham";
         public const string ROUTE_SAN_PHAM_SEARCH_PARAMS = "/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}";
         public const string ROUTE_SAN_PHAM_CHI_TIET_PARAMS = "/san-pham/chi-tiet/{id}";
+
+
+
+
+//
+        public const string ROUTE_GIO_HANG = "/gio-hang";
+        public const string ROUTE_GIO_HANG_THEM_MOI = "/gio-hang/them-moi";
+        //
+        public const string ROUTE_GIO_HANG_PARAMS = "/gio-hang";
+        public const string ROUTE_GIO_HANG_THEM_MOI_PARAMS = "/gio-hang/them-moi";
+
+
+
+        //
+        public const string ROUTE_DON_HANG = "/don-hang";
+        //
+        public const string ROUTE_DON_HANG_PARAMS = "/don-hang";
+
 
 
 

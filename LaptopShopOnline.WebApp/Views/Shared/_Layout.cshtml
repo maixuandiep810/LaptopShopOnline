@@ -67,9 +67,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     @await Component.InvokeAsync("MainMenu")
 
     @*thong bao cho nguoi dung*@
-    <div id="AlertBox" class="container d-none" style="right: 10px; top: 135px; position: fixed; z-index: 100;">
+    <div id="AlertBox" class="container d-none" style="right: 1rem; top: 9rem; position: fixed; z-index: 100;">
         <div id="AlertBoxContent" class="text-center alert @TempData["AlertType"]" style="float:right;">
-            @TempData["AlertMessage"] + HAHAHAHA
+            @TempData["AlertMessage"]
         </div>
     </div>
 

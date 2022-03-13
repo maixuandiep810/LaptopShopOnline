@@ -60,7 +60,7 @@ namespace LaptopShopOnline.WebApp.Controllers
                         userSession.FirstName = user.FirstName;
                         userSession.LastName = user.LastName;
                         HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userSession);
-                        return Redirect("/");
+                        return Redirect(CommonConstants.ROUTE_TRANG_CHU_PARAMS);
                     case 0:
                         ModelState.AddModelError("", "Tài khoản không tồn tại");
                         break;
@@ -129,7 +129,7 @@ namespace LaptopShopOnline.WebApp.Controllers
                     userSession.FirstName = user.FirstName;
                     userSession.LastName = user.LastName;
                     HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userSession);
-                    return Redirect("/");
+                    return Redirect(CommonConstants.ROUTE_TRANG_CHU_PARAMS);
                 }
             }
             else
@@ -142,12 +142,12 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        [HasCredential(RoleId = "BUYER_ROLE")]
+/*        [HasCredential(RoleId = "BUYER_ROLE")]*/
         public ActionResult Logout()
         {
             Object nullUserLogin = null;
             HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, nullUserLogin);
-            return RedirectToAction("Index", "Homes");
+            return Redirect(CommonConstants.ROUTE_TRANG_CHU_PARAMS);
         }
 
 

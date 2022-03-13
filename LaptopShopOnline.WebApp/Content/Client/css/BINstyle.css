@@ -283,11 +283,11 @@ a.simpleCart_empty {
         width: 60px;
         display: inline-block;
         border: none;
-        //background: #000000;
+        background: #000000;
     }
 
 .callbacks_here a:after {
-    //background: #181b2a;
+    background: #181b2a;
 }
 
 ul.callbacks_tabs.callbacks2_tabs {

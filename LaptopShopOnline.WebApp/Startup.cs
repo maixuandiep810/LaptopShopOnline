@@ -607,14 +607,33 @@ namespace LaptopShopOnline.WebApp
                 //
 
 
+
+                //
+                //  USER - HOME
+                //
+
+                endpoints.MapControllerRoute(
+                    name: "Home",
+                    pattern: CommonConstants.ROUTE_TRANG_CHU,
+                    defaults: new { controller = "Homes", action = "Index" });
+
+
+
+
                 //
                 //  USER - USER
                 //
 
                 endpoints.MapControllerRoute(
                     name: "Login",
-                    pattern: "dang-nhap",
+                    pattern: CommonConstants.ROUTE_DANG_NHAP,
                     defaults: new { controller = "User", action = "Login" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Logout",
+                    pattern: CommonConstants.ROUTE_DANG_XUAT,
+                    defaults: new { controller = "User", action = "Logout" });
 
 
                 //endpoints.MapControllerRoute(
@@ -630,16 +649,6 @@ namespace LaptopShopOnline.WebApp
 
 
 
-                //
-                //  USER - HOME
-                //
-
-                endpoints.MapControllerRoute(
-                    name: "Home",
-                    pattern: "/",
-                    defaults: new { controller = "Homes", action = "Index" });
-
-
 
                 //
                 //  USER - CART
@@ -648,13 +657,13 @@ namespace LaptopShopOnline.WebApp
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart",
-                    pattern: "gio-hang",
+                    pattern: CommonConstants.ROUTE_GIO_HANG,
                     defaults: new { controller = "Cart", action = "Index" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart-Create",
-                    pattern: "gio-hang/them-moi",
+                    pattern: CommonConstants.ROUTE_GIO_HANG_THEM_MOI,
                     defaults: new { controller = "Cart", action = "AddCart" });
 
                 //

@@ -6,8 +6,9 @@ using System.Web;
 
 namespace LaptopShopOnline.WebApp.Models
 {
-    public class JsonResultData
+    public class JsonResultData<T>
     {
+        public T Data { get; set; }
         public string Message { get; set; }
     }
 }
