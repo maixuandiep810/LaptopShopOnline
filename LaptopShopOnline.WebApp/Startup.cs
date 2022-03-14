@@ -687,19 +687,19 @@ namespace LaptopShopOnline.WebApp
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart",
-                    pattern: "don-hang",
+                    pattern: CommonConstants.ROUTE_DON_HANG,
                     defaults: new { controller = "Order", action = "Index" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart-Create",
-                    pattern: "don-hang/tao",
+                    pattern: CommonConstants.ROUTE_DON_HANG_THEM_MOI,
                     defaults: new { controller = "Order", action = "Create" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart-Create",
-                    pattern: "don-hang/xoa/{id}",
+                    pattern: CommonConstants.ROUTE_DON_HANG_XOA,
                     defaults: new { controller = "Order", action = "Delete" });
 
 

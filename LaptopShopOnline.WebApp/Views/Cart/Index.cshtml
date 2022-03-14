@@ -26,26 +26,26 @@
     <div class="card-body">
         @if (Model.Count > 0)
         {
-            <div class="table-responsive">
+            <div class="">
                 @{
                     var groupedCarts = Model.ToLookup(x => x.Product.Shop);
                     foreach (var groupedCart in groupedCarts)
                     {
-                        <div class="row my-5">
-                            <div class="row my-5">
+                        <div class="row no-gutters mt-1">
+                            <div class="row no-gutters pt-1">
                                 <h6>
                                     Cửa hàng : @groupedCart.Key?.Name
                                 </h6>
                             </div>
-                            <table class="row table table-bordered table-striped table-condensed">
+                            <table class="pt-1 table-responsive table-bordered table-striped table-condensed">
                                 <thead>
                                     <tr>
-                                        <td>Tên sản phẩm</td>
-                                        <td>Ảnh sản phẩm</td>
-                                        <td>Số lượng</td>
-                                        <td>Đơn giá</td>
-                                        <td>Thành tiền</td>
-                                        <td></td>
+                                        <th class="col-md-5 col-sm-2 col-2">Tên sản phẩm</th>
+                                        <th class="col-md-1 col-sm-1 col-1">Ảnh</th>
+                                        <th class="col-md-1 col-sm-3 col-3">SL</th>
+                                        <th class="col-md-2 col-sm-2 col-2">Đơn giá</th>
+                                        <th class="col-md-2 col-sm-2 col-2">Tổng</th>
+                                        <th class="col-md-1 col-sm-1 col-1"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,24 +55,24 @@
                                     }
                                 </tbody>
                             </table>
-                            <div class="row my-5 d-flex justify-content-end align-items-center">
+                            <div class="row no-gutters pt-1 justify-content-end align-items-center">
                                 <button class="btn"><a href="/don-hang/tao?shopId=@groupedCart.Key.Id">Đặt hàng theo cửa hàng</a></button>
                             </div>
                         </div>
                     }
                 }
 
-                <div class="row  d-flex justify-content-start align-items-center">
-                    <button class="btn"><a href="/">Tiếp tục mua hàng</a></button>
-                    <button class="btn"><a href="/gio-hang/xoa">Xóa giỏ hàng</a></button>
-                    <button class="btn"><a href="/don-hang/tao?shouldOrderAll=true">Đặt hàng tất cả</a></button>
+                <div class="row no-gutters mt-5 d-flex justify-content-start align-items-center">
+                    <button class="btn mr-1"><a href="/">Tiếp tục mua hàng</a></button>
+                    <button class="btn mr-1"><a href="/gio-hang/xoa">Xóa giỏ hàng</a></button>
+                    <button class="btn mr-1"><a href="/don-hang/tao?shouldOrderAll=true">Đặt hàng tất cả</a></button>
                 </div>
             </div>
         }
         else
         {
-            <div class="row">
-                <span class="alert alert-danger" style="margin-top: 40px;">Chưa có sản phẩm nào trong giỏ hàng</span>
+            <div class="row no-gutters mt-5">
+                <span class="alert alert-danger mt-5">Chưa có sản phẩm nào trong giỏ hàng</span>
             </div>
         }
     </div>

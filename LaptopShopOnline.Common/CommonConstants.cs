@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace LaptopShopOnline.Common
@@ -293,8 +294,12 @@ namespace LaptopShopOnline.Common
 
         //
         public const string ROUTE_DON_HANG = "/don-hang";
+        public const string ROUTE_DON_HANG_THEM_MOI = "/don-hang/them-moi";
+        public const string ROUTE_DON_HANG_XOA = "/don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_DON_HANG_PARAMS = "/don-hang";
+        public const string ROUTE_DON_HANG_THEM_MOI_PARAMS = "/don-hang/them-moi?cartId={cartId}&shopId={shopId}&shouldOrderAll={shouldOrderAll}";
+        public const string ROUTE_DON_HANG_XOA_PARAMS = "/don-hang/xoa/{id}";
 
 
 
@@ -303,5 +308,10 @@ namespace LaptopShopOnline.Common
 
         //{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
 
+
+
+
+        public static CultureInfo VietNamCultureInfo = CultureInfo.CreateSpecificCulture("vi-VN");
+        public const string CurrencyFormat = "c";
     }
 }

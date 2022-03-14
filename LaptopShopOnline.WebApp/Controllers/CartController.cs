@@ -33,7 +33,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         public ActionResult Index()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
+            var carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId).ToList();
             return View(carts);
         }
 
@@ -60,7 +60,7 @@ namespace LaptopShopOnline.WebApp.Controllers
                 };
                 return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.NotFound };
             }
-            var cartBuyer = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false && x.ProductId == cart.ProductId && x.BuyerId == userLoginSession.UserId).FirstOrDefault();
+            var cartBuyer = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false && x.ProductId == cart.ProductId && x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId).FirstOrDefault();
             if (cartBuyer != null)
             {
                 cartBuyer.Quantity += cart.Quantity;
@@ -98,7 +98,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         //     if (userLoginSession != null)
         //     {
         //         var product = _serviceWrapper.Db.Product.Find(productId);
-        //         var carts = _serviceWrapper.Db.Cart.Where(x => x.BuyerId == userLoginSession.UserId && x.ProductId == product.Id).FirstOrDefault();
+        //         var carts = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId && x.ProductId == product.Id).FirstOrDefault();
         //         if (carts != null)
         //         {
         //             carts.Quantity += quantity;
@@ -154,7 +154,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (id == null)
             {
-                _serviceWrapper.Db.Cart.RemoveRange(_serviceWrapper.Db.Cart.Where(x => x.BuyerId == userLoginSession.UserId));
+                _serviceWrapper.Db.Cart.RemoveRange(_serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId));
                 _serviceWrapper.Db.SaveChanges();
                 return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
             }
@@ -237,7 +237,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         //         content = content.Replace("{{Phone}}", mobile);
         //         content = content.Replace("{{Email}}", session.Email);
         //         content = content.Replace("{{Address}}", session.Address);
-        //         content = content.Replace("{{Total}}", total.ToString("N0"));
+        //         content = content.Replace("{{Total}}", total.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo));
         //         var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
 
         //         new MailHelper().SendMail(session.Email, "Đơn hàng mới từ Free Style Shoe", content);

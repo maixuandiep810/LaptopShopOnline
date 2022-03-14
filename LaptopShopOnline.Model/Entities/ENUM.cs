@@ -10,12 +10,11 @@ namespace LaptopShopOnline.Model.Entities
     {
         public enum OrderStatus
         {
-            BUYER_PENDING = 0,
-            SHOP_PENDING = 1,
-            SHOP_APPROVED = 2,
-            SHOP_SHIPPING = 3,
-            BUYER_PAID = 4,
-            BUYER_CANCELLED = 5
+            SHOP_PENDING = 0,
+            SHOP_APPROVED = 1,
+            SHOP_SHIPPING = 2,
+            BUYER_PAID = 3,
+            BUYER_CANCELLED = 4
         }
 
         public enum ShopStatus

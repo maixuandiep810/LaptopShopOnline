@@ -10,100 +10,71 @@
 }
 
 
-<div class="container">
-    <!--start-breadcrumbs-->
-    <div class="col-md-12">
-        <div class="breadcrumbs">
-            <div class="container">
-                <div class="breadcrumbs-main">
-                    <ol class="breadcrumb">
-                        <li><a href="/trang-chu">Trang chủ</a></li>
-                        <li class="active">@ViewBag.Title</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
+<!--start-breadcrumbs-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#" onclick="history.back()">Quay lại</a></li>
+    </ol>
+</nav>
+<!--end-breadcrumbs-->
+
+
+<div class="card shadow my-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
     </div>
-    <!--end-breadcrumbs-->
-    <div class="col-md-12">
+    <div class="card-body">
         @if (Model.Carts.Count > 0)
         {
-            <div class="col-md-12 my-5">
-                <div class="table-responsive container">
-                    @{
-                        var groupedCarts = Model.Carts.ToLookup(x => x.Product.Shop);
-                        foreach (var groupedCart in groupedCarts)
-                        {
-                            <div class="col-md-12 my-5">
-                                <div class="col-md-12 my-5">
-                                    <h6>
-                                        Cửa hàng : @groupedCart.Key?.Name
-                                    </h6>
-                                </div>
-                                <table class="table table-bordered table-striped table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <td>Tên sản phẩm</td>
-                                            <td>Ảnh sản phẩm</td>
-                                            <td>Số lượng</td>
-                                            <td>Đơn giá</td>
-                                            <td>Thành tiền</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var cart in groupedCart)
-                                        {
-                                            @Html.Partial("_EditPartialView", cart);
-                                        }
-                                    </tbody>
-                                </table>
+            <div class="">
+                @{
+                    var groupedCarts = Model.Carts.ToLookup(x => x.Product.Shop);
+                    foreach (var groupedCart in groupedCarts)
+                    {
+                        <div class="row no-gutters mt-1">
+                            <div class="row no-gutters pt-1">
+                                <h6>
+                                    Cửa hàng : @groupedCart.Key?.Name
+                                </h6>
                             </div>
-                        }
+                            <table class="pt-1 table-responsive table-bordered table-striped table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-6 col-sm-3 col-3">Tên sản phẩm</th>
+                                        <th class="col-md-1 col-sm-1 col-1">Ảnh</th>
+                                        <th class="col-md-1 col-sm-3 col-3">SL</th>
+                                        <th class="col-md-2 col-sm-2 col-2">Đơn giá</th>
+                                        <th class="col-md-2 col-sm-2 col-2">Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cart in groupedCart)
+                                    {
+                                        @Html.Partial("_EditPartialView", cart);
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     }
+                }
 
-                    <div class="col-md-12 my-5">
-                        @Html.Partial("_CreateOrderPartialView", Model.Order);
-                    </div>
+                <div class="row no-gutters mt-5">
+                    @Html.Partial("_CreateOrderPartialView", Model.Order);
+                </div>
 
-                    <p>
-                        <button class="btn"><a href="/">Tiếp tục mua hàng</a></button>
-                        <button class="btn"><a href="/gio-hang">Giỏ hàng</a></button>
-                        <button class="btn"><a href=@CommonConstants.ROUTE_DON_HANG_PARAMS>Đặt hàng</a></button>
-                    </p>
+                <div class="row no-gutters mt-5 d-flex justify-content-start align-items-center">
+                    <button class="btn mr-1"><a href=@CommonConstants.ROUTE_TRANG_CHU>Tiếp tục mua hàng</a></button>
+                    <button class="btn mr-1"><a href=@CommonConstants.ROUTE_GIO_HANG_PARAMS>Giỏ hàng</a></button>
+                    <button class="btn mr-1"><a href="/don-hang/tao">Đặt hàng</a></button>
                 </div>
             </div>
         }
         else
         {
-            <div class="container">
-                <span class="alert alert-danger" style="margin-top: 40px;">Chưa có sản phẩm nào trong giỏ hàng</span>
+            <div class="row no-gutters mt-5">
+                <span class="alert alert-danger mt-5">Chưa có sản phẩm nào trong giỏ hàng</span>
             </div>
         }
     </div>
-
 </div>
-
-<script>
-    function updateQuantity() {
-        var listProduct = $('.txtQuantity');
-        var cartList = [];
-        $.each(listProduct, function (i, item) {
-            cartList.push({
-                Quantity: $(item).val(),
-                ProductId: $(item).data('id')
-            })
-        });
-        $.ajax({
-            url: '/gio-hang/cap-nhat',
-            data: { cartModel: JSON.stringify(cartList) },
-            dataType: 'json',
-            type: 'POST',
-            success: function (res) {
-                if (res.status == true) {
-                    window.location.href = "/gio-hang";
-                }
-            }
-        })
-    };
-</script>

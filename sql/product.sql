@@ -1,7 +1,7 @@
 ﻿USE [LaptopShopOnline001]
 GO
 
-
+-- SSSSSSS
 INSERT [dbo].[Product] ([Id], [Name], [Code], [ShopId], [Description], [UrlImage], [Sub1UrlImage], [Sub2UrlImage], [Price], [PromotionPrice], [Quantity], [ProductCategoryId], [Detail], [IsTopHot], [IsNormalProduct1], [IsNormalProduct2], [IsNewProduct], [QuantityOfSoldProduct], [ViewCount], [ProductStatus], [CreatedOn], [CreatedBy], [ModifiedOn], [ModifiedBy], [IsDeleted]) VALUES 
 (N'b8b3e0cc-5aaa-4b93-9ff7-31c393bba431', N'Điện thoại Samsung Galaxy S22 5G 128GB ', N's101', N'3275b4f2-ca15-43db-994b-b1239fdde721', N'', '/Content/Data/q11.jpg', '/Content/Data/q12.jpg', '/Content/Data/q13.jpg', CAST(21999999 AS Decimal(18, 0)), CAST(20999999 AS Decimal(18, 0)), 45, N'369293f5-9c8d-46ea-97f4-b844a71529bf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, CAST(N'2022-03-06T21:11:05.0000000+07:00' AS DateTimeOffset), N'admin', CAST(N'2022-03-07T03:38:39.9005334+07:00' AS DateTimeOffset), N'admin', 0)
 GO
@@ -43,3 +43,11 @@ INSERT [dbo].[Product] ([Id], [Name], [Code], [ShopId], [Description], [UrlImage
 GO
 
 
+-- MMMMMMMMM
+INSERT [dbo].[Product] ([Id], [Name], [Code], [ShopId], [Description], [UrlImage], [Sub1UrlImage], [Sub2UrlImage], [Price], [PromotionPrice], [Quantity], [ProductCategoryId], [Detail], [IsTopHot], [IsNormalProduct1], [IsNormalProduct2], [IsNewProduct], [QuantityOfSoldProduct], [ViewCount], [ProductStatus], [CreatedOn], [CreatedBy], [ModifiedOn], [ModifiedBy], [IsDeleted]) VALUES 
+(N'a82e45dc-1d78-4434-90b5-0b2b20f74e3e', N'MTXT Apple Macbook Pro M1 8GPU/16Gb Ram/256Gb SDD/ Space Grey/ Z11B000CT  ', N'shopm101', N'27259fe0-be6e-4ea0-9494-cc3493e95875', N'', '/Content/Data/m11.jpg', '/Content/Data/m12.jpg', '/Content/Data/q13.jpg', CAST(38999999 AS Decimal(18, 0)), CAST(35999999 AS Decimal(18, 0)), 45, N'd199ea33-fe9d-417e-a1de-aed939ba2ce5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, CAST(N'2022-03-06T21:11:05.0000000+07:00' AS DateTimeOffset), N'admin', CAST(N'2022-03-07T03:38:39.9005334+07:00' AS DateTimeOffset), N'admin', 0)
+GO
+
+INSERT [dbo].[Product] ([Id], [Name], [Code], [ShopId], [Description], [UrlImage], [Sub1UrlImage], [Sub2UrlImage], [Price], [PromotionPrice], [Quantity], [ProductCategoryId], [Detail], [IsTopHot], [IsNormalProduct1], [IsNormalProduct2], [IsNewProduct], [QuantityOfSoldProduct], [ViewCount], [ProductStatus], [CreatedOn], [CreatedBy], [ModifiedOn], [ModifiedBy], [IsDeleted]) VALUES 
+(N'4a2c92bd-2bd2-42e2-9736-4be4d1ab201b', N'MTXT Asus Vivobook A415EA Core i5-1115G4/ 8GB Ram/ 256GB SSD/ 14.', N'shopm102', N'27259fe0-be6e-4ea0-9494-cc3493e95875', N'', '/Content/Data/m21.jpg', '/Content/Data/m22.jpg', '/Content/Data/m23.jpg', CAST(16999999 AS Decimal(18, 0)), CAST(15999999 AS Decimal(18, 0)), 45, N'd199ea33-fe9d-417e-a1de-aed939ba2ce5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, CAST(N'2022-03-06T21:11:05.0000000+07:00' AS DateTimeOffset), N'admin', CAST(N'2022-03-07T03:38:39.9005334+07:00' AS DateTimeOffset), N'admin', 0)
+GO

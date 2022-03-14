@@ -37,12 +37,12 @@
                 </p>
                 @if (Model.PromotionPrice > 0)
                 {
-                    <p><span class=""><strike>Giá gốc: @(Model.Price.ToString("N0"))</strike></span></p>
-                    <p><span>Chỉ còn: @(Model.PromotionPrice.Value.ToString("N0"))</span></p>
+                    <p><span class=""><strike>Giá gốc: @(Model.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))</strike></span></p>
+                    <p><span>Chỉ còn: @(Model.PromotionPrice.Value.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))</span></p>
                 }
                 else
                 {
-                    <p><span>Giá: @(Model.Price.ToString("N0"))</span></p>
+                    <p><span>Giá: @(Model.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))</span></p>
                 }
                 <div class="form-inline">
                     <input type="number" name="cart" class="form-control mr-4" min="1" value="1" id="cart-input" data-product-id="@Model.Id" />

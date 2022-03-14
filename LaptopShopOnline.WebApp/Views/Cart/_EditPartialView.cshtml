@@ -2,57 +2,41 @@
 
 @model Cart
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @action = "/gio-hang/cap-nhat" }))
-{
-    @Html.AntiForgeryToken()
+
 <tr>
- <td hidden>    
-    @Html.EditorFor(Model => Model.Id)
-    @Html.ValidationMessageFor(Model => Model.Id, "", new { @class = "text-danger" })
- </td>
- <td hidden>    
-    @Html.EditorFor(Model => Model.BuyerId)
-    @Html.ValidationMessageFor(Model => Model.BuyerId, "", new { @class = "text-danger" })
- </td>
- <td hidden>    
-    @Html.EditorFor(Model => Model.ProductId)
-    @Html.ValidationMessageFor(Model => Model.ProductId, "", new { @class = "text-danger" })
- </td>
 <td>@Model.Product.Name</td>
-<td><img src="@Model.Product.UrlImage" alt="Alternate Text" width="100" height="70" /></td>
 <td>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.EditorFor(Model => Model.Quantity)
-    @Html.ValidationMessageFor(Model => Model.Quantity, "", new { @class = "text-danger" })
+    <div class="s-box-square">
+        <img class="s-box-square-image" src="@Model.Product.UrlImage" alt="Alternate Text" style="" />
+    </div>
+</td>
+<td>
+    <input type="number" name="cart" class="form-control" min="1" value="@Model.Quantity" id="cart-input" data-cart-id="@Model.Id" />
 </td>
 <td>
     @if (Model.Product.PromotionPrice != null)
     {
-    <strike>@Model.Product.Price.ToString("N0")</strike>
+    <strike>@Model.Product.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)</strike>
     <span>/</span>
-    @Model.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")
+    @Model.Product.PromotionPrice.GetValueOrDefault(0).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)
     }
     else
     {
-    @Model.Product.Price.ToString("N0")
+    @Model.Product.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)
     }
 </td>
 <td>
     @if (Model.Product.PromotionPrice != null)
     {
-        @((Model.Product.PromotionPrice.GetValueOrDefault(0) * Model.Quantity).ToString("N0"))
+        @((Model.Product.PromotionPrice.GetValueOrDefault(0) * Model.Quantity).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))
     }
     else
     {
-        @((Model.Product.Price * Model.Quantity).ToString("N0"))
+        @((Model.Product.Price * Model.Quantity).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))
     }
 </td>
 <td>
-    <button type="submit" class="btn-sm btn-group-sm btn-primary">Cập nhật</button>
-    |
-    <a href="/don-hang/tao?cartId=@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-sm btn-group-sm btn-success">Tạo đơn hàng</a>
-    |
-    <a href="/gio-hang/xoa/@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-sm btn-group-sm btn-warning">Xoá</a>
+    <a href="/don-hang/tao?cartId=@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-sm btn-success m-1"><i class="fas fa-plus"></i></a>
+    <a href="/gio-hang/xoa/@Model.Id" @*data-id="@item.Product.Id"*@ class="btn-sm btn-danger m-1"><i class="fas fa-trash-alt"></i></a>
 </td>
 </tr>
-}

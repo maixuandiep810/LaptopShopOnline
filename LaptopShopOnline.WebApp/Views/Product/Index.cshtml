@@ -72,13 +72,13 @@
                                 <p>
                                     @if (item.PromotionPrice > 0)
                                     {
-                                        <span><strike>@(item.Price.ToString("N0"))</strike></span>
+                                        <span><strike>@(item.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))</strike></span>
                                         <br />
-                                        <span>@(item.PromotionPrice.Value.ToString("N0"))</span>
+                                        <span>@(item.PromotionPrice.Value.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))</span>
                                     }
                                     else
                                     {
-                                        <span>@(item.Price.ToString("N0"))</span>
+                                        <span>@(item.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))</span>
                                     }
                                 </p>
                                 <div>

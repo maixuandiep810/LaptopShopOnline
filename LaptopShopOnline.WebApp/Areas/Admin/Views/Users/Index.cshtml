@@ -73,9 +73,9 @@
                                 <a class="btn btn-primary btn-sm dialog-link" href="#", new { id = item.Id })>@(item.IsDeleted ? "Đã xóa" : "Chưa xóa")</a>
                             </td>
                             <td>
-                                <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.Id })><i class="far fa-edit"></i></a>
+                                <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.Id })><i class="fas fa-edit"></i></a>
                                 <a class="btn-sm btn-group-sm btn-secondary dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CHI_TIET_PARAMS, new { id = item.Id })><i class="fas fa-info"></i></a>
-                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_XOA_PARAMS, new { id = item.Id })><i class="far fa-trash-alt"></i></a>
+                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_XOA_PARAMS, new { id = item.Id })><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         i++;

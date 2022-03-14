@@ -1,31 +1,38 @@
-﻿@* @using LaptopShopOnline.Model.Entities
+﻿@using LaptopShopOnline.Model.Entities
 
 @model Cart
 
+
 <tr>
-<td>@Model.Product.Name</td>
-<td><img src="@Model.Product.UrlImage" alt="Alternate Text" width="100" height="70" /></td>
-<td>
-    @Model.Quantity
-</td>
-<td>
-    @if (Model.Product.PromotionPrice != null)
+    <td>@Model.Product.Name</td>
+    <td>
+        <div class="s-box-square">
+            <img class="s-box-square-image" src="@Model.Product.UrlImage" alt="Alternate Text" style="" />
+        </div>
+    </td>
+    <td>
+        @Model.Id
+    </td>
+    <td>
+        @if (Model.Product.PromotionPrice != null)
         {
-        @Model.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")
+            <strike>@Model.Product.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)</strike>
+            <span>/</span>
+            @Model.Product.PromotionPrice.GetValueOrDefault(0).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)
         }
         else
         {
-        @Model.Product.Price.GetValueOrDefault(0).ToString("N0")
+            @Model.Product.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)
         }
-</td>
-<td>
-    @if (Model.Product.PromotionPrice != null)
-    {
-        @((Model.Product.PromotionPrice.GetValueOrDefault(0) * Model.Quantity)?.ToString("N0"))
-    }
-    else
-    {
-        @((Model.Product.Price.GetValueOrDefault(0) * Model.Quantity)?.ToString("N0"))
-    }
-</td>
-</tr> *@
+    </td>
+    <td>
+        @if (Model.Product.PromotionPrice != null)
+        {
+            @((Model.Product.PromotionPrice.GetValueOrDefault(0) * Model.Quantity).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))
+        }
+        else
+        {
+            @((Model.Product.Price * Model.Quantity).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))
+        }
+    </td>
+</tr>
