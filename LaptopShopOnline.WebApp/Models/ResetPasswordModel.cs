@@ -16,7 +16,7 @@ namespace LaptopShopOnline.WebApp.Models
         [Compare("NewPassword", ErrorMessage = "Mật khẩu không khớp")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage= "Không được để trống")]
         public string ResetCode { get; set; }
     }
 }

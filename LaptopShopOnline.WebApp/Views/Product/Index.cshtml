@@ -27,10 +27,10 @@
     <div class="card-body">
         @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_SAN_PHAM_PARAMS }))
         {
-            <div class="form-group">
+            <div class="form-group row no-gutters">
                 @Html.TextBox("searchString", null, new
                 {
-                    @class = "col-md-4 form-control float-left",
+                    @class = "col-md-4 form-control",
                     @value = ViewBag.SearchString
                 })
                 <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>

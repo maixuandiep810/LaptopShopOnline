@@ -5,9 +5,7 @@
     ViewBag.Title = "Giỏ hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section Scripts{
-    <script src="~/Content/Client/js/Controller/cartController.js"></script>
-}
+
 
 
 <!--start-breadcrumbs-->
@@ -56,16 +54,16 @@
                                 </tbody>
                             </table>
                             <div class="row no-gutters pt-1 justify-content-end align-items-center">
-                                <button class="btn"><a href="/don-hang/tao?shopId=@groupedCart.Key.Id">Đặt hàng theo cửa hàng</a></button>
+                                <button class="btn"><a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_THEM_MOI_PARAMS, new {cartId = "", shopId=@groupedCart.Key.Id, shouldOrderAll=false})>Đặt hàng theo cửa hàng</a></button>
                             </div>
                         </div>
                     }
                 }
 
                 <div class="row no-gutters mt-5 d-flex justify-content-start align-items-center">
-                    <button class="btn mr-1"><a href="/">Tiếp tục mua hàng</a></button>
-                    <button class="btn mr-1"><a href="/gio-hang/xoa">Xóa giỏ hàng</a></button>
-                    <button class="btn mr-1"><a href="/don-hang/tao?shouldOrderAll=true">Đặt hàng tất cả</a></button>
+                    <button class="btn mr-1"><a href=@CommonConstants.ROUTE_TRANG_CHU_PARAMS>Tiếp tục mua hàng</a></button>
+                    <button class="btn mr-1"><a href="#">Xóa tất cả</a></button>
+                    <button class="btn mr-1"><a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_THEM_MOI_PARAMS, new {cartId = "", shopId = "", shouldOrderAll=true})>Đặt hàng tất cả</a></button>
                 </div>
             </div>
         }
@@ -78,28 +76,9 @@
     </div>
 </div>
 
+@section Scripts {
+    <script type="text/javascript" src="~/Content/Client/js/Client-Cart.js"></script>
 
-
-<script>
-    function updateQuantity() {
-        var listProduct = $('.txtQuantity');
-        var cartList = [];
-        $.each(listProduct, function (i, item) {
-            cartList.push({
-                Quantity: $(item).val(),
-                ProductId: $(item).data('id')
-            })
-        });
-        $.ajax({
-            url: '/gio-hang/cap-nhat',
-            data: { cartModel: JSON.stringify(cartList) },
-            dataType: 'json',
-            type: 'POST',
-            success: function (res) {
-                if (res.status == true) {
-                    window.location.href = "/gio-hang";
-                }
-            }
-        })
-    };
-</script>
+@*    <script src="~/Content/Client/js/Controller/cartController.js"></script>
+*@
+}

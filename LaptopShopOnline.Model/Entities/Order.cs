@@ -23,21 +23,21 @@ namespace LaptopShopOnline.Model.Entities
         public Guid ShopId { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage= "Không được để trống")]
         [Column(TypeName = "nvarchar(100)")]
         [StringLength(100)]
         [Display(Name = "Tên người nhận")]
         public string ShipName { get; set; }
 
         [Display(Name = "Số điện thoại người nhận")]
-        [Required]
+        [Required(ErrorMessage= "Không được để trống")]
         [Column(TypeName = "varchar(20)")]
         [StringLength(20)]
         [DataType(DataType.PhoneNumber)]
         public string ShipPhone { get; set; }
 
         [Display(Name = "Địa chỉ")]
-        [Required]
+        [Required(ErrorMessage= "Không được để trống")]
         [Column(TypeName = "nvarchar(1000)")]
         [StringLength(1000)]
         public string ShipAddress { get; set; }
@@ -45,7 +45,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Email")]
         [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
         ErrorMessage = "Không đúng định dạng email")]
-        [Required]
+        [Required(ErrorMessage= "Không được để trống")]
         [StringLength(256)]
         public string ShipEmail { get; set; }
 

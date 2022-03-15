@@ -70,7 +70,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
                 order.Id = Guid.NewGuid();
                 AuditTable.InsertAuditFields(order, userLoginSession.UserName);
-                order.OrderStatus = (int)ENUM.OrderStatus.BUYER_PENDING;
+                order.OrderStatus = (int)ENUM.OrderStatus.SHOP_PENDING;
                 _serviceWrapper.Db.Order.Add(order);
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Thêm mới thành công", "success");

@@ -286,19 +286,26 @@ namespace LaptopShopOnline.Common
 //
         public const string ROUTE_GIO_HANG = "/gio-hang";
         public const string ROUTE_GIO_HANG_THEM_MOI = "/gio-hang/them-moi";
+        public const string ROUTE_GIO_HANG_CAP_NHAT = "/gio-hang/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_GIO_HANG_XOA = "/gio-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_GIO_HANG_PARAMS = "/gio-hang";
         public const string ROUTE_GIO_HANG_THEM_MOI_PARAMS = "/gio-hang/them-moi";
+        public const string ROUTE_GIO_HANG_CAP_NHAT_PARAMS = "/gio-hang/cap-nhat/{id}";
+        public const string ROUTE_GIO_HANG_XOA_PARAMS = "/gio-hang/xoa/{id}";
 
 
 
         //
         public const string ROUTE_DON_HANG = "/don-hang";
         public const string ROUTE_DON_HANG_THEM_MOI = "/don-hang/them-moi";
+        public const string ROUTE_DON_HANG_CAP_NHAT = "/don-hang/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         public const string ROUTE_DON_HANG_XOA = "/don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_DON_HANG_PARAMS = "/don-hang";
+        public const string ROUTE_DON_HANG_SEARCH_PARAMS = "/don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}";
         public const string ROUTE_DON_HANG_THEM_MOI_PARAMS = "/don-hang/them-moi?cartId={cartId}&shopId={shopId}&shouldOrderAll={shouldOrderAll}";
+        public const string ROUTE_DON_HANG_CAP_NHAT_PARAMS = "/don-hang/cap-nhat/{id}";
         public const string ROUTE_DON_HANG_XOA_PARAMS = "/don-hang/xoa/{id}";
 
 

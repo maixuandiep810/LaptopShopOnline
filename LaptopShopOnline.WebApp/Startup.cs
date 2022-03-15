@@ -664,19 +664,19 @@ namespace LaptopShopOnline.WebApp
                 endpoints.MapControllerRoute(
                     name: "Cart-Create",
                     pattern: CommonConstants.ROUTE_GIO_HANG_THEM_MOI,
-                    defaults: new { controller = "Cart", action = "AddCart" });
+                    defaults: new { controller = "Cart", action = "ApiAdd" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart-Edit",
-                    pattern: "gio-hang/cap-nhat",
-                    defaults: new { controller = "Cart", action = "Edit" });
+                    pattern: CommonConstants.ROUTE_GIO_HANG_CAP_NHAT,
+                    defaults: new { controller = "Cart", action = "ApiEdit" });
 
                 //
                 endpoints.MapControllerRoute(
                     name: "Cart-Delete",
-                    pattern: "gio-hang/xoa/{id}",
-                    defaults: new { controller = "Cart", action = "Delete" });
+                    pattern: CommonConstants.ROUTE_GIO_HANG_XOA,
+                    defaults: new { controller = "Cart", action = "ApiDelete" });
 
 
 
@@ -686,19 +686,19 @@ namespace LaptopShopOnline.WebApp
 
                 //
                 endpoints.MapControllerRoute(
-                    name: "Cart",
+                    name: "Order",
                     pattern: CommonConstants.ROUTE_DON_HANG,
                     defaults: new { controller = "Order", action = "Index" });
 
                 //
                 endpoints.MapControllerRoute(
-                    name: "Cart-Create",
+                    name: "Order-Create",
                     pattern: CommonConstants.ROUTE_DON_HANG_THEM_MOI,
                     defaults: new { controller = "Order", action = "Create" });
 
                 //
                 endpoints.MapControllerRoute(
-                    name: "Cart-Create",
+                    name: "Order-Create",
                     pattern: CommonConstants.ROUTE_DON_HANG_XOA,
                     defaults: new { controller = "Order", action = "Delete" });
 

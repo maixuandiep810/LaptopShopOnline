@@ -33,12 +33,12 @@ namespace LaptopShopOnline.WebApp.Controllers
         public ActionResult Index()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId).ToList();
+            var carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.IsDeleted == false && x.BuyerId == userLoginSession.UserId).ToList();
             return View(carts);
         }
 
         [HttpPost]
-        public JsonResult AddCart([FromBody] Cart cart)
+        public JsonResult ApiAdd([FromBody] Cart cart)
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             JsonResultData<int> jsonResultData = null;
@@ -52,7 +52,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             }
 
             var product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
-            if (product == null)
+            if (product == null || cart.Quantity <= 0)
             {
                 jsonResultData = new JsonResultData<int>
                 {
@@ -60,21 +60,25 @@ namespace LaptopShopOnline.WebApp.Controllers
                 };
                 return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.NotFound };
             }
-            var cartBuyer = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false && x.ProductId == cart.ProductId && x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId).FirstOrDefault();
+            var cartBuyer = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false && x.ProductId == cart.ProductId && x.IsDeleted == false && x.BuyerId == userLoginSession.UserId).FirstOrDefault();
+
             if (cartBuyer != null)
             {
-                cartBuyer.Quantity += cart.Quantity;
-            }
-            else
-            {
-                var newCartBuyer = new Cart
+                jsonResultData = new JsonResultData<int>
                 {
-                    BuyerId = userLoginSession.UserId,
-                    ProductId = cart.ProductId,
-                    Quantity = cart.Quantity
+                    Message = "Thêm mới lỗi. Sản phẩm đã có trong giỏ hàng."
                 };
-                _serviceWrapper.Db.Cart.Add(newCartBuyer);
+                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.BadRequest };
             }
+
+            var newCartBuyer = new Cart
+            {
+                BuyerId = userLoginSession.UserId,
+                ProductId = cart.ProductId,
+                Quantity = cart.Quantity
+            };
+            _serviceWrapper.Db.Cart.Add(newCartBuyer);
+
             _serviceWrapper.Db.SaveChanges();
             var cartsCount = _serviceWrapper.Db.Cart.Count();
             jsonResultData = new JsonResultData<int>
@@ -86,65 +90,76 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-        // //[HasCredential(RoleId = "BUYER_ROLE")]
-        // public ActionResult Add(Guid? productId, int quantity)
-        // {
-        //     if (quantity <= 0)
-        //     {
-        //         SetAlert("Thêm vào giỏ thất bại", "warning");
-        //         return Redirect(Request.Headers["Referer"].ToString());
-        //     }
-        //     var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-        //     if (userLoginSession != null)
-        //     {
-        //         var product = _serviceWrapper.Db.Product.Find(productId);
-        //         var carts = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId && x.ProductId == product.Id).FirstOrDefault();
-        //         if (carts != null)
-        //         {
-        //             carts.Quantity += quantity;
-        //             _serviceWrapper.Db.SaveChanges();
-        //         }
-        //         else
-        //         {
-        //             var newCart = new Cart
-        //             {
-        //                 BuyerId = userLoginSession.UserId,
-        //                 ProductId = product.Id,
-        //                 Quantity = quantity
-        //             };
-        //             _serviceWrapper.Db.Cart.Add(newCart);
-        //             _serviceWrapper.Db.SaveChanges();
-        //         }
 
-        //         SetAlert("Thêm vào giỏ thành công", "success");
-        //         return Redirect(Request.Headers["Referer"].ToString());
-        //     }
-        //     else
-        //     {
-        //         SetAlert("Bạn phải đăng nhập để có thể mua hàng", "warning");
-        //         return Redirect("/dang-nhap");
-        //     }
-        // }
-
-        //[HasCredential(RoleId = "BUYER_ROLE")]
+        //
         [HttpPost]
-        public ActionResult Edit(Cart cart)
+        public JsonResult ApiEdit([FromBody] Cart cart)
         {
-            if (ModelState.IsValid)
+            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            JsonResultData<int> jsonResultData = null;
+            if (userLoginSession == null)
             {
-                if (cart.Quantity <= 0)
+                jsonResultData = new JsonResultData<int>
                 {
-                    SetAlert("Thêm vào giỏ thất bại", "warning");
-                    return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
-                }
-                var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-                _serviceWrapper.Db.Entry(cart).State = EntityState.Modified;
-                _serviceWrapper.Db.SaveChanges();
-                SetAlert("Cập nhật thành công", "success");
-                return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+                    Message = "Bạn phải đăng nhập để có thể mua hàng"
+                };
+                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.Unauthorized };
             }
-            SetAlert("Thêm vào giỏ thất bại", "warning");
-            return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+
+            var existedCart = _serviceWrapper.Db.Cart.Where(p => p.IsDeleted == false && p.Id == cart.Id).FirstOrDefault();
+            if (existedCart == null || cart.Quantity <= 0)
+            {
+                jsonResultData = new JsonResultData<int>
+                {
+                    Message = "Cập nhật lỗi"
+                };
+                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+
+            existedCart.Quantity = cart.Quantity;
+            _serviceWrapper.Db.SaveChanges();
+
+            jsonResultData = new JsonResultData<int>
+            {
+                Message = "Cập nhật thành công"
+            };
+            return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.OK };
+        }
+
+
+        //
+        public JsonResult ApiDelete(Guid? id)
+        {
+            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            JsonResultData<int> jsonResultData = null;
+            if (userLoginSession == null)
+            {
+                jsonResultData = new JsonResultData<int>
+                {
+                    Message = "Bạn phải đăng nhập để có thể mua hàng"
+                };
+                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.Unauthorized };
+            }
+
+            var existedCart = _serviceWrapper.Db.Cart.Where(p => p.IsDeleted == false && p.Id == id).FirstOrDefault();
+            if (existedCart == null)
+            {
+                jsonResultData = new JsonResultData<int>
+                {
+                    Message = "Xóa lỗi"
+                };
+                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+
+            existedCart.IsDeleted = true;
+            _serviceWrapper.Db.SaveChanges();
+            var cartsCount = _serviceWrapper.Db.Cart.Count();
+            jsonResultData = new JsonResultData<int>
+            {
+                Data = cartsCount,
+                Message = "Xóa thành công"
+            };
+            return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.OK };
         }
 
 
@@ -154,7 +169,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             if (id == null)
             {
-                _serviceWrapper.Db.Cart.RemoveRange(_serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId));
+                _serviceWrapper.Db.Cart.RemoveRange(_serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false && x.BuyerId == userLoginSession.UserId));
                 _serviceWrapper.Db.SaveChanges();
                 return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
             }
@@ -166,6 +181,66 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
+        //// //[HasCredential(RoleId = "BUYER_ROLE")]
+        //// public ActionResult Add(Guid? productId, int quantity)
+        //// {
+        ////     if (quantity <= 0)
+        ////     {
+        ////         SetAlert("Thêm vào giỏ thất bại", "warning");
+        ////         return Redirect(Request.Headers["Referer"].ToString());
+        ////     }
+        ////     var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+        ////     if (userLoginSession != null)
+        ////     {
+        ////         var product = _serviceWrapper.Db.Product.Find(productId);
+        ////         var carts = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false &&  x.BuyerId == userLoginSession.UserId && x.ProductId == product.Id).FirstOrDefault();
+        ////         if (carts != null)
+        ////         {
+        ////             carts.Quantity += quantity;
+        ////             _serviceWrapper.Db.SaveChanges();
+        ////         }
+        ////         else
+        ////         {
+        ////             var newCart = new Cart
+        ////             {
+        ////                 BuyerId = userLoginSession.UserId,
+        ////                 ProductId = product.Id,
+        ////                 Quantity = quantity
+        ////             };
+        ////             _serviceWrapper.Db.Cart.Add(newCart);
+        ////             _serviceWrapper.Db.SaveChanges();
+        ////         }
+
+        ////         SetAlert("Thêm vào giỏ thành công", "success");
+        ////         return Redirect(Request.Headers["Referer"].ToString());
+        ////     }
+        ////     else
+        ////     {
+        ////         SetAlert("Bạn phải đăng nhập để có thể mua hàng", "warning");
+        ////         return Redirect("/dang-nhap");
+        ////     }
+        //// }
+
+        ////[HasCredential(RoleId = "BUYER_ROLE")]
+        //[HttpPost]
+        //public ActionResult Edit(Cart cart)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (cart.Quantity <= 0)
+        //        {
+        //            SetAlert("Thêm vào giỏ thất bại", "warning");
+        //            return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+        //        }
+        //        var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+        //        _serviceWrapper.Db.Entry(cart).State = EntityState.Modified;
+        //        _serviceWrapper.Db.SaveChanges();
+        //        SetAlert("Cập nhật thành công", "success");
+        //        return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+        //    }
+        //    SetAlert("Thêm vào giỏ thất bại", "warning");
+        //    return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+        //}
 
 
         // Payment for item
