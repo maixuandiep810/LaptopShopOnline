@@ -12,7 +12,11 @@ namespace LaptopShopOnline.Common
         public const string USER_GROUP_ID_PREFIX_BUYER = "BUYER";
         public const string USER_GROUP_ID_PREFIX_MANAGER = "MANAGER";
         public const string USER_GROUP_ID_PREFIX_SELLER = "SELLER";
-        public static List<string> _USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST = (new string[] { "MANAGER", "SELLER" }).ToList();
+        public static List<string> USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST = (new string[] { "MANAGER", "SELLER" }).ToList();
+
+        public const string USER_GROUP_ID_BUYER_DEFAULT = "BUYER_DEFAULT";
+        public const string USER_GROUP_ID_MANAGER_DEFAULT = "MANAGER_DEFAULT";
+        public const string USER_GROUP_ID_SELLER_DEFAULT = "SELLER_DEFAULT";
 
         public const string MANAGER_ROLE_SYS_READ_ID = "MANAGER_ROLE_SYS_READ";
         public const string MANAGER_ROLE_SYS_CREATE_ID = "MANAGER_ROLE_SYS_CREATE";
@@ -266,9 +270,17 @@ namespace LaptopShopOnline.Common
         //
         public const string ROUTE_DANG_NHAP = "/dang-nhap";
         public const string ROUTE_DANG_XUAT = "/dang-xuat";
+        public const string ROUTE_DANG_KY = "/dang-ky";
+        public const string ROUTE_CAP_NHAT_PROFILE = "/cap-nhat-profile";
+        public const string ROUTE_CAP_NHAT_MAT_KHAU = "/cap-nhat-mat-khau";
         //
         public const string ROUTE_DANG_NHAP_PARAMS = "/dang-nhap";
         public const string ROUTE_DANG_XUAT_PARAMS = "/dang-xuat";
+        public const string ROUTE_DANG_KY_PARAMS = "/dang-ky";
+        public const string ROUTE_CAP_NHAT_PROFILE_PARAMS = "/cap-nhat-profile";
+        public const string ROUTE_CAP_NHAT_MAT_KHAU_PARAMS = "/cap-nhat-mat-khau";
+
+
 
 
 
@@ -287,12 +299,12 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_GIO_HANG = "/gio-hang";
         public const string ROUTE_GIO_HANG_THEM_MOI = "/gio-hang/them-moi";
         public const string ROUTE_GIO_HANG_CAP_NHAT = "/gio-hang/cap-nhat/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
-        public const string ROUTE_GIO_HANG_XOA = "/gio-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        public const string ROUTE_GIO_HANG_XOA = "/gio-hang/xoa";
         //
         public const string ROUTE_GIO_HANG_PARAMS = "/gio-hang";
         public const string ROUTE_GIO_HANG_THEM_MOI_PARAMS = "/gio-hang/them-moi";
         public const string ROUTE_GIO_HANG_CAP_NHAT_PARAMS = "/gio-hang/cap-nhat/{id}";
-        public const string ROUTE_GIO_HANG_XOA_PARAMS = "/gio-hang/xoa/{id}";
+        public const string ROUTE_GIO_HANG_XOA_PARAMS = "/gio-hang/xoa?cartId={cartId}&shopId={shopId}&shouldOrderAll={shouldOrderAll}";
 
 
 
@@ -309,6 +321,15 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_DON_HANG_XOA_PARAMS = "/don-hang/xoa/{id}";
 
 
+
+        //
+        //
+        public const string ROUTE_CUA_HANG = "/cua-hang";
+        public const string ROUTE_CUA_HANG_CHI_TIET = "/cua-hang/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
+        //
+        public const string ROUTE_CUA_HANG_PARAMS = "/cua-hang";
+        public const string ROUTE_CUA_HANG_SEARCH_PARAMS = "/cua-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}";
+        public const string ROUTE_CUA_HANG_CHI_TIET_PARAMS = "/cua-hang/chi-tiet/{id}";
 
 
 

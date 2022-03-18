@@ -127,58 +127,64 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-        //
-        public JsonResult ApiDelete(Guid? id)
-        {
-            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            JsonResultData<int> jsonResultData = null;
-            if (userLoginSession == null)
-            {
-                jsonResultData = new JsonResultData<int>
-                {
-                    Message = "Bạn phải đăng nhập để có thể mua hàng"
-                };
-                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.Unauthorized };
-            }
 
-            var existedCart = _serviceWrapper.Db.Cart.Where(p => p.IsDeleted == false && p.Id == id).FirstOrDefault();
-            if (existedCart == null)
-            {
-                jsonResultData = new JsonResultData<int>
-                {
-                    Message = "Xóa lỗi"
-                };
-                return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.BadRequest };
-            }
-
-            existedCart.IsDeleted = true;
-            _serviceWrapper.Db.SaveChanges();
-            var cartsCount = _serviceWrapper.Db.Cart.Count();
-            jsonResultData = new JsonResultData<int>
-            {
-                Data = cartsCount,
-                Message = "Xóa thành công"
-            };
-            return new JsonResult(jsonResultData) { StatusCode = (int)HttpStatusCode.OK };
-        }
 
 
         //[HasCredential(RoleId = "BUYER_ROLE")]
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid? cartId, Guid? shopId, bool shouldDeleteAll)
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            if (id == null)
+            var cartsCount = 0;
+            if (shouldDeleteAll)
             {
-                _serviceWrapper.Db.Cart.RemoveRange(_serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false && x.BuyerId == userLoginSession.UserId));
-                _serviceWrapper.Db.SaveChanges();
-                return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+                cartsCount = _serviceWrapper.Db.Cart.Where(x => x.BuyerId == userLoginSession.UserId).Count();
             }
-            _serviceWrapper.Db.Cart.Remove(_serviceWrapper.Db.Cart.Find(id));
-            _serviceWrapper.Db.SaveChanges();
-            return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+            else if (shopId != null)
+            {
+                cartsCount = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Product.ShopId == shopId).Count();
+            }
+            else
+            {
+                cartsCount = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Id == cartId).Count();
+            }
+            if (cartsCount <= 0)
+            {
+                return PartialView("_Delete");
+            }
+            return PartialView();
         }
 
+        //[HasCredential(RoleId = "BUYER_ROLE")]
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(Guid? cartId, Guid? shopId, bool shouldDeleteAll)
+        {
+            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            IQueryable<Cart> carts = null;
+            if (shouldDeleteAll)
+            {
+                carts = _serviceWrapper.Db.Cart.Where(x => x.BuyerId == userLoginSession.UserId);
+            }
+            else
+            if (shopId != null)
+            {
+                carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Product.ShopId == shopId);
+            }
+            else
+            {
+                carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Id == cartId);
+            }
 
+
+            if (carts.Count() <= 0)
+            {
+                SetAlert("Xóa lỗi", "danger");
+                return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+            }
+            _serviceWrapper.Db.Cart.RemoveRange(carts);
+            _serviceWrapper.Db.SaveChanges();
+            SetAlert("Xóa thành công", "success");
+            return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
+        }
 
 
         //// //[HasCredential(RoleId = "BUYER_ROLE")]

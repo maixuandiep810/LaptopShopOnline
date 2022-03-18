@@ -26,7 +26,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
         public ActionResult Login()
         {
-            ViewBag.UserGroupIdPrefix = new SelectList(CommonConstants._USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST, "Id");
+            ViewBag.UserGroupIdPrefix = new SelectList(CommonConstants.USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST, "Id");
             return View();
         }
         //
@@ -71,7 +71,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                         break;
                 }
             }
-            ViewBag.UserGroupIdPrefix = new SelectList(CommonConstants._USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST, "Id");
+            ViewBag.UserGroupIdPrefix = new SelectList(CommonConstants.USER_GROUP_ID_PREFIX_ADMIN_AREA_LIST, "Id");
             return View(model);
         }
 

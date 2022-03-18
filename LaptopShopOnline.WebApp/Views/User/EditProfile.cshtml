@@ -1,66 +1,68 @@
 ﻿@model LaptopShopOnline.Model.Entities.User
 
 @{
-    ViewBag.Title = "Cập nhật người dùng";
+    ViewBag.Title = "Cập nhật Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!--start-account-->
-<div class="account">
-    <div class="container">
-        <div class="account-bottom">
-            @using (Html.BeginForm("EditProfile", "User", FormMethod.Post))
-            {
-                <div class="col-md-12 account-left">
 
-                    @Html.AntiForgeryToken()
-                    <div class="account-top heading">
-                        <h3>Hồ sơ người dùng</h3>
-                    </div>
-                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.Id)
-                    @Html.HiddenFor(model => model.UserGroupId)
-                    @Html.HiddenFor(model => model.CreatedOn)
-                    @Html.HiddenFor(model => model.CreatedBy)
 
-                    <div class="col-md-6">
-                        <div class="address">
-                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
-                            @Html.TextBoxFor(model => model.UserName, new { @placeholder = "Tên đăng nhập", @readonly = "readonly" })
-                        </div>
-                        <div class="address">
-                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-                            @Html.PasswordFor(model => model.Password, new { @placeholder = "Mật khẩu" })
-                        </div>
-                        <div class="address">
-                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
-                            @Html.PasswordFor(model => model.ConfirmPassword, new { @placeholder = "Xác nhận mật khẩu" })
-                        </div>
-                        <div class="address">
-                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })
-                            @Html.TextBoxFor(model => model.Address, new { @placeholder = "Địa chỉ" })
-                        </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="address">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
-                            @Html.TextBoxFor(model => model.Email, new { @placeholder = "Email", @readonly = "readonly" })
-                        </div>
-                        <div class="address">
-                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
-                            @Html.TextBoxFor(model => model.FirstName, new { @placeholder = "Họ lót" })
-                        </div>
-                        <div class="address">
-                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
-                            @Html.TextBoxFor(model => model.LastName, new { @placeholder = "Tên" })
-                        </div>
-                        <div class="address">
-                            <input type="submit" value="Cập nhật">
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+<!--start-breadcrumbs-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#" onclick="history.back()">Quay lại</a></li>
+    </ol>
+</nav>
+<!--end-breadcrumbs-->
+<!-- DataTales Example -->
+<div class="card shadow my-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { }))
+        {
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.UserGroupId)
+            @Html.HiddenFor(model => model.CreatedOn)
+            @Html.HiddenFor(model => model.CreatedBy)
+            @Html.HiddenFor(model => model.Password)
+            Model.ConfirmPassword = Model.Password;
+            @Html.HiddenFor(model => model.ConfirmPassword)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "" })
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" , @readonly = "readonly", @placeholder = "Tên đăng nhập" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" , @placeholder = "Email" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "" })
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" ,  @placeholder = "Họ lót" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "" })
+                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" , @placeholder = "Tên" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "" })
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control" , @placeholder = "Địa chỉ" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserGroupId, htmlAttributes: new { @class = "" })
+                @Html.TextBoxFor(model => model.UserGroupId, new { @class = "form-control" ,  @readonly ="readonly"})
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-primary btn-group-sm btn-sm">Cập nhật</button>
+            </div>
+        }
     </div>
 </div>
-<!--end-account-->
+
+

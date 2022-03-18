@@ -1,0 +1,22 @@
+﻿@using LaptopShopOnline.Model.Entities
+
+@model OrderDetail
+
+
+<tr>
+    <td>@Model.Product.Name</td>
+    <td>
+        <div class="s-box-square">
+            <img class="s-box-square-image" src="@Model.Product.UrlImage" alt="Alternate Text" style="" />
+        </div>
+    </td>
+    <td>
+        @Model.Quantity
+    </td>
+    <td>
+        @Model.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)
+    </td>
+    <td>
+        @Model.Total.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)
+    </td>
+</tr>

@@ -35,36 +35,39 @@
                                     Cửa hàng : @groupedCart.Key?.Name
                                 </h6>
                             </div>
-                            <table class="pt-1 table-responsive table-bordered table-striped table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-5 col-sm-2 col-2">Tên sản phẩm</th>
-                                        <th class="col-md-1 col-sm-1 col-1">Ảnh</th>
-                                        <th class="col-md-1 col-sm-3 col-3">SL</th>
-                                        <th class="col-md-2 col-sm-2 col-2">Đơn giá</th>
-                                        <th class="col-md-2 col-sm-2 col-2">Tổng</th>
-                                        <th class="col-md-1 col-sm-1 col-1"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var cart in groupedCart)
-                                    {
-                                        @Html.Partial("_EditPartialView", cart);
-                                    }
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table pt-1 table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-5 col-sm-2 col-2">Tên sản phẩm</th>
+                                            <th class="col-md-1 col-sm-1 col-1">Ảnh</th>
+                                            <th class="col-md-1 col-sm-3 col-3">SL</th>
+                                            <th class="col-md-2 col-sm-2 col-2">Đơn giá</th>
+                                            <th class="col-md-2 col-sm-2 col-2">Tổng</th>
+                                            <th class="col-md-1 col-sm-1 col-1"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cart in groupedCart)
+                                        {
+                                            @Html.Partial("_EditPartialView", cart);
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="row no-gutters pt-1 justify-content-end align-items-center">
-                                <button class="btn"><a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_THEM_MOI_PARAMS, new {cartId = "", shopId=@groupedCart.Key.Id, shouldOrderAll=false})>Đặt hàng theo cửa hàng</a></button>
+                                <button class="btn mr-1"><a href=@Smart.Format(CommonConstants.ROUTE_GIO_HANG_XOA_PARAMS, new {cartId = "", shopId=@groupedCart.Key.Id, shouldOrderAll=false}) class="dialog-link">Xóa tất cả</a></button>
+                                <button class="btn mr-1"><a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_THEM_MOI_PARAMS, new {cartId = "", shopId=@groupedCart.Key.Id, shouldOrderAll=false})>Đặt hàng theo cửa hàng</a></button>
                             </div>
                         </div>
                     }
                 }
 
-                <div class="row no-gutters mt-5 d-flex justify-content-start align-items-center">
-                    <button class="btn mr-1"><a href=@CommonConstants.ROUTE_TRANG_CHU_PARAMS>Tiếp tục mua hàng</a></button>
-                    <button class="btn mr-1"><a href="#">Xóa tất cả</a></button>
-                    <button class="btn mr-1"><a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_THEM_MOI_PARAMS, new {cartId = "", shopId = "", shouldOrderAll=true})>Đặt hàng tất cả</a></button>
-                </div>
+            <div class="row no-gutters mt-5 d-flex justify-content-start align-items-center">
+                <button class="btn mr-1"><a href=@Smart.Format(CommonConstants.ROUTE_GIO_HANG_XOA_PARAMS, new {cartId = "", shopId = "", shouldOrderAll=true}) class="dialog-link">Xóa tất cả</a></button>
+                <button class="btn mr-1"><a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_THEM_MOI_PARAMS, new {cartId = "", shopId = "", shouldOrderAll=true})>Đặt hàng tất cả</a></button>
+                <button class="btn mr-1"><a href=@CommonConstants.ROUTE_TRANG_CHU_PARAMS>Tiếp tục mua hàng</a></button>
+            </div>
             </div>
         }
         else

@@ -4,9 +4,9 @@
     <a href=@CommonConstants.ROUTE_DON_HANG_PARAMS class="text-secondary">Đơn hàng</a>
 </div>
 <div class="row no-gutters">
-    <a class="mr-1 text-secondary" href=@CommonConstants.ROUTE_GIO_HANG_PARAMS>
+    <a class="text-secondary" href=@CommonConstants.ROUTE_GIO_HANG_PARAMS>
         <img class="mr-1" src="~/Content/Client/images/cart-1.png" alt="" />
-        <span id="cart-count" class="mr-1">@(Model == null ? 0 : Model.Count)</span>
+        <span id="cart-count">@(Model == null ? 0 : Model.Count)</span>
         Sản phẩm
     </a>
 </div>

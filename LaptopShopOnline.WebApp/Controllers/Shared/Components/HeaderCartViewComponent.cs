@@ -23,7 +23,7 @@ namespace LaptopShopOnline.WebApp.Controllers.Shared.Components
         public IViewComponentResult Invoke()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var carts = _serviceWrapper.Db.Cart.Where(x => x.BuyerId == userLoginSession.UserId).ToList();
+            var carts = _serviceWrapper.Db.Cart.Where(x => x.IsDeleted == false && x.BuyerId == userLoginSession.UserId).ToList();
             return View("HeaderCart", carts);
         }
     }

@@ -1,0 +1,93 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using LaptopShopOnline.Model.Entities
+
+@model IPagedList<Shop>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Cửa hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
+}
+
+<!--start-breadcrumbs-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#" onclick="history.back()">Quay lại</a></li>
+    </ol>
+</nav>
+<!--end-breadcrumbs-->
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_CUA_HANG_PARAMS }))
+                {
+                    <div class="form-group row no-gutters">
+                        @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control", @value = ViewBag.SearchString })
+                        <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+                    </div>
+                }
+                <thead>
+                    <tr>
+                        <th class="col-md-1 col-sm-1 col-1">
+                            STT
+                        </th>
+                        <th class="col-md-3 col-sm-3 col-3">
+                            Mã cửa hàng
+                        </th>
+                        <th class="col-md-8 col-sm-8 col-8">
+                            Tên cửa hàng
+                            <a href=@Smart.Format(CommonConstants.ROUTE_CUA_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.NameSortParm, searchString = ViewBag.SearchString, page = 1})>
+                                <i class="fas fa-sort text-dark"></i>
+                            </a>
+                        </th>
+                        <th class="col-md-1 col-sm-1 col-1">
+                            Ngày tạo
+                        </th>
+                        <th class="col-md-1 col-sm-1 col-1">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @i
+                            </td>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @(item.CreatedOn.HasValue ? item.CreatedOn.Value.Date.ToShortDateString() : null)
+                            </td>
+                            <td>
+                                <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_CUA_HANG_CHI_TIET_PARAMS, new { id = item.Id})><i class="fas fa-info"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (Model.Count() <= 0)
+        {
+            <div class="text-center text-danger">Không có dữ liệu</div>
+        }
+    </div>
+    <div class="text-center">
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
+        @Html.PagedListPager(Model, page => @Smart.Format(CommonConstants.ROUTE_CUA_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.SortOrder, searchString = ViewBag.SearchString, page = page }))
+    </div>
+</div>
+

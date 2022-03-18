@@ -21,17 +21,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" />
-    <script
-        type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!--fonts-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <link
-        href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,300,400,500,700,800,900,100italic,300italic,400italic,500italic,700italic,800italic,900italic'
-        rel='stylesheet' type='text/css'>
-    <link
-        href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic'
-        rel='stylesheet' type='text/css'>
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,300,400,500,700,800,900,100italic,300italic,400italic,500italic,700italic,800italic,900italic'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic'
+          rel='stylesheet' type='text/css'>
     <!--//fonts-->
     <script type="text/javascript" src="~/Content/Client/js/move-top.js"></script>
     <script type="text/javascript" src="~/Content/Client/js/easing.js"></script>
@@ -46,7 +43,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="~/Content/Client/js/jquery-ui.js"></script>
     <!-- start menu -->
     <script src="~/Content/Client/js/simpleCart.min.js"></script>
-    <link href="~/Content/Client/css/memenu.css" rel="stylesheet" type="text/css" media="all" />
+
+    @*<link href="~/Content/Client/css/memenu.css" rel="stylesheet" type="text/css" media="all" />*@
+
+    <link href="~/Content/Client/css/Client-MainMenu.css" rel="stylesheet" type="text/css" media="all" />
     <script type="text/javascript" src="~/Content/Client/js/memenu.js"></script>
     <script>$(document).ready(function () { $(".memenu").memenu(); });</script>
 
@@ -98,38 +98,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </span>
     </a>
 
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            /*
-            var defaults = {
-                    containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-                };
-            */
-
-            $().UItoTop({ easingType: 'easeOutQuart' });
-
-        });
-    </script>
     <!--end-footer-text-->
     <script src="~/Scripts/jquery.shorten.1.0.js"></script>
-    <script>
-        $(".content p").shorten({
-            "showChars": 155,
-            "moreText": "",
-            "lessText": "",
-        });
-    </script>
-    <script>
-        $('#AlertBox').removeClass('d-none').slideDown(500).stop().delay(5000).slideUp(500).delay(0).queue(function () {
-            $(this).addClass('d-none');
-    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Content/Client/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/Client/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Content/Client/"></script>
+
     <script src="~/Content/Client/js/Controller/baseController.js"></script>
     @RenderSection("Scripts", required: false)
     <script src="~/Scripts/removeAdsSomee.js"></script>
+    <script src="~/Content/Client/js/modal-dialog.js"></script>
+    <script src="~/Content/Client/js/Client-Layout.js"></script>
+    <script src="~/Content/Client/js/Client-MainMenu.js"></script>
+
+
 </body>
 
 </html>

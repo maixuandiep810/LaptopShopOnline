@@ -3,7 +3,7 @@
 @model Cart
 
 
-<tr id="cart-item">
+<tr>
 <td>@Model.Product.Name</td>
 <td>
     <div class="s-box-square">
@@ -37,6 +37,6 @@
 </td>
 <td>
     <a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_THEM_MOI_PARAMS, new {cartId = Model.Id, shopId = "", shouldOrderAll=false}) @*data-id="@item.Product.Id"*@ class="btn-sm btn-success m-1"><i class="fas fa-plus"></i></a>
-    <a id="cart-del" href="#" data-cart-id=@Model.Id class="btn-sm btn-danger m-1"><i class="fas fa-trash-alt"></i></a>
+    <a href=@Smart.Format(CommonConstants.ROUTE_GIO_HANG_XOA_PARAMS, new {cartId = Model.Id, shopId = "", shouldOrderAll=false}) class="btn-sm btn-danger m-1 dialog-link"><i class="fas fa-trash-alt"></i></a>
 </td>
 </tr>

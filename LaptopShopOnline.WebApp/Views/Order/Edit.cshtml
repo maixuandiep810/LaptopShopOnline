@@ -1,0 +1,79 @@
+﻿@using LaptopShopOnline.Model.Entities
+
+@model Order
+
+@{
+    ViewBag.Title = "Đơn hàng - Chi tiết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script src="~/Content/Client/js/Controller/cartController.js"></script>
+}
+
+
+<!--start-breadcrumbs-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#" onclick="history.back()">Quay lại</a></li>
+    </ol>
+</nav>
+<!--end-breadcrumbs-->
+
+
+<div class="card shadow my-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+    </div>
+    <div class="card-body">
+        <div class="">
+            @{
+                <div class="row no-gutters mt-1">
+                    <div class="row no-gutters pt-1">
+                        <h6>
+                            Cửa hàng : @Model.Shop.Name
+                        </h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="pt-1 table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-6 col-sm-3 col-3">Tên sản phẩm</th>
+                                    <th class="col-md-1 col-sm-1 col-1">Ảnh</th>
+                                    <th class="col-md-1 col-sm-3 col-3">SL</th>
+                                    <th class="col-md-2 col-sm-2 col-2">Đơn giá</th>
+                                    <th class="col-md-2 col-sm-2 col-2">Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var orderDetail in Model.OrderDetails)
+                                {
+                                    @Html.Partial("_OrderDetailPartialView", orderDetail)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row no-gutters mt-5">
+            <div class="col-md-12">
+                @{
+                    var orderTotal = Model.OrderDetails.Sum(x => x.Total);
+                }
+                Tổng: @orderTotal.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo)
+            </div>
+        </div>
+
+        <div class="row no-gutters mt-5">
+            @Html.Partial("_EditOrderPartialView", Model)
+        </div>
+
+        <div class="row no-gutters mt-5 d-flex justify-content-start align-items-center">
+            <button class="btn mr-1"><a href=@CommonConstants.ROUTE_TRANG_CHU>Tiếp tục mua hàng</a></button>
+            <button class="btn mr-1"><a href=@CommonConstants.ROUTE_DON_HANG_PARAMS>Đơn hàng</a></button>
+        </div>
+    </div>
+</div>

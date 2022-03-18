@@ -635,19 +635,23 @@ namespace LaptopShopOnline.WebApp
                     pattern: CommonConstants.ROUTE_DANG_XUAT,
                     defaults: new { controller = "User", action = "Logout" });
 
+                //
+                endpoints.MapControllerRoute(
+                    name: "Register",
+                    pattern: CommonConstants.ROUTE_DANG_KY,
+                    defaults: new { controller = "User", action = "Register" });
 
-                //endpoints.MapControllerRoute(
-                //    name: "Register",
-                //    pattern: "dang-ky",
-                //    defaults: new { controller = "User", action = "Register" });
+                //
+                endpoints.MapControllerRoute(
+                    name: "EditProfile",
+                    pattern: CommonConstants.ROUTE_CAP_NHAT_PROFILE,
+                    defaults: new { controller = "User", action = "EditProfile" });
 
-
-                //endpoints.MapControllerRoute(
-                //    name: "EditProfile",
-                //    pattern: "ho-so-nguoi-dung",
-                //    defaults: new { controller = "User", action = "EditProfile" });
-
-
+                //
+                endpoints.MapControllerRoute(
+                    name: "EditPassword",
+                    pattern: CommonConstants.ROUTE_CAP_NHAT_MAT_KHAU,
+                    defaults: new { controller = "User", action = "EditPassword" });
 
 
                 //
@@ -676,7 +680,7 @@ namespace LaptopShopOnline.WebApp
                 endpoints.MapControllerRoute(
                     name: "Cart-Delete",
                     pattern: CommonConstants.ROUTE_GIO_HANG_XOA,
-                    defaults: new { controller = "Cart", action = "ApiDelete" });
+                    defaults: new { controller = "Cart", action = "Delete" });
 
 
 
@@ -698,6 +702,12 @@ namespace LaptopShopOnline.WebApp
 
                 //
                 endpoints.MapControllerRoute(
+                    name: "Order-Edit",
+                    pattern: CommonConstants.ROUTE_DON_HANG_CAP_NHAT,
+                    defaults: new { controller = "Order", action = "Edit" });
+
+                //
+                endpoints.MapControllerRoute(
                     name: "Order-Create",
                     pattern: CommonConstants.ROUTE_DON_HANG_XOA,
                     defaults: new { controller = "Order", action = "Delete" });
@@ -716,9 +726,27 @@ namespace LaptopShopOnline.WebApp
 
                 //
                 endpoints.MapControllerRoute(
-                    name: "Product",
+                    name: "Product-Detail",
                     pattern: CommonConstants.ROUTE_SAN_PHAM_CHI_TIET,
                     defaults: new { controller = "Product", action = "Details" });
+
+
+
+                //
+                //  USER - SHOP
+                //
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Shop",
+                    pattern: CommonConstants.ROUTE_CUA_HANG,
+                    defaults: new { controller = "Shop", action = "Index" });
+
+                //
+                endpoints.MapControllerRoute(
+                    name: "Shop-Detail",
+                    pattern: CommonConstants.ROUTE_CUA_HANG_CHI_TIET,
+                    defaults: new { controller = "Shop", action = "Details" });
 
 
 

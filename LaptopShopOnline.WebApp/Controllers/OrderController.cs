@@ -58,17 +58,30 @@ namespace LaptopShopOnline.WebApp.Controllers
             if (shouldOrderAll)
             {
                 createOrderVM.Carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId).ToList();
-                return View(createOrderVM);
             }
             else
             if (shopId != null)
             {
                 createOrderVM.Carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Product.ShopId == shopId).ToList();
-                return View(createOrderVM);
             }
             else
             {
                 createOrderVM.Carts = _serviceWrapper.Db.Cart.Include(x => x.Product).ThenInclude(x => x.Shop).Where(x => x.BuyerId == userLoginSession.UserId && x.Id == cartId).ToList();
+            }
+            var alertMessage = "";
+            var isOutOfQuantity = false;
+            foreach (var cart in createOrderVM.Carts)
+            {
+                if (cart.Quantity > cart.Product.Quantity)
+                {
+                    isOutOfQuantity = true;
+                    alertMessage += $"Sản phẩm {cart.Product.Name} chỉ còn {cart.Product.Quantity} sp. ";
+                }
+            }
+            if (isOutOfQuantity)
+            {
+                SetAlert(alertMessage, "warning");
+                return Redirect(CommonConstants.ROUTE_GIO_HANG_PARAMS);
             }
             return View(createOrderVM);
         }
@@ -130,8 +143,85 @@ namespace LaptopShopOnline.WebApp.Controllers
                 createOrderVM.Carts = carts;
                 createOrderVM.Order = order;
                 return View(createOrderVM);
-
         }
 
+
+
+        //
+        public ActionResult Edit(Guid? id)
+        {
+            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var order = _serviceWrapper.Db.Order.Include(p => p.OrderDetails).ThenInclude(p => p.Product).Include(p => p.Shop).Where(p => p.IsDeleted == false && p.BuyerId == userLoginSession.UserId && p.Id == id).FirstOrDefault();
+            if (order == null)
+            {
+                return NotFound();
+            }
+            if (order.OrderStatus >= (int)ENUM.OrderStatus.SHOP_APPROVED)
+            {
+                SetAlert("Không thể cập nhật đơn hàng đã duyệt", "danger");
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            return View(order);
+        }
+        //
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+                AuditTable.UpdateAuditFields(order, userLoginSession.UserName);
+                _serviceWrapper.Db.Entry(order).State = EntityState.Modified;
+                _serviceWrapper.Db.SaveChanges();
+                SetAlert("Cập nhật thành công", "success");
+                return Redirect(CommonConstants.ROUTE_DON_HANG_PARAMS);
+            }
+            SetAlert("Cập nhật lỗi", "danger");
+            var existedorder = _serviceWrapper.Db.Order.Include(p => p.OrderDetails).ThenInclude(p => p.Product).Include(p => p.Shop).Where(x => x.Id == order.Id).FirstOrDefault();
+            return View(existedorder);
+        }
+
+
+
+        //
+        public ActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return PartialView("_Delete");
+            }
+            var order = _serviceWrapper.Db.Order.Where(p => p.IsDeleted == false && p.Id == id).FirstOrDefault();
+            if (order == null)
+            {
+                return PartialView("_Delete");
+            }
+            return View(order);
+        }
+        // POST: Admin/Products/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            var order = _serviceWrapper.Db.Order.Where(p => p.IsDeleted == false && p.Id == id).FirstOrDefault();
+            if (order == null)
+            {
+                SetAlert("Xóa lỗi", "danger");
+                return Redirect(CommonConstants.ROUTE_DON_HANG_PARAMS);
+            }
+            if (order.OrderStatus >= (int)ENUM.OrderStatus.SHOP_APPROVED)
+            {
+                SetAlert("Không thể xóa đơn hàng đã duyệt", "danger");
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            order.IsDeleted = true;
+            _serviceWrapper.Db.SaveChanges();
+            SetAlert("Xóa thành công", "success");
+            return Redirect(CommonConstants.ROUTE_DON_HANG_PARAMS);
+        }
     }
 }

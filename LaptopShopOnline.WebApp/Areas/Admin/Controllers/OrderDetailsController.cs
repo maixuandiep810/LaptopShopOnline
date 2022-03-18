@@ -119,6 +119,5 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.OrderStatus = new SelectList(ENUM.GetSelectList_OrderStatus(), "Id", "Name");
             return View(order);
         }
-
     }
 }

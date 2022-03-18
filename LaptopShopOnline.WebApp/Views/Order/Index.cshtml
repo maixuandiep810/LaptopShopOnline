@@ -6,7 +6,7 @@
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Sản phẩm";
+    ViewBag.Title = "Đơn hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 1;
 }
@@ -26,79 +26,80 @@
         <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
     </div>
     <div class="card-body">
-        <table class="table-responsive table-bordered" id="dataTable" width="100%" cellspacing="0">
-            @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_DON_HANG_PARAMS }))
-            {
-                <div class="form-group row no-gutters">
-                    @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control", @value = ViewBag.SearchString })
-                    <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
-                </div>
-            }
-            <thead>
-                <tr>
-                    <th class="col-md-1 col-sm-1 col-1">
-                        STT
-                    </th>
-                    <th class="col-md-2 col-sm-1 col-1">
-                        Mã đơn hàng
-                    </th>
-                    <th class="col-md-2 col-sm-1 col-1">
-                        Tên cửa hàng
-                        <a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.ShopNameSortParm, searchString = ViewBag.SearchString, page = 1})>
-                            <i class="fas fa-sort text-dark"></i>
-                        </a>
-                    </th>
-                    <th class="col-md-1 col-sm-1 col-1">
-                        Thành tiền
-                    </th>
-                    <th class="col-md-1 col-sm-1 col-1">
-                        Ngày tạo
-                        <a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.CreatedOnSortParm, searchString = ViewBag.SearchString, page = 1})>
-                            <i class="fas fa-sort text-dark"></i>
-                        </a>
-                    </th>
-                    <th class="col-md-1 col-sm-1 col-1">
-                        Trạng thái
-                        <a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.OrderStatusSortParm, searchString = ViewBag.SearchString, page = 1})>
-                            <i class="fas fa-sort text-dark"></i>
-                        </a>
-                    </th>
-                    <th class="col-md-1 col-sm-2 col-2">
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_DON_HANG_PARAMS }))
                 {
-                    <tr>
-                        <td class="text-center">
-                            @i
-                        </td>
-                        <td>
-                            @item.Id
-                        </td>
-                        <td>
-                            @item.Shop.Name
-                        </td>
-                        <td>
-                            @((item.Total ?? 0).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))
-                        </td>
-                        <td>
-                            @item.CreatedOn
-                        </td>
-                        <td>
-                            @item.OrderStatus
-                        </td>
-                        <td>
-                            <a class="btn-sm btn-group-sm btn-success" href="/don-hang/cap-nhat?id=@item.Id"><i class="far fa-edit"></i></a>
-                            <a class="btn-sm btn-group-sm btn-warning dialog-link" href="@Url.Action("Details", new { id = item.Id })"><i class="fas fa-info"></i></a>
-                            <a class="btn-sm btn-group-sm btn-danger dialog-link" href="@Url.Action("Delete", new { id = item.Id })"><i class="far fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    i++;
+                    <div class="form-group row no-gutters">
+                        @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control", @value = ViewBag.SearchString })
+                        <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+                    </div>
                 }
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th class="col-md-1 col-sm-1 col-1">
+                            STT
+                        </th>
+                        <th class="col-md-2 col-sm-1 col-1">
+                            Mã đơn hàng
+                        </th>
+                        <th class="col-md-2 col-sm-1 col-1">
+                            Tên cửa hàng
+                            <a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.ShopNameSortParm, searchString = ViewBag.SearchString, page = 1})>
+                                <i class="fas fa-sort text-dark"></i>
+                            </a>
+                        </th>
+                        <th class="col-md-1 col-sm-1 col-1">
+                            Thành tiền
+                        </th>
+                        <th class="col-md-1 col-sm-1 col-1">
+                            Ngày tạo
+                            <a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.CreatedOnSortParm, searchString = ViewBag.SearchString, page = 1})>
+                                <i class="fas fa-sort text-dark"></i>
+                            </a>
+                        </th>
+                        <th class="col-md-1 col-sm-1 col-1">
+                            Trạng thái
+                            <a href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.OrderStatusSortParm, searchString = ViewBag.SearchString, page = 1})>
+                                <i class="fas fa-sort text-dark"></i>
+                            </a>
+                        </th>
+                        <th class="col-md-1 col-sm-2 col-2">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @i
+                            </td>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Shop.Name
+                            </td>
+                            <td>
+                                @((item.Total ?? 0).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))
+                            </td>
+                            <td>
+                                @item.CreatedOn
+                            </td>
+                            <td>
+                                @ENUM.GetSelectList_OrderStatus().Where(x => x.Id == item.OrderStatus).FirstOrDefault().Name
+                            </td>
+                            <td>
+                                <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_CAP_NHAT_PARAMS, new { id = item.Id})><i class="far fa-edit"></i></a>
+                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_DON_HANG_XOA_PARAMS, new { id = item.Id})><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
         @if (Model.Count() <= 0)
         {
             <div class="text-center text-danger">Không có dữ liệu</div>

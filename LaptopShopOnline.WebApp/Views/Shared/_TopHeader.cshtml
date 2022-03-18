@@ -23,24 +23,56 @@
                 @if (userLoginSession == null)
                 {
                     <a class="btn btn-sm btn-outline-secondary mr-1" href=@CommonConstants.ROUTE_DANG_NHAP_PARAMS>Đăng nhập</a>
-                    <a class="btn btn-sm btn-outline-secondary mr-1" href="#">Đăng ký</a>
+                    <a class="btn btn-sm btn-outline-secondary mr-1" href=@CommonConstants.ROUTE_DANG_KY_PARAMS>Đăng ký</a>
                 }
                 else
                 {
-                    <div class="col-md-4 px-1 row justify-content-end">
+                    <div class="col-md-4 px-1 row no-gutters justify-content-end">
                         @await Component.InvokeAsync("HeaderCart")
                     </div>
-                    <div class="col-md-4 px-1 row justify-content-end">
-INFO
+                    <div class="col-md-4 px-1 row no-gutters justify-content-end">
+                        <a class="text-secondary" data-toggle="dropdown">
+                            Xin chào: @userLoginSession.UserName
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item text-secondary" href=@CommonConstants.ROUTE_CAP_NHAT_PROFILE_PARAMS>Cập nhật Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-secondary" href=@CommonConstants.ROUTE_CAP_NHAT_MAT_KHAU_PARAMS>Cập nhật mật khẩu</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-4 px-1 row justify-content-end">
-                        <a class="btn btn-sm btn-outline-secondary mr-1" href=@CommonConstants.ROUTE_DANG_XUAT_PARAMS>Đăng xuất</a>
+                    <div class="col-md-4 px-1 row no-gutters justify-content-end">
+                        <a class="btn btn-sm btn-outline-secondary" href=@CommonConstants.ROUTE_DANG_XUAT_PARAMS>Đăng xuất</a>
                     </div>
                 }
             </div>
         </div>
     </header>
 </div>
+
+
+@*<div class="col-md-4 px-1 row justify-content-end">
+        @await Component.InvokeAsync("HeaderCart")
+    </div>
+    <div class="col-md-4 px-1 row justify-content-end">
+        <span data-toggle="collapse" href="#collapseProfile" role="button" aria-expanded="false" aria-controls="collapseProfile">
+            Xin chào: @userLoginSession.UserName
+            <i class="fas fa-caret-down"></i>
+        </span>
+    </div>
+    <div class="collapse col-md-4 px-1 row" id="collapseProfile">
+        <div class="card card-body">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4 px-1 row justify-content-end">
+        <a class="btn btn-sm btn-outline-secondary mr-1" href=@CommonConstants.ROUTE_DANG_XUAT_PARAMS>Đăng xuất</a>
+    </div>*@
 
 @*<div class="top-component">
         <div class="float-left">
