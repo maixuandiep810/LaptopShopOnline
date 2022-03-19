@@ -10,8 +10,30 @@ namespace LaptopShopOnline.Service.Implement
 {
     public class ProductService : IProductService
     {
-        public IPagedList<Product> GetAll(IQueryable<Product> products, string searchString, string sortOrder, int? pageSize, int? page, dynamic ViewBag)
+        private readonly ServiceWrapper _serviceWrapper;
+
+        public ProductService(ServiceWrapper serviceWrapper)
         {
+            _serviceWrapper = serviceWrapper;
+        }
+
+        public IPagedList<Product> GetAll(IQueryable<Product> products, Guid? productCategoryId, Guid? shopId,string searchString, string sortOrder, int? pageSize, int? page, dynamic ViewBag)
+        {
+            var productCategoryName = "";
+            if (productCategoryId != null)
+            {
+                products = products.Where(s => s.ProductCategoryId == productCategoryId);
+                var productCategory = _serviceWrapper.Db.ProductCategory.Where(x => x.Id == productCategoryId).FirstOrDefault();
+                productCategoryName = productCategory != null ? productCategory.Name : "";
+            }
+
+            var shopName = "";
+            if (shopId != null)
+            {
+                products = products.Where(s => s.ShopId == shopId);
+                var shop = _serviceWrapper.Db.Shop.Where(x => x.Id == shopId).FirstOrDefault();
+                shopName = shop != null ? shop.Name : "";
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -56,6 +78,11 @@ namespace LaptopShopOnline.Service.Implement
             //
             ViewBag.SearchString = searchString;
             ViewBag.SortOrder = sortOrder;
+            //
+            ViewBag.ProductCategoryId = productCategoryId;
+            ViewBag.ShopId = shopId;
+            ViewBag.ProductCategoryName = productCategoryName;
+            ViewBag.ShopName = shopName;
 
             // paging
             int pageNumber = (page ?? 1);

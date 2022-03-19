@@ -23,22 +23,22 @@ namespace LaptopShopOnline.Common
         public const string MANAGER_ROLE_SYS_UPDATE_ID = "MANAGER_ROLE_SYS_UPDATE";
         public const string MANAGER_ROLE_SYS_DELETE_ID = "MANAGER_ROLE_SYS_DELETE";
 
-        public const string MANAGER_ROLE_LAYOUT_VIEW_ID = "MANAGER_ROLE_LAYOUT_VIEW";
+        public const string MANAGER_ROLE_LAYOUT_READ_ID = "MANAGER_ROLE_LAYOUT_READ";
         public const string MANAGER_ROLE_LAYOUT_CREATE_ID = "MANAGER_ROLE_LAYOUT_CREATE";
         public const string MANAGER_ROLE_LAYOUT_UPDATE_ID = "MANAGER_ROLE_LAYOUT_UPDATE";
         public const string MANAGER_ROLE_LAYOUT_DELETE_ID = "MANAGER_ROLE_LAYOUT_DELETE";
 
-        public const string MANAGER_ROLE_SHOP_VIEW_ID = "MANAGER_ROLE_SHOP_VIEW";
-        public const string MANAGER_ROLE_SHOP_CREATE_ID = "MANAGER_ROLE_SHOP_CREATE";
-        public const string MANAGER_ROLE_SHOP_UPDATE_ID = "MANAGER_ROLE_SHOP_UPDATE";
-        public const string MANAGER_ROLE_SHOP_DELETE_ID = "MANAGER_ROLE_SHOP_DELETE";
+        public const string MANAGER_ROLE_BUSINESS_READ_ID = "MANAGER_ROLE_BUSINESS_READ";
+        public const string MANAGER_ROLE_BUSINESS_CREATE_ID = "MANAGER_ROLE_BUSINESS_CREATE";
+        public const string MANAGER_ROLE_BUSINESS_UPDATE_ID = "MANAGER_ROLE_BUSINESS_UPDATE";
+        public const string MANAGER_ROLE_BUSINESS_DELETE_ID = "MANAGER_ROLE_BUSINESS_DELETE";
 
-        public const string SELLER_ROLE_VIEW_ID = "SELLER_ROLE_VIEW";
+        public const string SELLER_ROLE_READ_ID = "SELLER_ROLE_READ";
         public const string SELLER_ROLE_CREATE_ID = "SELLER_ROLE_CREATE";
         public const string SELLER_ROLE_UPDATE_ID = "SELLER_ROLE_UPDATE";
         public const string SELLER_ROLE_DELETE_ID = "SELLER_ROLE_DELETE";
 
-        public const string BUYER_ROLE_VIEW_ID = "BUYER_ROLE_VIEW";
+        public const string BUYER_ROLE_READ_ID = "BUYER_ROLE_READ";
         public const string BUYER_ROLE_CREATE_ID = "BUYER_ROLE_CREATE";
         public const string BUYER_ROLE_UPDATE_ID = "BUYER_ROLE_UPDATE";
         public const string BUYER_ROLE_DELETE_ID = "BUYER_ROLE_DELETE";
@@ -156,7 +156,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_SAN_PHAM_XOA = "/quan-tri/san-pham/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_QUAN_TRI_SAN_PHAM_PARAMS = "/quan-tri/san-pham";
-        public const string ROUTE_QUAN_TRI_SAN_PHAM_SEARCH_PARAMS = "/quan-tri/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}";
+        public const string ROUTE_QUAN_TRI_SAN_PHAM_SEARCH_PARAMS = "/quan-tri/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}&productCategoryId={productCategoryId}&shopId={shopId}";
         public const string ROUTE_QUAN_TRI_SAN_PHAM_CHI_TIET_PARAMS = "/quan-tri/san-pham/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_SAN_PHAM_CAP_NHAT_PARAMS = "/quan-tri/san-pham/cap-nhat/{id}";
         public const string ROUTE_QUAN_TRI_SAN_PHAM_THEM_MOI_PARAMS = "/quan-tri/san-pham/them-moi";
@@ -172,7 +172,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_XOA = "/quan-tri/nguoi-ban/san-pham/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_PARAMS = "/quan-tri/nguoi-ban/san-pham";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS = "/quan-tri/nguoi-ban/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS = "/quan-tri/nguoi-ban/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}&productCategoryId={productCategoryId}";
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CHI_TIET_PARAMS = "/quan-tri/nguoi-ban/san-pham/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CAP_NHAT_PARAMS = "/quan-tri/nguoi-ban/san-pham/cap-nhat/{id}";
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_THEM_MOI_PARAMS = "/quan-tri/nguoi-ban/san-pham/them-moi";
@@ -189,7 +189,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_DON_HANG_XOA = "/quan-tri/don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_QUAN_TRI_DON_HANG_PARAMS = "/quan-tri/don-hang";
-        public const string ROUTE_QUAN_TRI_DON_HANG_SEARCH_PARAMS = "/quan-tri/don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}&orderStatus={orderStatus}";
+        public const string ROUTE_QUAN_TRI_DON_HANG_SEARCH_PARAMS = "/quan-tri/don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}&orderStatus={orderStatus}&shopId={shopId}";
         public const string ROUTE_QUAN_TRI_DON_HANG_CHI_TIET_PARAMS = "/quan-tri/don-hang/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_DON_HANG_CAP_NHAT_PARAMS = "/quan-tri/don-hang/cap-nhat/{id}";
         public const string ROUTE_QUAN_TRI_DON_HANG_THEM_MOI_PARAMS = "/quan-tri/don-hang/them-moi";
@@ -205,7 +205,7 @@ namespace LaptopShopOnline.Common
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_XOA = "/quan-tri/nguoi-ban/don-hang/xoa/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_PARAMS = "/quan-tri/nguoi-ban/don-hang";
-        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_SEARCH_PARAMS = "/quan-tri/nguoi-ban/don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}&orderStatus={orderStatus}";
+        public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_SEARCH_PARAMS = "/quan-tri/nguoi-ban/don-hang?sortOrder={sortOrder}&searchString={searchString}&page={page}";
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CHI_TIET_PARAMS = "/quan-tri/nguoi-ban/don-hang/chi-tiet/{id}";
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CAP_NHAT_PARAMS = "/quan-tri/nguoi-ban/don-hang/cap-nhat/{id}";
         public const string ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_THEM_MOI_PARAMS = "/quan-tri/nguoi-ban/don-hang/them-moi";
@@ -283,13 +283,12 @@ namespace LaptopShopOnline.Common
 
 
 
-
         //
         public const string ROUTE_SAN_PHAM = "/san-pham";
         public const string ROUTE_SAN_PHAM_CHI_TIET = "/san-pham/chi-tiet/{id:regex(^[{{]?[0-9a-fA-F]{{8}}-([0-9a-fA-F]{{4}}-){{3}}[0-9a-fA-F]{{12}}[}}]?$)?}";
         //
         public const string ROUTE_SAN_PHAM_PARAMS = "/san-pham";
-        public const string ROUTE_SAN_PHAM_SEARCH_PARAMS = "/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}";
+        public const string ROUTE_SAN_PHAM_SEARCH_PARAMS = "/san-pham?sortOrder={sortOrder}&searchString={searchString}&page={page}&productCategoryId={productCategoryId}&shopId={shopId}";
         public const string ROUTE_SAN_PHAM_CHI_TIET_PARAMS = "/san-pham/chi-tiet/{id}";
 
 

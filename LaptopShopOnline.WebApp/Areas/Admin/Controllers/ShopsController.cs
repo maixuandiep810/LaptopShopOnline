@@ -29,7 +29,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Products
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_READ_ID)]
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             CountMessage();
@@ -41,15 +41,10 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 page = page ?? 1;
                 sortOrder = sortOrder ?? "Name";
                 searchString = searchString ?? "";
-                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_SEARCH_PARAMS,
-                    new { sortOrder = sortOrder, page = page, searchString })));
             }
 
 
-            //Sort order
-            ViewBag.UserNameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
-            ViewBag.SearchString = searchString;
-            ViewBag.SortOrder = sortOrder;
+
 
             var shops = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false);
 
@@ -70,7 +65,11 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     break;
             }
 
-            int pageSize = 5;
+            //Sort order
+            ViewBag.UserNameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewBag.SearchString = searchString;
+            ViewBag.SortOrder = sortOrder;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             // Đếm được số trang vì là IQueryable
             return View(shops.ToPagedList(pageNumber, pageSize));
@@ -81,12 +80,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Shops/Details/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_READ_ID)]
         public ActionResult Details(Guid? id)
         {
             CountMessage();
             CountProduct();
             CountOrder();
+
             if (id == null)
             {
                 return BadRequest();
@@ -101,7 +101,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
@@ -109,7 +109,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountProduct();
             return View();
         }
-        // POST: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Shop shop)
@@ -131,13 +131,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-
-        // GET: Admin/Shops/Edit/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_UPDATE_ID)]
         public ActionResult Edit(Guid? id)
         {
             CountMessage();
             CountOrder();
             CountProduct();
+
             if (id == null)
             {
                 return BadRequest();
@@ -149,14 +149,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(shop);
         }
-        // POST: Admin/Products/Edit/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Shop shop)
         {
-            CountMessage();
-            CountProduct();
             CountOrder();
+            CountProduct();
+
             if (ModelState.IsValid)
             {
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -169,14 +169,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             SetAlert("Cập nhật lỗi", "danger");
             return View(shop);
         }
-        // GET: Admin/Seller/Shops
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_UPDATE_ID)]
         public ActionResult EditSG()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
             var shop = _serviceWrapper.Db.Shop.Include(p => p.Seller).Where(x => x.IsDeleted == false && x.Id == userLoginSession.ShopId).FirstOrDefault();
             return View(shop);
         }
-        // POST: Admin/Seller/Shops/Edit
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditSG(Shop shop)
@@ -205,17 +205,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-        // GET: Admin/Products/Delete/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_DELETE_ID)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -230,7 +220,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View(shop);
         }
 
-        // POST: Admin/Products/Delete/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

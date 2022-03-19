@@ -17,7 +17,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS }))
+                @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS }))
                 {
                     <div class="form-group">
                         @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
@@ -106,36 +106,3 @@
         </div>
     </div>
 </div>
-
-@*@section Scripts{
-    <script>
-        var order = {
-            init: function () {
-                order.registerEvents();
-            },
-            registerEvents: function () {
-                $('.btn-active').off('click').on('click', function (e) {
-                    e.preventDefault();
-                    var btn = $(this);
-                    var id = btn.data('id');
-                    $.ajax({
-                        url: "/Admin/Orders/ChangeStatus",
-                        data: { id: id },
-                        dataType: "json",
-                        type: "POST",
-                        success: function (response) {
-                            console.log(response);
-                            if (response.status == true) {
-                                btn.text('Đã xác nhận');
-                            }
-                            else {
-                                btn.text('Chưa xác nhận');
-                            }
-                        }
-                    })
-                });
-            },
-        }
-        order.init();
-    </script>
-}*@

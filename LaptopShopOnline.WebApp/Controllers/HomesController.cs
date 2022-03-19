@@ -25,7 +25,6 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        // GET: Homes
         public ActionResult Index()
         {
             return View();

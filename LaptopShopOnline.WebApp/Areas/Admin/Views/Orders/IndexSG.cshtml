@@ -17,40 +17,40 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS }))
+                @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_SEARCH_PARAMS }))
                 {
-                    <div class="form-group">
-                        @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
-                        <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
-                        <a href=@CommonConstants.ROUTE_QUAN_TRI_DON_HANG_THEM_MOI_PARAMS class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
-                    </div>
+                <div class="form-group">
+                    @Html.Hidden("sortOrder", null, new { @value = "" })
+                    @Html.Hidden("page", null, new { @value = "" })
+
+
+                    @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
+                    <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
+                    <a href=@CommonConstants.ROUTE_QUAN_TRI_DON_HANG_THEM_MOI_PARAMS class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
+                </div>
                 }
                 <thead>
                     <tr>
-                        <th>
+                        <th class="col-md-1">
                             STT
                         </th>
-                        <th>
-                            Tên khách hàng
-                            <a@* href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.ShipNameSortParm, page = 1, searchString = ViewBag.SearchString, orderStatus = -1   })*@><i class="fas fa-sort text-dark"></i></a>
+                        <th class="col-md-5">
+                            Tên tài khoản
+                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.ShipNameSortParm, page = 1, searchString = ViewBag.SearchString   })>
+                            <i class="fas fa-sort text-dark"></i></a>
                         </th>
-                        <th>
-                            Số điện thoại
+                        <th class="col-md-1">
+                            Thành tiền
                         </th>
-                        <th>
-                            Địa chỉ
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th style="width: 10%;">
+                        <th class="col-md-2">
                             Ngày đặt hàng
-                            <a @*href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.CreatedOnSortParm, page = 1, searchString = ViewBag.SearchString, orderStatus = -1   })*@><i class="fas fa-sort text-dark"></i></a>
+                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.CreatedOnSortParm, page = 1, searchString = ViewBag.SearchString  })><i class="fas fa-sort text-dark"></i></a>
                         </th>
-                        <th style="width: 5%">
+                        <th class="col-md-1">
                             Trạng thái
                         </th>
-                        <th></th>
+                        <th class="col-md-2">
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,33 +61,20 @@
                             @i
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ShipName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ShipPhone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ShipAddress)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ShipEmail)
+                            @Html.DisplayFor(modelItem => item.Buyer.UserName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CreatedOn)
                         </td>
                         <td>
                         <td>
-                            @{
-                                var status = ((ENUM.OrderStatus)item.OrderStatus).ToString();
-                            }
-                            @status
+                            @ENUM.GetSelectList_OrderStatus().Where(x => x.Id == item.OrderStatus).FirstOrDefault().Name
                         </td>                        
                         </td>
                         <td>
-                            <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_CAP_NHAT_PARAMS, new { id = item.Id })><i class="far fa-edit"></i></a>
-                            <a class="btn-sm btn-group-sm btn-secondary dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_CHI_TIET_PARAMS, new { id = item.Id })><i class="fas fa-info"></i></a>
-                            <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_XOA_PARAMS, new { id = item.Id })><i class="far fa-trash-alt"></i></a>
-                            <a class="btn-sm btn-group-sm btn-warning" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_CHI_TIET_PARAMS, new { id = item.Id })>Chi tiết ĐH</a>
+                            <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CAP_NHAT_PARAMS, new { id = item.Id })><i class="far fa-edit"></i></a>
+                            <a class="btn-sm btn-group-sm btn-secondary dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_CHI_TIET_PARAMS, new { id = item.Id })><i class="fas fa-info"></i></a>
+                            <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_XOA_PARAMS, new { id = item.Id })><i class="far fa-trash-alt"></i></a>
                         </td>
                     </tr>
                         i++;
@@ -101,40 +88,7 @@
         </div>
         <div class="text-center">
             Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
-            @Html.PagedListPager(Model, page => @Smart.Format(CommonConstants.ROUTE_QUAN_TRI_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.SortOrder, page = page, searchString = ViewBag.SearchString, orderStatus = -1 }))
+            @Html.PagedListPager(Model, page => @Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.SortOrder, page = page, searchString = ViewBag.SearchString, orderStatus = -1 }))
         </div>
     </div>
 </div>
-
-@*@section Scripts{
-    <script>
-        var order = {
-            init: function () {
-                order.registerEvents();
-            },
-            registerEvents: function () {
-                $('.btn-active').off('click').on('click', function (e) {
-                    e.preventDefault();
-                    var btn = $(this);
-                    var id = btn.data('id');
-                    $.ajax({
-                        url: "/Admin/Orders/ChangeStatus",
-                        data: { id: id },
-                        dataType: "json",
-                        type: "POST",
-                        success: function (response) {
-                            console.log(response);
-                            if (response.status == true) {
-                                btn.text('Đã xác nhận');
-                            }
-                            else {
-                                btn.text('Chưa xác nhận');
-                            }
-                        }
-                    })
-                });
-            },
-        }
-        order.init();
-    </script>
-}*@

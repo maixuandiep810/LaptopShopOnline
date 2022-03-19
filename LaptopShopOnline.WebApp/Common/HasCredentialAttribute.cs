@@ -1,10 +1,12 @@
 ﻿using LaptopShopOnline.Common;
+using LaptopShopOnline.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace LaptopShopOnline.WebApp.Common
@@ -28,30 +30,28 @@ namespace LaptopShopOnline.WebApp.Common
 
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
-            //var userLoginSession = filterContext.HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            //if (userLoginSession == null)
-            //{
-            //    filterContext.Result = new ViewResult
-            //    {
-            //        ViewName = "~/Areas/Admin/Views/Shared/_Error401.cshtml"
-            //    };
-            //    return;
-            //}
+            var userLoginSession = filterContext.HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            var isAjaxRequest = filterContext.HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            var viewResult401 = new ViewResult
+            {
+                ViewName = "~/Areas/Admin/Views/Shared/_Error401.cshtml"
+            };
+            var jsonResult401 = new JsonResult(new JsonResultData<bool>{ Message = "Bạn không có quyền thực hiện hành động này." }) { StatusCode = (int)HttpStatusCode.Unauthorized };
+            if (userLoginSession == null)
+            {
+                filterContext.Result = isAjaxRequest == true ? jsonResult401 : viewResult401;
+                return;
+            }
 
-            //List<string> privilegeLevels = this.GetCredentialByLoggedInUser(filterContext, userLoginSession.UserName); // Call another method to get rights of the user from DB
+            List<string> privilegeLevels = this.GetCredentialByLoggedInUser(filterContext, userLoginSession.UserName); // Call another method to get rights of the user from DB
 
-            //if (privilegeLevels.Contains(RoleId))
-            //{
-            //    return;
-            //}   
-            //else
-            //{
-            //    filterContext.Result = new ViewResult
-            //    {
-            //        ViewName = "~/Areas/Admin/Views/Shared/_Error401.cshtml"
-            //    };
-            //    return;
-            //}
+            if (privilegeLevels == null || privilegeLevels.Contains(RoleId) == false)
+            {
+                filterContext.Result = isAjaxRequest == true ? jsonResult401 : viewResult401;
+                return;
+            }
+            return;
+
         }
 
 

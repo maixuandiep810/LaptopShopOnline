@@ -24,8 +24,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-        // GET: Admin/Products
-        public ActionResult Index(string sortOrder, int? page, string searchString)
+        public ActionResult Index(string sortOrder, int? page, string searchString, Guid? productCategoryId, Guid? shopId)
         {
             if (page == null || sortOrder == null)
             {
@@ -36,14 +35,13 @@ namespace LaptopShopOnline.WebApp.Controllers
 
             var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
-            int pageSize = 10;
-            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, pageSize, page, ViewBag);
+            int pageSize = 12;
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, productCategoryId, shopId, searchString, sortOrder, pageSize, page, ViewBag);
 
             return View(productsPaging);
         }
 
 
-        //Detail of Product
         public ActionResult Details(Guid? id)
         {
             if (id == null)

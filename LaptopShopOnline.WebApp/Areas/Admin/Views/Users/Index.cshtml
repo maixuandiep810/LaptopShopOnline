@@ -17,7 +17,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS }))
+                @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_PARAMS }))
                 {
                 <div class="form-group">
                     @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
@@ -27,26 +27,23 @@
                 }
                 <thead>
                     <tr>
-                        <th style="width: 5%;">
+                        <th class="col-md-1">
                             STT
                         </th>
-                        <th style="width: 15%;">
+                        <th class="col-md-1">
                             Nhóm
                         </th>
-                        <th style="width: 15%;">
+                        <th class="col-md-2">
                             Tên đăng nhập
                             <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_SEARCH_PARAMS, new { sortOrder = ViewBag.UserNameSortParm, page = 1, searchString = ViewBag.SearchString   })><i class="fas fa-sort text-dark"></i></a>
                         </th>
-                        <th style="width: 15%;">
+                        <th class="col-md-3">
                             Họ và tên
                         </th>
-                        <th style="width: 15%;">
+                        <th class="col-md-3">
                             Email
                         </th>
-                        <th style="width: 10%;">
-                            Trạng thái
-                        </th>
-                        <th class="text-center"></th>
+                        <th class="col-md-2 text-center"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +54,9 @@
                                 @i
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.UserGroupId)
+                                <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.UserGroupId })>
+                                    @item.UserGroupId
+                                    </a>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.UserName)
@@ -68,9 +67,6 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                <a class="btn btn-primary btn-sm dialog-link" href="#", new { id = item.Id })>@(item.IsDeleted ? "Đã xóa" : "Chưa xóa")</a>
                             </td>
                             <td>
                                 <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.Id })><i class="fas fa-edit"></i></a>
@@ -93,36 +89,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        var order = {
-            init: function () {
-                order.registerEvents();
-            },
-            registerEvents: function () {
-                $('.btn-user').off('click').on('click', function (e) {
-                    e.preventDefault();
-                    var btn = $(this);
-                    var id = btn.data('id');
-                    $.ajax({
-                        url: "/Admin/Users/ChangeStatus",
-                        data: { id: id },
-                        dataType: "json",
-                        type: "POST",
-                        success: function (response) {
-                            console.log(response);
-                            if (response.status == true) {
-                                btn.text('Khóa');
-                            }
-                            else {
-                                btn.text('Hoạt động');
-                            }
-                        }
-                    })
-                });
-            },
-        }
-        order.init();
-    </script>
-}

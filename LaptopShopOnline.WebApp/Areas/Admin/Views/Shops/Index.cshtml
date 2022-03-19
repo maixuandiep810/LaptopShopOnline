@@ -28,17 +28,17 @@
                 }
                 <thead>
                     <tr>
-                        <th style="width: 5%;">
+                        <th class="col-md-1">
                             STT
                         </th>
-                        <th style="width: 40%;">
+                        <th class="col-md-5">
                             Tên cửa hàng
                             <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_SEARCH_PARAMS, new { sortOrder = ViewBag.NameSortParm, page = 1, searchString = ViewBag.SearchString   })><i class="fas fa-sort text-dark"></i></a>
                         </th>
-                        <th style="width: 20%;">
-                            Người bán
+                        <th class="col-md-4">
+                            Mã người bán
                         </th>
-                        <th class="text-center"></th>
+                        <th class="col-md-2 text-center">
                     </tr>
                 </thead>
                 <tbody>
@@ -52,15 +52,18 @@
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td>
-                                <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.Id })>
-                                    @Html.DisplayFor(modelItem => item.SellerId)
+                                <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_CAP_NHAT_PARAMS, new { id = item.SellerId })>
+                                    @item.SellerId
                                 </a>
                             </td>
                             <td>
                                 <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CAP_NHAT_PARAMS, new {id = item.Id})><i class="far fa-edit"></i></a>
                                 <a class="btn-sm btn-group-sm btn-secondary dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_CHI_TIET_PARAMS, new { id = item.Id })><i class="fas fa-info"></i></a>
-                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_XOA_PARAMS, new { id = item.Id })><i class="far fa-trash-alt"></i></a>                  
-                                          </td>
+                                <a class="btn-sm btn-group-sm btn-warning" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_SEARCH_PARAMS, new {sortOrder = "", searchString = "", page = 1, productCategoryId = "", shopId = item.Id})>
+                                    <i class="fas fa-cubes"></i>
+                                </a>
+                                <a class="btn-sm btn-group-sm btn-danger dialog-link" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_XOA_PARAMS, new { id = item.Id })><i class="far fa-trash-alt"></i></a>
+                            </td>
                         </tr>
                         i++;
                     }

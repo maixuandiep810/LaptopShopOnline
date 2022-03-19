@@ -52,21 +52,6 @@
     </div>
 
 
-    <div class="row">
-        <div class="form-group col-md-6">
-            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-11">
-                @Html.DropDownListFor(m => m.IsDeleted, new SelectList(new[]
-                    {
-                        new SelectListItem { Value = null, Text = "Trạng thái" },
-                        new SelectListItem { Value = "false", Text = "Hoạt động" },
-                        new SelectListItem { Value = "true", Text = "Khóa" },
-                    }, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
     @Html.HiddenFor(model => model.CreatedBy)
     @Html.HiddenFor(model => model.CreatedOn)
 

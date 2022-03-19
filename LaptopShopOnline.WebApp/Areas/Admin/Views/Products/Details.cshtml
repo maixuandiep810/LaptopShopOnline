@@ -92,12 +92,6 @@
                         <td>@Html.Raw(Model.Description)</td>
                     </tr>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.ProductStatus)</th>
-                        <td>
-                            @(((ENUM.ProductStatus)Model.ProductStatus).ToString())
-                        </td>
-                    </tr>
-                    <tr>
                         <th>@Html.DisplayNameFor(model => model.IsDeleted)</th>
                         <td>
                             <a href="#" class="btn-primary btn-sm text-decoration-none">@(Model.IsDeleted ? "Đã xóa" : "Chưa xóa")</a>

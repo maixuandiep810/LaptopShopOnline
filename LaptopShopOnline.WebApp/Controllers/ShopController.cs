@@ -23,6 +23,8 @@ namespace LaptopShopOnline.WebApp.Controllers
         {
         }
 
+
+
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             if (page == null || sortOrder == null)
@@ -39,6 +41,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
             return View(shopsPaging);
         }
+
 
 
         public ActionResult Details(Guid? id)

@@ -26,8 +26,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-
-        // GET: Admin/Users
         [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_SYS_READ_ID)]
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
@@ -40,15 +38,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 page = page ?? 1;
                 sortOrder = sortOrder ?? "UserName";
                 searchString = searchString ?? "";
-                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_TAI_KHOAN_NGUOI_DUNG_SEARCH_PARAMS, 
-                    new {sortOrder = sortOrder, page = page, searchString })));
             }
-
-
-            //Sort order
-            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "user_name_desc" : "UserName";
-            ViewBag.SearchString = searchString;
-            ViewBag.SortOrder = sortOrder;
 
             var user = _serviceWrapper.Db.User.Where(u => u.IsDeleted == false).Include(u => u.UserGroup).Select(p => p);
 
@@ -69,6 +59,12 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                     break;
             }
 
+
+            //Sort order
+            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "user_name_desc" : "UserName";
+            ViewBag.SearchString = searchString;
+            ViewBag.SortOrder = sortOrder;
+            //
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             // Đếm được số trang vì là IQueryable
@@ -87,6 +83,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             CountMessage();
             CountProduct();
             CountOrder();
+
             if (id == null)
             {
                 return BadRequest();

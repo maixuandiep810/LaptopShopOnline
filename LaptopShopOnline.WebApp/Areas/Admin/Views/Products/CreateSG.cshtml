@@ -37,16 +37,6 @@
             </div>
         </div>
 
-        @*<div class="row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.ShopId, "Mã Shop", htmlAttributes: new { @class = "control-label col-md-6" })
-                <div class="col-md-11">
-                    @Html.EditorFor(model => model.ShopId, new { htmlAttributes = new { @Value = userLoginSession.ShopId, @class = "form-control", @disabled = true } })
-                    @Html.ValidationMessageFor(model => model.ShopId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>*@
-
         <div class="row">
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-6" })

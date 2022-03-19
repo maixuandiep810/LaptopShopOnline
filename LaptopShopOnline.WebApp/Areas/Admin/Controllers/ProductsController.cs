@@ -38,8 +38,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Products
-        public ActionResult Index(string sortOrder, int? page, string searchString)
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_READ_ID)]
+        public ActionResult Index(string sortOrder, int? page, string searchString, Guid? productCategoryId, Guid? shopId)
         {
             CountMessage();
             CountProduct();
@@ -50,20 +50,18 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 page = page ?? 1;
                 sortOrder = sortOrder ?? "Name";
                 searchString = searchString ?? "";
-                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_SEARCH_PARAMS,
-                    new { sortOrder = sortOrder, page = page, searchString = searchString })));
             }
 
             var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
             int pageSize = 10;
-            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, pageSize, page, ViewBag);
-             
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, productCategoryId, shopId, searchString, sortOrder, pageSize, page, ViewBag);
+
             return View(productsPaging);
         }
 
         //GET: Admin/Products
-         public ActionResult IndexSG(string sortOrder, int? page, string searchString, string currentFilter)
+         public ActionResult IndexSG(string sortOrder, int? page, string searchString, Guid? productCategoryId)
         {
             CountProduct();
             CountOrder();
@@ -73,15 +71,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 page = page ?? 1;
                 sortOrder = sortOrder ?? "Name";
                 searchString = searchString ?? "";
-                return Redirect(Flurl.Url.EncodeIllegalCharacters(SmartFormat.Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS,
-                    new { sortOrder = sortOrder, page = page, searchString })));
             }
 
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
-            var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false && x.ShopId == userLoginSession.ShopId);
+            var products = _serviceWrapper.Db.Product.Include(p => p.ProductCategory).Where(x => x.IsDeleted == false);
 
             int pageSize = 10;
-            var productsPaging = _serviceWrapper.ProductService.GetAll(products, searchString, sortOrder, pageSize, page, ViewBag);
+            var productsPaging = _serviceWrapper.ProductService.GetAll(products, productCategoryId, userLoginSession.ShopId, searchString, sortOrder, pageSize, page, ViewBag);
 
             //
             return View(productsPaging);
@@ -90,8 +86,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-
-        // GET: Admin/Products/Details/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_READ_ID)]
         public ActionResult Details(Guid? id)
         {
             if (id == null)
@@ -105,8 +100,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(product);
         }
-        //GET: Admin/Products/Details/5
-         public ActionResult DetailsSG(Guid? id)
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_CREATE_ID)]
+        public ActionResult DetailsSG(Guid? id)
         {
             if (id == null)
             {
@@ -125,17 +120,16 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
             CountOrder();
             CountProduct();
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name");
-            ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name");
             return View();
         }
-        // POST: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Product product)
@@ -145,7 +139,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
                 product.Id = Guid.NewGuid();
                 AuditTable.InsertAuditFields(product, userLoginSession.UserName);
-                product.ProductStatus = (int)ENUM.ProductStatus.PENDING;
                 _serviceWrapper.Db.Product.Add(product);
                 _serviceWrapper.Db.SaveChanges();
                 if (product.Image != null)
@@ -160,19 +153,20 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             } 
                 SetAlert("Thêm mới lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
-            ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
             return View(product);
         }
 
-        //GET: Admin/Products/Create
-         public ActionResult CreateSG()
+
+
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_CREATE_ID)]
+        public ActionResult CreateSG()
         {
             CountOrder();
             CountProduct();
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name");
             return View();
         }
-        // POST: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_CREATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateSG(Product product)
@@ -183,7 +177,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 product.Id = Guid.NewGuid();
                 product.ShopId = userLoginSession.ShopId;
                 AuditTable.InsertAuditFields(product, userLoginSession.UserName);
-                product.ProductStatus = (int)ENUM.ProductStatus.PENDING;
                 _serviceWrapper.Db.Product.Add(product);
                 _serviceWrapper.Db.SaveChanges();
                 if (product.Image != null)
@@ -207,12 +200,13 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Products/Edit/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_UPDATE_ID)]
         public ActionResult Edit(Guid? id)
         {
             CountMessage();
             CountOrder();
             CountProduct();
+
             if (id == null)
             {   
                 return BadRequest();
@@ -223,11 +217,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
-            ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
-            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
-        // POST: Admin/Products/Edit/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Product product)
@@ -243,29 +235,14 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
                 SetAlert("Cập nhật lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
-            ViewBag.ShopId = new SelectList(_serviceWrapper.Db.Shop, "Id", "Name", product.ShopId);
-            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
+            //ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
 
-        //public JsonResult ChangeProductStatus(Guid? id, int productStatus) {
-        //    if (id == null)
-        //    {
-        //        return new JsonResult (null) { StatusCode = (int) HttpStatusCode.BadRequest };
-        //    }
-        //    Product product = _serviceWrapper.Db.Product.Where(p => p.IsDeleted == false).FirstOrDefault();
-        //    if (product == null)
-        //    {
-        //        return new JsonResult(null) { StatusCode = (int)HttpStatusCode.NotFound };
-        //    }
-        //    product.ProductStatus = productStatus;
-        //    _serviceWrapper.Db.SaveChanges();
-        //    return new JsonResult(null) { StatusCode = (int)HttpStatusCode.OK };
-        //}
 
 
-        //GET: Admin/Products/Edit/5
-         public ActionResult EditSG(Guid? id)
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_UPDATE_ID)]
+        public ActionResult EditSG(Guid? id)
         {
             CountOrder();
             CountProduct();
@@ -280,10 +257,9 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
-            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
-        // POST: Admin/Products/Edit/5
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditSG(Product product)
@@ -303,7 +279,6 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             SetAlert("Cập nhật lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
-            ViewBag.ProductStatus = new SelectList(ENUM.GetSelectList_ProductStatus(), "Id", "Name");
             return View(product);
         }
 
@@ -311,7 +286,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Products/Delete/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_DELETE_ID)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -325,7 +300,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             }
             return View(product);
         }
-        // POST: Admin/Products/Delete/5
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

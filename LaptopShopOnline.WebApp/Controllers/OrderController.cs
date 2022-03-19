@@ -27,8 +27,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        // GET: Admin/Products
-        //[HasCredential(RoleId = "BUYER_ROLE")]
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_READ_ID)]
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             if (page == null || sortOrder == null)
@@ -50,7 +49,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        //[HasCredential(RoleId = "BUYER_ROLE")]
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_CREATE_ID)]
         public ActionResult Create(Guid? cartId, Guid? shopId, bool shouldOrderAll)
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -86,7 +85,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             return View(createOrderVM);
         }
         //
-        //[HasCredential(RoleId = "BUYER_ROLE")]
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_CREATE_ID)]
         [HttpPost]
         public ActionResult Create([FromForm] Order order, Guid? cartId, Guid? shopId, bool shouldOrderAll)
         {
@@ -147,7 +146,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        //
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_UPDATE_ID)]
         public ActionResult Edit(Guid? id)
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -167,7 +166,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             }
             return View(order);
         }
-        //
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Order order)
@@ -188,7 +187,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        //
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_DELETE_ID)]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -202,7 +201,8 @@ namespace LaptopShopOnline.WebApp.Controllers
             }
             return View(order);
         }
-        // POST: Admin/Products/Delete/5
+        //
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_DELETE_ID)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)

@@ -11,6 +11,12 @@
 
 <div class="form-horizontal">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.CreatedOn)
+    @Html.HiddenFor(model => model.CreatedBy)
+    @Html.HiddenFor(model => model.IsDeleted)
+
     <div class="row">
         <div class="form-group col-md-6">
             @Html.LabelFor(model => model.ShopId, htmlAttributes: new { @class = "control-label col-md-6" })
@@ -32,14 +38,14 @@
         <div class="form-group col-md-6">
             @Html.LabelFor(model => model.ShipName, htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
-                @Html.EditorFor(model => model.ShipName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ShipName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group col-md-6">
             @Html.LabelFor(model => model.ShipPhone, htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
-                @Html.EditorFor(model => model.ShipPhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ShipPhone, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ShipPhone, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,7 +55,7 @@
         <div class="form-group col-md-6">
             @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
-                @Html.EditorFor(model => model.ShipAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ShipAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ShipAddress, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,7 +63,7 @@
         <div class="form-group col-md-6">
             @Html.LabelFor(model => model.ShipEmail, htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
-                @Html.EditorFor(model => model.ShipEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ShipEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ShipEmail, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,16 +73,15 @@
         <div class="form-group col-md-6">
             @Html.LabelFor(model => model.OrderStatus, "Trạng thái", htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
-                @Html.DropDownList("OrderStatus", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.OrderStatus, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.OrderStatus, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group col-sm-6">
-            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-6" })
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.OrderStatus, "Trạng thái mới", htmlAttributes: new { @class = "control-label col-md-6" })
             <div class="col-md-11">
-                <div id="IsDeleted" class="form-control" readonly="readonly">
-                    @(Model.IsDeleted ? "Đã xóa" : "Chưa xóa")
-                </div>
+                @Html.DropDownList("OrderStatus", null, htmlAttributes: new { @class = "form-control", @value = @ENUM.GetSelectList_OrderStatus().Where(x => x.Id == Model.OrderStatus).FirstOrDefault().Name })
+                @Html.ValidationMessageFor(model => model.OrderStatus, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -90,6 +95,27 @@
     </div>
 </div>
 }
+
+
+<div class="table-responsive">
+    <table class="pt-1 table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th class="col-md-6 col-sm-3 col-3">Tên sản phẩm</th>
+                <th class="col-md-1 col-sm-1 col-1">Ảnh</th>
+                <th class="col-md-1 col-sm-3 col-3">SL</th>
+                <th class="col-md-2 col-sm-2 col-2">Đơn giá</th>
+                <th class="col-md-2 col-sm-2 col-2">Tổng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderDetail in Model.OrderDetails)
+            {
+                @Html.Partial("_OrderDetailPartialView", orderDetail)
+            }
+        </tbody>
+    </table>
+</div>
 @section Scripts{
     <script>
         CKEDITOR.replace("Description");

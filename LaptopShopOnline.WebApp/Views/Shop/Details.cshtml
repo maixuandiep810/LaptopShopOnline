@@ -30,6 +30,11 @@
                 <p>
                     Ngày tạo: @Model.CreatedOn
                 </p>
+                <p>
+                    <a href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new {sortOrder = "", searchString = "", page = 1, productCategoryId = Model.Id, shopId = ""})>
+                        Sản phẩm
+                    </a>
+                </p>
             </div>
         </div>
         <div class="row no-gutters mt-4">

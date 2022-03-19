@@ -4,14 +4,16 @@ using LaptopShopOnline.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LaptopShopOnline.Model.Migrations
 {
     [DbContext(typeof(LaptopShopOnlineDbContext))]
-    partial class LaptopShopOnlineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220319090618_ntext_product")]
+    partial class ntext_product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -521,7 +523,7 @@ namespace LaptopShopOnline.Model.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 

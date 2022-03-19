@@ -38,7 +38,7 @@ function cart_input_change() {
             var alert_box = $('#AlertBox');
             var alert_box_content = alert_box.children("#AlertBoxContent");
             alert_box_content.addClass("alert-warning");
-            alert_box_content.html("Cập nhật lỗi");
+            alert_box_content.html(e.responseJSON.message);
             alert_box.removeClass('d-none').slideDown(500).stop().delay(2000).slideUp(500).delay(0).queue(function () {
                 $(this).addClass('d-none');
             });

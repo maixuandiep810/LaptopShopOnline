@@ -89,10 +89,6 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Lượt xem")]
         public int? ViewCount { get; set; }
 
-        [Display(Name = "Trạng thái cửa hàng")]
-        public int ProductStatus { get; set; }
-
-
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày tạo")]
         public DateTimeOffset? CreatedOn { get; set; }

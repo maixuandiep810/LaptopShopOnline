@@ -25,18 +25,6 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-
-
-        //// GET: Users
-        //public ActionResult Login(string message = null, string type = null)
-        //{
-        //    if (message != null && type != null)
-        //    {
-        //        SetAlert(message, type);
-        //    }
-        //    return View();
-        //}
-        // GET: Users
         public ActionResult Login()
         {
             return View();
@@ -60,6 +48,8 @@ namespace LaptopShopOnline.WebApp.Controllers
                         userSession.FirstName = user.FirstName;
                         userSession.LastName = user.LastName;
                         HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userSession);
+                        var listCredentials = _serviceWrapper.UserService.GetListCredential(model.UserName);
+                        HttpContext.Session.Add(CommonConstants.CREDENTIALS_SESSION, listCredentials);
                         return Redirect(CommonConstants.ROUTE_TRANG_CHU_PARAMS);
                     case 0:
                         ModelState.AddModelError("", "Tài khoản không tồn tại");
@@ -127,6 +117,8 @@ namespace LaptopShopOnline.WebApp.Controllers
                 userSession.FirstName = user.FirstName;
                 userSession.LastName = user.LastName;
                 HttpContext.Session.Add(CommonConstants.USER_LOGIN_SESSION, userSession);
+                var listCredentials = _serviceWrapper.UserService.GetListCredential(model.UserName);
+                HttpContext.Session.Add(CommonConstants.CREDENTIALS_SESSION, listCredentials);
                 return Redirect(CommonConstants.ROUTE_TRANG_CHU_PARAMS);
             }
             SetAlert("Đăng ký không thành công", "warning");
@@ -135,7 +127,7 @@ namespace LaptopShopOnline.WebApp.Controllers
 
 
 
-        /*        [HasCredential(RoleId = "BUYER_ROLE")]*/
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_READ_ID)]
         public ActionResult Logout()
         {
             Object nullUserLogin = null;
@@ -144,7 +136,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_UPDATE_ID)]
         public ActionResult EditProfile()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -156,6 +148,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             return View(user);
         }
         //
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditProfile(User user)
@@ -173,7 +166,7 @@ namespace LaptopShopOnline.WebApp.Controllers
         }
 
 
-
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_UPDATE_ID)]
         public ActionResult EditPassword()
         {
             var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
@@ -185,6 +178,7 @@ namespace LaptopShopOnline.WebApp.Controllers
             return View(user);
         }
         //
+        [HasCredential(RoleId = CommonConstants.BUYER_ROLE_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditPassword(User user)

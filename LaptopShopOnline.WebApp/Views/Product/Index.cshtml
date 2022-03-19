@@ -18,16 +18,42 @@
     </ol>
 </nav>
 <!--end-breadcrumbs-->
-
 <!-- DataTales Example -->
 <div class="card shadow my-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_SAN_PHAM_PARAMS }))
+        <div class="row no-gutters">
+            @{
+                var productCategoryId = ViewBag.ProductCategoryId;
+                var shopId = ViewBag.ShopId;
+            }
+            @if (productCategoryId != null)
+            {
+                <h3>
+                    Danh mục sản phẩm: @ViewBag.ProductCategoryName
+                </h3>
+            }
+            @if (shopId != null)
+            {
+                <h3>
+                    Cửa hàng:
+                    <a href=@Smart.Format(CommonConstants.ROUTE_CUA_HANG_CHI_TIET_PARAMS, new { id = shopId})>
+                        @ViewBag.ShopName
+                    </a>
+                </h3>
+            }
+        </div>
+        @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS }))
         {
             <div class="form-group row no-gutters">
+                @Html.Hidden("sortOrder", null, new { @value = "" })
+                @Html.Hidden("page", null, new { @value = "" })
+                @Html.Hidden("productCategoryId", null, new { @value = "" })
+                @Html.Hidden("shopId", null, new { @value = "" })
+
+
                 @Html.TextBox("searchString", null, new
                 {
                     @class = "col-md-4 form-control",
@@ -37,22 +63,22 @@
             </div>
             <div class="form-group">
                 <a class="btn btn-secondary mr-1" href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new {sortOrder =
-                        ViewBag.NameSortParm, searchString = ViewBag.SearchString, page = 1})>
+                        ViewBag.NameSortParm, searchString = ViewBag.SearchString, page = 1, productCategoryId = productCategoryId, shopId = shopId})>
                     <span>Lọc theo tên</span>
                     <i class="fas fa-sort text-dark"></i>
                 </a>
                 <a class="btn btn-secondary mr-1" href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new {sortOrder =
-                        ViewBag.PriceSortParm, searchString = ViewBag.SearchString, page = 1})>
+                        ViewBag.PriceSortParm, searchString = ViewBag.SearchString,page = 1, productCategoryId = productCategoryId, shopId = shopId})>
                     <span>Lọc theo giá</span>
                     <i class="fas fa-sort text-dark"></i>
                 </a>
-                <a class="btn btn-secondary mr-1" href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new {sortOrder =
-                        ViewBag.PromotionPriceSortParm, searchString = ViewBag.SearchString, page = 1})>
+                <a class="btn btn-secondary mr-1" href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new { sortOrder =
+                                ViewBag.PromotionPriceSortParm, searchString = ViewBag.SearchString,page = 1, productCategoryId = productCategoryId, shopId = shopId})>
                     <span>Lọc theo giá k/m</span>
                     <i class="fas fa-sort text-dark"></i>
                 </a>
-                <a class="btn btn-secondary mr-1" href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new {sortOrder =
-                        ViewBag.QuantitySortParm, searchString = ViewBag.SearchString, page = 1})>
+                <a class="btn btn-secondary mr-1" href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new { sortOrder =
+                            ViewBag.QuantitySortParm, searchString = ViewBag.SearchString, page = 1, productCategoryId = productCategoryId, shopId = shopId})>
                     <span>Lọc theo số lượng mở bán</span>
                     <i class="fas fa-sort text-dark"></i>
                 </a>
@@ -83,7 +109,8 @@
                                 </p>
                                 <div>
                                     <a href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_CHI_TIET_PARAMS, new { id = item.Id }) class="btn btn-warning pm-1">Chi tiết</a>
-                                    <a href="#" class="btn btn-primary m-1">Thêm giỏ hàng</a>
+                                    <input type="number" hidden="hidden" name="cart" class="form-control mr-4" min="1" value="1" id="cart-input" data-product-id="@item.Id" />
+                                    <button class="btn btn-primary m-1" id="btn-add-cart-input">Thêm giỏ hàng</button>
                                 </div>
                             </div>
                         </div>
@@ -98,11 +125,18 @@
         <div class="text-center">
             Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
             @Html.PagedListPager(Model, page => @Smart.Format(CommonConstants.ROUTE_SAN_PHAM_SEARCH_PARAMS, new
-            {
-                sortOrder = ViewBag.SortOrder,
-                page = page,
-                searchString = ViewBag.SearchString
+       {
+           sortOrder = ViewBag.SortOrder,
+           page = page,
+           searchString = ViewBag.SearchString,
+           productCategoryId = productCategoryId,
+           shopId = shopId
             }))
         </div>
     </div>
 </div>
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/Content/Client/js/Client-Product.js"></script>
+}

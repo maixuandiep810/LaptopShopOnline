@@ -4,7 +4,9 @@
 
 
 <tr>
-<td>@Model.Product.Name</td>
+<td>
+    <a href=@Smart.Format(CommonConstants.ROUTE_SAN_PHAM_CHI_TIET_PARAMS, new { id = Model.ProductId })>@Model.Product.Name</a>
+</td>
 <td>
     <div class="s-box-square">
         <img class="s-box-square-image" src="@Model.Product.UrlImage" alt="Alternate Text" style="" />

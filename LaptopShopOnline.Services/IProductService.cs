@@ -11,6 +11,6 @@ namespace LaptopShopOnline.Service
     public interface IProductService
     {
 
-        IPagedList<Product> GetAll(IQueryable<Product> products, string searchString, string sortOrder, int? pageSize, int? page, dynamic ViewBag);
+        IPagedList<Product> GetAll(IQueryable<Product> products, Guid? productCategoryId, Guid? shopId, string searchString, string sortOrder, int? pageSize, int? page, dynamic ViewBag);
     }
 }

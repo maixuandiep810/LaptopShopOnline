@@ -79,7 +79,9 @@
                                 @item.Id
                             </td>
                             <td>
-                                @item.Shop.Name
+                                <a href=@Smart.Format(CommonConstants.ROUTE_CUA_HANG_CHI_TIET_PARAMS, new { id = item.Id})>
+                                    @item.Shop.Name
+                                </a>
                             </td>
                             <td>
                                 @((item.Total ?? 0).ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))

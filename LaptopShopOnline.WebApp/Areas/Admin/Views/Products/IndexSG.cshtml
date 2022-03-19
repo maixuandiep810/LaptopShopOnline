@@ -16,11 +16,27 @@
         <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
     </div>
     <div class="card-body">
+        <div class="row no-gutters">
+            @{
+                var productCategoryId = ViewBag.ProductCategoryId;
+                var shopId = ViewBag.ShopId;
+            }
+            @if (productCategoryId != null)
+            {
+                <h3>
+                    Danh mục sản phẩm: @ViewBag.ProductCategoryName
+                </h3>
+            }
+        </div>
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                @using (Html.BeginForm(null, null, FormMethod.Post, new { @action = CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_PARAMS }))
+                @using (Html.BeginForm(null, null, FormMethod.Get, new { @action = CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS }))
                 {
                     <div class="form-group">
+                        @Html.Hidden("sortOrder", null, new { @value = "" })
+                        @Html.Hidden("page", null, new { @value = "" })
+                        @Html.Hidden("productCategoryId", null, new { @value = productCategoryId })
+
                         @Html.TextBox("SearchString", null, new { @class = "col-md-4 form-control float-left", @value = ViewBag.SearchString })
                         <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i></button>
                         <a href=@CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_THEM_MOI_PARAMS class="btn btn-group-sm btn-primary text-decoration-none"><i class="fa fa-plus"></i> Thêm mới</a>
@@ -31,32 +47,37 @@
                         <th>
                             STT
                         </th>
-                        <th>
+                        <th class="col-md-1 col-sm-1 col-1">
                             Loại sản phẩm
                         </th>
-                        <th>
+                        <th class="col-md-5 col-sm-5 col-5">
                             Tên sản phẩm
-                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.NameSortParm, page = 1, searchString = ViewBag.SearchString   })><i class="fas fa-sort text-dark"></i></a>
+                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.NameSortParm, page = 1, searchString = ViewBag.SearchString, productCategoryId = productCategoryId, shopId = shopId})>
+                                <i class="fas fa-sort text-dark"></i>
+                            </a>
                         </th>
-                        <th>
+                        <th class="col-md-1 col-sm-1 col-1">
                             Ảnh
                         </th>
-                        <th>
+                        <th class="col-md-1 col-sm-1 col-1">
                             Giá
-                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.PriceSortParm, page = 1, searchString = ViewBag.SearchString   })><i class="fas fa-sort text-dark"></i></a>
+                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.PriceSortParm, page = 1, searchString = ViewBag.SearchString, productCategoryId = productCategoryId})>
+                                <i class="fas fa-sort text-dark"></i>
+                            </a>
                         </th>
-                        <th>
+                        <th class="col-md-1 col-sm-1 col-1">
                             Giá khuyến mãi
-                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.PromotionPriceSortParm, page = 1, searchString = ViewBag.SearchString   })><i class="fas fa-sort text-dark"></i></a>
+                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.PromotionPriceSortParm, page = 1, searchString = ViewBag.SearchString, productCategoryId = productCategoryId})>
+                            <i class="fas fa-sort text-dark"></i></a>
                         </th>
-                        <th>
+                        <th class="col-md-1 col-sm-1 col-1">
                             Số lượng
-                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.QuantitySortParm, page = 1, searchString = ViewBag.SearchString   })><i class="fas fa-sort text-dark"></i></a>
+                            <a href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.QuantitySortParm, page = 1, searchString = ViewBag.SearchString, productCategoryId = productCategoryId})>
+                                <i class="fas fa-sort text-dark"></i>
+                            </a>
                         </th>
-                        <th>
-                            Trạng thái
+                        <th class="col-md-1 col-sm-1 col-1 text-center">
                         </th>
-                        <th class="text-center" style="width: 10%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,22 +94,21 @@
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td>
-                                <img src=@item.UrlImage width="100" height="70" />
+                                <div class="s-box-square">
+                                    <img class="s-box-square-image" src=@item.UrlImage alt="Alternate Text" style="" />
+                                </div>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Price)
+                                @(item.Price.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PromotionPrice)
+                                @if (item.PromotionPrice > 0)
+                                {
+                                    <span>@(item.PromotionPrice?.ToString(CommonConstants.CurrencyFormat, CommonConstants.VietNamCultureInfo))</span>
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Quantity)
-                            </td>
-                            <td>
-                               @{
-                                var status = ((ENUM.ProductStatus)item.ProductStatus).ToString();
-                                }
-                                @status
                             </td>
                             <td>
                                 <a class="btn-sm btn-group-sm btn-success" href=@Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_CAP_NHAT_PARAMS, new {id = item.Id })><i class="far fa-edit"></i></a>
@@ -108,7 +128,13 @@
         </div>
         <div class="text-center">
             Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trên @Model.PageCount
-            @Html.PagedListPager(Model, page => @Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new { sortOrder = ViewBag.SortOrder, page = page, searchString = ViewBag.SearchString }))
+            @Html.PagedListPager(Model, page => @Smart.Format(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_SEARCH_PARAMS, new
+       {
+           sortOrder = ViewBag.SortOrder,
+           page = page,
+           searchString = ViewBag.SearchString,
+           productCategoryId = productCategoryId
+       }))
         </div>
     </div>
 </div>

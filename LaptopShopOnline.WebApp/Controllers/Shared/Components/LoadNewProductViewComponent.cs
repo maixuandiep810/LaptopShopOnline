@@ -20,7 +20,7 @@ namespace LaptopShopOnline.WebApp.Controllers.Shared.Components
         public IViewComponentResult Invoke()
         {
             var products = new List<Product>();
-            products = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedOn).Take(3).ToList();
+            products = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedOn).Take(6).ToList();
             ViewBag.Count = products.Count();
             return View("LoadNewProduct", products);
         }

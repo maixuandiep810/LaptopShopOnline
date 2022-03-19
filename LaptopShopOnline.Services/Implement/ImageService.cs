@@ -10,6 +10,13 @@ namespace LaptopShopOnline.Service.Implement
 {
     public class ImageService : IImageService
     {
+        private readonly ServiceWrapper _serviceWrapper;
+
+        public ImageService(ServiceWrapper serviceWrapper)
+        {
+            _serviceWrapper = serviceWrapper;
+        }
+
         public string SaveImage(IFormFile formFile, string uploadFolder) 
         {
             var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);

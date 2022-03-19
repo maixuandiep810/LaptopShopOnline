@@ -40,60 +40,10 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.CountProductCategory = _serviceWrapper.Db.ProductCategory.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountNews = _serviceWrapper.Db.News.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountNewsCategory = _serviceWrapper.Db.NewsCategory.Where(x => x.IsDeleted == false).Count();
-            ViewBag.CountMenu = _serviceWrapper.Db.Menu.Where(x => x.IsDeleted == false && x.ParentId == null).Count();
+            ViewBag.CountShop = _serviceWrapper.Db.Shop.Where(x => x.IsDeleted == false).Count();
             ViewBag.CountOrder = _serviceWrapper.Db.Order.Where(x => x.IsDeleted == false).Count();
-            var result = from o in _serviceWrapper.Db.OrderDetail
-                         join p in _serviceWrapper.Db.Product on o.ProductId equals p.Id
-                         where o.IsDeleted == false
-                         select new
-                         {
-                             Code = p.Code,
-                             Price = o.Price,
-                             Quantity = o.Quantity,
-                             ProductId = p.Id
-                         };
-            var sumPrice = result.Sum(x => x.Quantity * x.Price);
-            var sum = result.Sum(x => x.Quantity * x.Price);
             return View();
         }
-
-        //public ActionResult ExportToExcel()
-        //{
-        //    var ExcelData = (from od in _serviceWrapper.Db.OrderDetail
-        //                     join o in _serviceWrapper.Db.Order
-        //                     on od.OrderId equals o.Id
-        //                     join u in _serviceWrapper.Db.User
-        //                     on o.UserId equals u.Id
-        //                     join p in _serviceWrapper.Db.Product
-        //                     on od.ProductId equals p.Id
-        //                     select new ExcelModel
-        //                     {
-        //                         Customer = u.FirstName + u.LastName,
-        //                         Email = u.Email,
-        //                         Phone = o.ShipPhone,
-        //                         ProductName = p.Name,
-        //                         CreatedOn = o.CreatedOn.Value,
-        //                         Price = od.Price.Value,
-        //                         Quantity = od.Quantity.Value,
-        //                         Total = od.Price.Value * od.Quantity.Value
-        //                     }).ToList();
-        //    var orderDetail = _serviceWrapper.Db.OrderDetail.Where(x => !x.IsDeleted).ToList();
-        //    var gv = new GridView();
-        //    gv.DataSource = ExcelData;
-        //    gv.DataBind();
-        //    Response.ClearContent();
-        //    Response.Buffer = true;
-        //    Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
-        //    Response.ContentType = "application/ms-excel";
-        //    Response.Charset = "";
-        //    StringWriter objStringWriter = new StringWriter();
-        //    HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
-        //    gv.RenderControl(objHtmlTextWriter);
-        //    Response.Output.Write(objStringWriter.ToString());
-        //    Response.Flush();
-        //    Response.End();
-        //    return View();
-        //}
     }
 
 }

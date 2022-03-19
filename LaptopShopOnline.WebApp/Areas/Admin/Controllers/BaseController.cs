@@ -1,4 +1,5 @@
 ﻿using LaptopShopOnline.Common;
+using LaptopShopOnline.Model.Entities;
 using LaptopShopOnline.Service;
 using LaptopShopOnline.WebApp.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -73,13 +74,32 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
         protected void CountProduct()
         {
-            var products = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.Quantity < 5);
+            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            IQueryable<Product> products = null;
+            if (userLoginSession.ShopId == Guid.Empty)
+            {
+                products = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.Quantity < 5);
+            }
+            else
+            {
+                products = _serviceWrapper.Db.Product.Where(x => x.IsDeleted == false && x.Quantity < 5 && x.ShopId == userLoginSession.ShopId);
+            }
+
             TempData["cpd"] = products.Count().ToString();
         }
         protected void CountOrder()
         {
-            //var orders = _serviceWrapper.Db.Order.Where(x => x.Status == false && x.IsDeleted == false);
-            //TempData["ord"] = orders.Count().ToString();
+            var userLoginSession = HttpContext.Session.Get<UserLogin>(CommonConstants.USER_LOGIN_SESSION);
+            IQueryable<Order> orders = null;
+            if (userLoginSession.ShopId == Guid.Empty)
+            {
+                orders = _serviceWrapper.Db.Order.Where(x => x.OrderStatus == (int)ENUM.OrderStatus.SHOP_PENDING && x.IsDeleted == false);
+            }
+            else
+            {
+                orders = _serviceWrapper.Db.Order.Where(x => x.OrderStatus == (int)ENUM.OrderStatus.SHOP_PENDING && x.IsDeleted == false && x.ShopId == userLoginSession.ShopId);
+            }
+            TempData["ord"] = orders.Count().ToString();
         }
     }
 }

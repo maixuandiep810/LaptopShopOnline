@@ -4,45 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!--banner-starts-->
-<!--banner-ends-->
 
-<!--End-slider-script-->
-<!--start-banner-bottom
-<!--end-banner-bottom-->
-<div class="shoes">
-    <div class="container">
-        <div class="product-one">
-            <div><h6>Sản phẩm xu hướng</h6>></div>
-            @await Component.InvokeAsync("LoadHotProduct")
-            <div class="clearfix"> </div>
-        </div>
+
+<!--start-breadcrumbs-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#" onclick="history.back()">Quay lại</a></li>
+    </ol>
+</nav>
+<!--end-breadcrumbs-->
+<!-- DataTales Example -->
+<div class="card shadow my-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+    </div>
+    <div class="card-body">
+        @await Component.InvokeAsync("LoadHotProduct")
+        @await Component.InvokeAsync("LoadNewProduct")
     </div>
 </div>
-<!--start-shoes-->
-<div class="shoes">
-    <div class="container">
-        <div class="product-one">
-            <div><h6>Sản phẩm khác</h6>></div>
-            @await Component.InvokeAsync("LoadNormalProduct1")
-            <div class="clearfix"> </div>
-        </div>
-        <div class="product-one">
-            <div><h6>Sản phẩm khác</h6>></div>
-            @await Component.InvokeAsync("LoadNormalProduct2")
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-</div>
-<!--end-shoes-->
-<!--start-abt-shoe-->
-<div class="shoes">
-    <div class="container">
-        <div class="product-one">
-            <div><h6>Sản phẩm mới</h6>></div>
-            @await Component.InvokeAsync("LoadNewProduct")
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-</div>
-<!--end-abt-shoe-->
+
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/Content/Client/js/Client-Product.js"></script>
+}

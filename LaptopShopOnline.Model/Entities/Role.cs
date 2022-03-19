@@ -19,7 +19,7 @@ namespace LaptopShopOnline.Model.Entities
         public string Id { get; set; }
 
         [Required(ErrorMessage = "Bạn chưa nhập Tên")]
-        [Column(TypeName = "varchar(100)")]
+        [Column(TypeName = "nvarchar(100)")]
         [StringLength(100)]
         [Display(Name = "Tên")]
         public string Name { get; set; }

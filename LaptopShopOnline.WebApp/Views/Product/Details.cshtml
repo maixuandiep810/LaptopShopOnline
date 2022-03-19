@@ -33,7 +33,7 @@
                     @Model.Name
                 </h3>
                 <p>
-                    Cửa hàng: @Model.Shop.Name
+                    Cửa hàng: <a href=@Smart.Format(CommonConstants.ROUTE_CUA_HANG_CHI_TIET_PARAMS, new { id = Model.ShopId })>@Model.Shop.Name</a>
                 </p>
                 @if (Model.PromotionPrice > 0)
                 {

@@ -29,8 +29,7 @@ namespace LaptopShopOnline.Model.Entities
         [Display(Name = "Người bán")]
         public Guid? SellerId { get; set; }
 
-        [Column(TypeName = "nvarchar(1000)")]
-        [StringLength(1000)]
+        [Column(TypeName = "ntext")]
         [Display(Name = "Mô tả")]
         public string Description { get; set; }
 
@@ -38,9 +37,6 @@ namespace LaptopShopOnline.Model.Entities
         [Column(TypeName = "varchar(1000)")]
         [StringLength(1000)]
         public string UrlImage { get; set; }
-
-        [Display(Name = "Trạng thái cửa hàng")]
-        public int ShopStatus { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày tạo")]

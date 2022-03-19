@@ -1,19 +1,20 @@
-﻿@using LaptopShopOnline.WebApp.Common
+﻿@using System.Text.RegularExpressions;
+
+@using LaptopShopOnline.WebApp.Common
 
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     var userLoginSession = Context.Session.Get<UserLogin>(LaptopShopOnline.Common.CommonConstants.USER_LOGIN_SESSION);
 }
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<div class=" align-items-center justify-content-between mb-4">
-    @if (userLoginSession?.GroupId == "ADMIN")
-    {
+
+
+@if (userLoginSession != null && Regex.IsMatch(userLoginSession.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_MANAGER))
+{
+
+    <div class=" align-items-center justify-content-between mb-4">
         <!--Quản lý người dùng-->
-        <h6 class="alert alert-success text-center"><i class="fas fa-users"></i> Quản lý người dùng</h6>
+        <h6 class="alert alert-success text-center"><i class="fas fa-users"></i> Quản lý hệ thống</h6>
         <div class="row col-md-12">
             <a href=@CommonConstants.ROUTE_QUAN_TRI_NHOM_NGUOI_DUNG_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -76,153 +77,124 @@
                 </div>
             </a>
         </div>
-    }
 
-    <!--Quản lý sản phẩm-->
-    <h6 class="alert alert-info text-center"><i class="far fa-newspaper"></i> Quản lý sản phẩm</h6>
-    <div class="row col-md-12">
-        <a href=@CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-primary">Sản phẩm</div>
-                            <div class="text-sm font-weight-bold text-primary">@ViewBag.CountProduct</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fab fa-product-hunt fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href=@CommonConstants.ROUTE_QUAN_TRI_DANH_MUC_SAN_PHAM_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-success">Nhóm sản phẩm</div>
-                            <div class="text-sm font-weight-bold text-success">@ViewBag.CountProductCategory</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-stream fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
 
-    <!--Quản lý chuyên mục bài viết-->
-    <h6 class="alert alert-warning text-center"><i class="far fa-newspaper"></i> Quản lý bài viết</h6>
-    <div class="row col-md-12">
-        <a href="/quan-tri/tin-tuc" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-primary">Tin tức</div>
-                            <div class="text-sm font-weight-bold text-primary">@ViewBag.CountNews</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fab fa-product-hunt fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="/quan-tri/loai-tin-tuc" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-success">Nhóm tin tức</div>
-                            <div class="text-sm font-weight-bold text-success">@ViewBag.CountNewsCategory</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-stream fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <!--Quản lý giao diện người dùng-->
-    @if (userLoginSession?.GroupId == "ADMIN")
-    {
-        <h6 class="alert alert-primary text-center"><i class="fas fa-tv"></i> Quản lý giao diện</h6>
+        <!--Quản lý sản phẩm-->
+        <h6 class="alert alert-info text-center"><i class="far fa-newspaper"></i> Quản lý kinh doanh</h6>
         <div class="row col-md-12">
-            <a href="/quan-tri/menu" class="col-xl-3 col-md-6 mb-4 text-decoration-none">
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-4">
-                                <div class="text-sm font-weight-bold text-primary">Menu</div>
-                                <div class="text-sm font-weight-bold text-primary">@ViewBag.CountMenu</div>
+                                <div class="text-sm font-weight-bold text-primary">Sản phẩm</div>
+                                <div class="text-sm font-weight-bold text-primary">@ViewBag.CountProduct</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fa fa-list fa-2x text-gray-300"></i>
+                                <i class="fab fa-product-hunt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_DANH_MUC_SAN_PHAM_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-4">
+                                <div class="text-sm font-weight-bold text-success">Danh mục sản phẩm</div>
+                                <div class="text-sm font-weight-bold text-success">@ViewBag.CountProductCategory</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-stream fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!--Quản lý đơn đặt hàng-->
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-4">
+                                <div class="text-sm font-weight-bold text-primary">Đơn hàng</div>
+                                <div class="text-sm font-weight-bold text-primary">@ViewBag.CountOrder</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa fa-list-alt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_CUA_HANG_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-4">
+                                <div class="text-sm font-weight-bold text-warning">Cửa hàng</div>
+                                <div class="text-sm font-weight-bold text-warning">@ViewBag.CountShop</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa fa-store fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </a>
         </div>
-    }
 
-    <!--Quản lý đơn đặt hàng-->
-    <h6 class="alert alert-secondary text-center"><i class="fas fa-bars"></i> Quản lý đơn hàng</h6>
-    <div class="row col-md-12">
-        <a href=@CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-primary">Đơn đặt hàng</div>
-                            <div class="text-sm font-weight-bold text-primary">@ViewBag.CountOrder</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fa fa-list-alt fa-2x text-gray-300"></i>
+    </div>
+}
+
+
+@if (userLoginSession != null && Regex.IsMatch(userLoginSession.GroupId, CommonConstants.USER_GROUP_ID_PREFIX_SELLER))
+{
+
+    <div class=" align-items-center justify-content-between mb-4">
+
+
+
+        <!--Quản lý sản phẩm-->
+        <h6 class="alert alert-info text-center"><i class="far fa-newspaper"></i> Quản lý kinh doanh</h6>
+        <div class="row col-md-12">
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-4">
+                                <div class="text-sm font-weight-bold text-primary">Sản phẩm</div>
+                                <div class="text-sm font-weight-bold text-primary">@ViewBag.CountProduct</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fab fa-product-hunt fa-2x text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </a>
-    </div>
+            </a>
 
-    <!--Doanh thu-->
-    <h6 class="alert alert-secondary text-center"><i class="fas fa-bars"></i> Quản lý đơn hàng</h6>
-    <div class="row col-md-12">
-        <a href=@CommonConstants.ROUTE_QUAN_TRI_DON_HANG_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-4">
-                            <div class="text-sm font-weight-bold text-primary">AAAAA</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fa fa-list-alt fa-2x text-gray-300"></i>
+            <!--Quản lý đơn đặt hàng-->
+            <a href=@CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_DON_HANG_PARAMS class="col-xl-3 col-md-6 mb-4 text-decoration-none">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-4">
+                                <div class="text-sm font-weight-bold text-primary">Đơn hàng</div>
+                                <div class="text-sm font-weight-bold text-primary">@ViewBag.CountOrder</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa fa-list-alt fa-2x text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </a>
+            </a>
 
+        </div>
 
     </div>
-    @*// chart*@
-    @*<select>
-        <option value="2022" selected>2022</option>
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
-    </select>
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-    </figure>*@
-    @*//Xuất ExCel*@
-    @using (Html.BeginForm("ExportToExcel", "Home", FormMethod.Post))
-    {
-        <input type="submit" value="Export to Excel" class="button" />
-    }
-</div>
+}
