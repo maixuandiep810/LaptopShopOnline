@@ -275,7 +275,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 _serviceWrapper.Db.Entry(product).State = EntityState.Modified;
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
-                return Redirect(CommonConstants.ROUTE_QUAN_TRI_SAN_PHAM_PARAMS);
+                return Redirect(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_PARAMS);
             }
             SetAlert("Cập nhật lỗi", "danger");
             ViewBag.ProductCategoryId = new SelectList(_serviceWrapper.Db.ProductCategory, "Id", "Name", product.ProductCategoryId);
