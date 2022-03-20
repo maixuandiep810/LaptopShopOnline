@@ -14,7 +14,7 @@ using X.PagedList;
 
 namespace LaptopShopOnline.WebApp.Controllers
 {
-    public class NewsContentController : BaseController
+    public class NewsContentController
     {
 
 
