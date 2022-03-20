@@ -27,7 +27,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Orders
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_READ_ID)]
         public ActionResult Index(string sortOrder, int? page, string searchString)
         {
             CountMessage();
@@ -52,7 +52,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
 
 
-        // GET: Admin/Orders
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_READ_ID)]
         public ActionResult IndexSG(string sortOrder, int? page, string searchString)
         {
             CountProduct();
@@ -76,7 +76,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
         }
 
 
-        // GET: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_CREATE_ID)]
         public ActionResult Create()
         {
             CountMessage();
@@ -107,7 +107,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
 
 
 
-        // GET: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_UPDATE_ID)]
         public ActionResult Edit(Guid? id)
         {
             CountMessage();
@@ -126,7 +126,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.OrderStatus = new SelectList(ENUM.GetSelectList_OrderStatus(), "Id", "Name");
             return View(order);
         }
-        // POST: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.MANAGER_ROLE_BUSINESS_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Order order)
@@ -145,7 +145,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View(order);
         }
 
-        // GET: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_UPDATE_ID)]
         public ActionResult EditSG(Guid? id)
         {
             CountMessage();
@@ -164,7 +164,7 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             ViewBag.OrderStatus = new SelectList(ENUM.GetSelectList_OrderStatus(), "Id", "Name");
             return View(order);
         }
-        // POST: Admin/Products/Create
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_UPDATE_ID)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditSG(Order order)

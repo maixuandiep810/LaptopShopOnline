@@ -60,8 +60,8 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
             return View(productsPaging);
         }
 
-        //GET: Admin/Products
-         public ActionResult IndexSG(string sortOrder, int? page, string searchString, Guid? productCategoryId)
+        [HasCredential(RoleId = CommonConstants.SELLER_ROLE_READ_ID)]
+        public ActionResult IndexSG(string sortOrder, int? page, string searchString, Guid? productCategoryId)
         {
             CountProduct();
             CountOrder();
