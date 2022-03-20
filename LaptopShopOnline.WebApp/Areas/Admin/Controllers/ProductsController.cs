@@ -279,6 +279,12 @@ namespace LaptopShopOnline.WebApp.Areas.Admin.Controllers
                 }
                 AuditTable.UpdateAuditFields(product, userLoginSession.UserName);
                 _serviceWrapper.Db.Entry(product).State = EntityState.Modified;
+                if (product.Image != null)
+                    product.UrlImage = Path.Combine(_contentFolder, _serviceWrapper.ImageService.SaveImage(product.Image, _uploadFolder));
+                if (product.Sub1Image != null)
+                    product.Sub1UrlImage = Path.Combine(_contentFolder, _serviceWrapper.ImageService.SaveImage(product.Sub1Image, _uploadFolder));
+                if (product.Sub2Image != null)
+                    product.Sub2UrlImage = Path.Combine(_contentFolder, _serviceWrapper.ImageService.SaveImage(product.Sub2Image, _uploadFolder));
                 _serviceWrapper.Db.SaveChanges();
                 SetAlert("Cập nhật thành công", "success");
                 return Redirect(CommonConstants.ROUTE_QUAN_TRI_NGUOI_BAN_SAN_PHAM_PARAMS);
